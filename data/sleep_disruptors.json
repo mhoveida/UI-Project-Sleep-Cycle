@@ -1,14 +1,69 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-  </style>
-</head>
-<body>
-</body>
-</html>
+{
+  "title": "Sleep Disruptors",
+  "intro": {
+    "title": "What disturbs your sleep cycle?",
+    "subtitle": "Drag each disruptor to the sleep stage it affects most:"
+  },
+  "disruptors": [
+    {
+      "id": "screen_blue_light",
+      "title": "Screen blue light",
+      "icon": "screen.png",
+      "affectsStage": "N1",
+      "explanation": "Blue light from screens suppresses melatonin production, making it harder to fall asleep initially."
+    },
+    {
+      "id": "stress_anxiety",
+      "title": "Stress & anxiety",
+      "icon": "stressed_person.png",
+      "affectsStage": "REM",
+      "explanation": "Stress and anxiety can significantly reduce REM sleep, disrupting emotional processing."
+    },
+    {
+      "id": "late_caffeine",
+      "title": "Late caffeine",
+      "icon": "coffee.png",
+      "affectsStage": "N2",
+      "explanation": "Caffeine consumed in the afternoon can prevent you from reaching deeper stages of sleep."
+    },
+    {
+      "id": "irregular_schedule",
+      "title": "Irregular schedule",
+      "icon": "calendar_clock.png",
+      "affectsStage": "N3",
+      "explanation": "Changing sleep schedules disrupt your body's ability to enter deep sleep at the right times."
+    },
+    {
+      "id": "exercising_late",
+      "title": "Exercising late",
+      "icon": "exercise_warning.png",
+      "affectsStage": "N3",
+      "explanation": "Late exercise raises your body temperature and heart rate, making it harder to enter deep sleep."
+    },
+    {
+      "id": "alcohol_bed",
+      "title": "Alcohol before bed",
+      "icon": "beer.png",
+      "affectsStage": "REM",
+      "explanation": "Alcohol might help you fall asleep faster, but it severely reduces REM sleep, leaving you feeling mentally foggy even after 8 hours in bed!"
+    }
+  ],
+  "stageTargets": [
+    {
+      "id": "N1",
+      "name": "N1: Light Sleep"
+    },
+    {
+      "id": "N2",
+      "name": "N2: Deeper Light Sleep"
+    },
+    {
+      "id": "N3",
+      "name": "N3: Deep Sleep"
+    },
+    {
+      "id": "REM",
+      "name": "REM Sleep"
+    }
+  ]
+}
