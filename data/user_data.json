@@ -1,0 +1,22 @@
+{
+  "userId": "anonymous-user-1",
+  "currentLearnStage": 0,
+  "currentQuizQuestion": 0,
+  "learnProgress": {
+    "sleepCyclesViewed": [],
+    "disruptorsExplored": [],
+    "realWorldExamplesViewed": [],
+    "calculatorUsed": false
+  },
+  "quizProgress": {
+    "questionsAnswered": [],
+    "correctAnswers": [],
+    "score": 0,
+    "totalQuestions": 7
+  },
+  "userSelections": {
+    "ageRange": null,
+    "stressLevel": null,
+    "timeToFallAsleep": null
+  }
+}
