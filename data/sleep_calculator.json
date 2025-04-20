@@ -1,14 +1,81 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-  </style>
-</head>
-<body>
-</body>
-</html>
+{
+  "title": "Sleep Calculator",
+  "tagline": "Find your best sleep/wake up time with science!",
+  "modes": [
+    {
+      "id": "wakeup",
+      "title": "When to wake up",
+      "icon": "sun.png"
+    },
+    {
+      "id": "sleep",
+      "title": "When to sleep",
+      "icon": "moon.png"
+    }
+  ],
+  "inputs": {
+    "ageRanges": ["10-13", "14-17", "18-25", "26-35", "36-45", "46-55", "56-64", "65+"],
+    "timeToFallAsleep": [
+      {
+        "label": "5 minutes or less (fast)",
+        "value": 5
+      },
+      {
+        "label": "10 - 15 minutes (average)",
+        "value": 15
+      },
+      {
+        "label": "20 - 30 minutes (slow)",
+        "value": 30
+      },
+      {
+        "label": "45+ minutes (very slow)",
+        "value": 45
+      }
+    ],
+    "stressLevels": [
+      {
+        "label": "Low",
+        "value": 1
+      },
+      {
+        "label": "Medium",
+        "value": 2
+      },
+      {
+        "label": "High",
+        "value": 3
+      }
+    ]
+  },
+  "recommendedSleepHours": {
+    "10-13": 10,
+    "14-17": 9,
+    "18-25": 8,
+    "26-35": 7.5,
+    "36-45": 7.5,
+    "46-55": 7,
+    "56-64": 7,
+    "65+": 6.5
+  },
+  "calculationRules": {
+    "cycleLength": 90,
+    "stressAdjustment": {
+      "1": 0,
+      "2": 15,
+      "3": 30
+    }
+  },
+  "results": {
+    "wakeup": {
+      "title": "Your Recommended Wake-Up Times",
+      "message": "Based on your personal adjustments, waking up at {recommendedTime} will give you the most restful sleep."
+    },
+    "sleep": {
+      "title": "Your Recommended Bed Times",
+      "message": "Based on your personal adjustments, {recommendedTime} gives you the best sleep quality."
+    }
+  },
+  "backButtonText": "< Back",
+  "calculateButtonText": "Calculate optimal wake up time"
+}
