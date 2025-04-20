@@ -1,14 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-  </style>
-</head>
-<body>
-</body>
-</html>
+{
+  "title": "Real-World Examples",
+  "description": "Click on pictures to see the reason",
+  "examples": [
+    {
+      "title": "Improved sports performance",
+      "icon": "athlete.png",
+      "explanation": "Growth hormone released during deep sleep helps muscle recovery and athletic improvement",
+      "sleepStage": "N3"
+    },
+    {
+      "title": "Solving a complex problem",
+      "icon": "thinking_person.png",
+      "explanation": "REM sleep helps brain make unusual connections between ideas",
+      "sleepStage": "REM"
+    },
+    {
+      "title": "Getting sick after all-nighters",
+      "icon": "sick_person.png",
+      "explanation": "Immune system strengthening happens during deep sleep",
+      "sleepStage": "N3"
+    },
+    {
+      "title": "Recovering from a breakup",
+      "icon": "emotional_person.png",
+      "explanation": "Emotional processing occurs during REM sleep",
+      "sleepStage": "REM"
+    },
+    {
+      "title": "Mastering guitar chords overnight",
+      "icon": "guitar_player.png",
+      "explanation": "Motor skill consolidation happens during N2 sleep",
+      "sleepStage": "N2"
+    },
+    {
+      "title": "Forgetting studied material",
+      "icon": "forgetful_person.png",
+      "explanation": "Fact-based memories consolidate during deep sleep",
+      "sleepStage": "N3"
+    }
+  ],
+  "nextButtonText": "How to improve >",
+  "backButtonText": "< Back"
+}
