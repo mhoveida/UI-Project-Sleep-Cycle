@@ -1,14 +1,97 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-  </style>
-</head>
-<body>
-</body>
-</html>
+{
+  "title": "Sleep Cycles",
+  "intro": {
+    "title": "Sleep isn't Just one state",
+    "subtitle": "Why you still feel tired even after 8 hours of sleep?",
+    "description": "Sleep stages repeat every 90 minutes:"
+  },
+  "stages": [
+    {
+      "id": "N1",
+      "name": "Light Sleep",
+      "percentage": 5,
+      "description": "Lightest Sleep",
+      "characteristics": [
+        {
+          "title": "Easily woken",
+          "icon": "tired_person.png"
+        },
+        {
+          "title": "Falling Sensation",
+          "icon": "falling_person.png",
+          "detail": "Brain misinterprets muscle relaxation as falling"
+        }
+      ]
+    },
+    {
+      "id": "N2",
+      "name": "Deeper Light Sleep",
+      "percentage": 45,
+      "description": "Deeper Light Sleep",
+      "characteristics": [
+        {
+          "title": "Body temperature and heart beat slows",
+          "icon": "heart_thermometer.png"
+        },
+        {
+          "title": "Brain practices skills you learned during the day",
+          "icon": "brain_workout.png"
+        },
+        {
+          "title": "External sounds enter semi-conscious mind",
+          "icon": "ear_sound.png"
+        }
+      ]
+    },
+    {
+      "id": "N3",
+      "name": "Deep Sleep",
+      "percentage": 25,
+      "description": "Deep Sleep",
+      "characteristics": [
+        {
+          "title": "Hardest to wake, maximum disorientation if interrupted",
+          "icon": "sloth.png"
+        },
+        {
+          "title": "Physical repair infection-fighting cells activate",
+          "icon": "immune_system.png"
+        },
+        {
+          "title": "Transfers memories to long-term",
+          "icon": "memory_transfer.png"
+        }
+      ]
+    },
+    {
+      "id": "REM",
+      "name": "REM Sleep",
+      "percentage": 25,
+      "description": "REM Sleep",
+      "characteristics": [
+        {
+          "title": "Rapid Eye Movement",
+          "icon": "moving_eyes.png"
+        },
+        {
+          "title": "Dreaming occurs",
+          "icon": "dream_bubble.png"
+        },
+        {
+          "title": "Body freezes muscles to prevent acting out dreams",
+          "icon": "paralyzed_body.png"
+        },
+        {
+          "title": "Emotional Processing",
+          "icon": "brain_emotions.png"
+        },
+        {
+          "title": "Memory connection + creativity boost",
+          "icon": "creative_brain.png"
+        }
+      ]
+    }
+  ],
+  "cycleSequence": ["N1", "N2", "N3", "REM"],
+  "cycleDuration": 90
+}
