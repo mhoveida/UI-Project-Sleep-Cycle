@@ -1,14 +1,153 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-  </style>
-</head>
-<body>
-</body>
-</html>
+{
+  "title": "Sleep Knowledge Quiz",
+  "description": "Test your knowledge about sleep cycles!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "question": "Correct Sequence the Sleep Cycle",
+      "hint": "Think about how you transition from awake to deep sleep and back again during the night",
+      "options": ["Light Sleep", "Deeper Light Sleep", "Deep Sleep", "REM Sleep"],
+      "correctAnswer": ["Light Sleep", "Deeper Light Sleep", "Deep Sleep", "REM Sleep"]
+    },
+    {
+      "id": 2,
+      "type": "dragDrop",
+      "question": "Sleep Disruptor Effects",
+      "hint": "Some habits help, some hurt - can you spot which is which?",
+      "options": {
+        "all": ["Meditation", "Screen blue light", "Stress & anxiety", "Late caffeine", "Reading Ebook", "Video Game", "Exercising late", "Alcohol before bed", "Regular schedule"],
+        "categories": ["Helps Sleep", "Hurts Sleep"]
+      },
+      "correctAnswer": {
+        "Helps Sleep": ["Meditation", "Reading physical book", "Regular schedule"],
+        "Hurts Sleep": ["Screen blue light", "Stress & anxiety", "Late caffeine", "Video Game", "Exercising late", "Alcohol before bed"]
+      }
+    },
+    {
+      "id": 3,
+      "type": "matching",
+      "question": "Match the Scenario to Sleep Stage",
+      "hint": "Match each person's vibe to their sleep stage!",
+      "items": [
+        {
+          "label": "Sufficient N3 Deep Sleep",
+          "match": "sick_person.png",
+          "explanation": "Better immune system functioning"
+        },
+        {
+          "label": "Complete REM Cycles",
+          "match": "athlete.png", 
+          "explanation": "Better athletic performance"
+        },
+        {
+          "label": "Insufficient N3 Deep Sleep",
+          "match": "forgetful_person.png",
+          "explanation": "Memory consolidation issues"
+        },
+        {
+          "label": "Multiple REM cycles",
+          "match": "thinking_person.png",
+          "explanation": "Creative problem solving"
+        },
+        {
+          "label": "N2 Deeper Light Sleep",
+          "match": "guitar_player.png",
+          "explanation": "Motor skill improvement"
+        },
+        {
+          "label": "Disrupted N3 Deep Sleep",
+          "match": "emotional_person.png",
+          "explanation": "Emotional regulation difficulties"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "multipleChoice",
+      "question": "When to wake up?",
+      "hint": "Timing is everything - which wake-up time feels just right?",
+      "context": {
+        "bedtime": "11 P.M."
+      },
+      "options": [
+        {
+          "time": "5:30 A.M.",
+          "cycles": 4.5,
+          "quality": "poor"
+        },
+        {
+          "time": "6:00 A.M.",
+          "cycles": 5,
+          "quality": "good"
+        },
+        {
+          "time": "7:30 A.M.",
+          "cycles": 5.5,
+          "quality": "moderate"
+        }
+      ],
+      "correctAnswer": "6:00 A.M."
+    },
+    {
+      "id": 5,
+      "type": "multipleChoice",
+      "question": "Which sleep stage is the longest in each cycle?",
+      "options": ["REM Sleep", "Deep Sleep", "Light Sleep", "Deeper light Sleep"],
+      "correctAnswer": "Deeper light Sleep"
+    },
+    {
+      "id": 6,
+      "type": "dragDrop",
+      "question": "Drag activities that are good before bedtime",
+      "options": ["Meditation", "Social Media", "Reading Ebook", "Video Game"],
+      "correctAnswer": ["Meditation", "Reading Ebook"]
+    },
+    {
+      "id": 7,
+      "type": "multipleChoice",
+      "question": "Which sleep is most affected by alcohol consumption",
+      "options": ["REM Sleep", "Deep Sleep", "Light Sleep", "Deeper light Sleep"],
+      "correctAnswer": "REM Sleep"
+    }
+  ],
+  "results": {
+    "ranges": [
+      {
+        "min": 6,
+        "max": 7,
+        "title": "Excellent!",
+        "message": "You're a sleep cycle expert!",
+        "score": "5/5"
+      },
+      {
+        "min": 4,
+        "max": 5,
+        "title": "Good work!",
+        "message": "You understand most sleep concepts!",
+        "score": "4/5"
+      },
+      {
+        "min": 2,
+        "max": 3,
+        "title": "Keep improving!",
+        "message": "You're making progress on understanding sleep cycles",
+        "score": "3/5"
+      },
+      {
+        "min": 0,
+        "max": 1,
+        "title": "Try again!",
+        "message": "Learning about sleep will improve your health!",
+        "score": "1/5"
+      }
+    ]
+  },
+  "buttons": {
+    "next": "Next >",
+    "back": "< Back",
+    "reviewStages": "Review Sleep Stages",
+    "quizSolutions": "Quiz Solutions",
+    "tryAgain": "Try Again"
+  }
+}
