@@ -1,14 +1,38 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-  </style>
-</head>
-<body>
-</body>
-</html>
+{
+  "app": {
+    "title": "Sleep Cycle Education",
+    "sections": [
+      "sleepCycles",
+      "sleepDisruptors",
+      "sleepCalculator",
+      "quiz"
+    ],
+    "navItems": [
+      {
+        "id": "sleepCycles",
+        "title": "Sleep Cycles",
+        "route": "/learn/1"
+      },
+      {
+        "id": "sleepDisruptors",
+        "title": "Sleep Disruptors",
+        "route": "/learn/2"
+      },
+      {
+        "id": "sleepCalculator",
+        "title": "Sleep Calculator",
+        "route": "/calculator"
+      },
+      {
+        "id": "quiz",
+        "title": "Quiz",
+        "route": "/quiz/1"
+      }
+    ]
+  },
+  "home": {
+    "title": "Sleep Cycle Education",
+    "subtitle": "Why you still feel tired even after 8 hours of sleep?",
+    "startButtonText": "START HERE"
+  }
+}
