@@ -1,9 +1,21 @@
 {% extends "layout.html" %}
 
-{% block title %}Sleep Disruptors{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1>Common Sleep Disruptors</h1>
-<p>Explore the factors that can interfere with a good night's sleep—from stress to screen time.</p>
-{% endblock %}
+<section class="intro">
+  <h1>{{ content.intro.title }}</h1>
+  <h2>{{ content.intro.subtitle }}</h2>
+</section>
 
+<section class="disruptors">
+  {% for d in content.disruptors %}
+    <div class="disruptor">
+      <img src="{{ url_for('static', filename='media/Distruptors/' ~ d.icon) }}" alt="{{ d.title }}">
+      <h3>{{ d.title }}</h3>
+      <p><em>Affects: {{ d.affectsStage }}</em></p>
+      <p>{{ d.explanation }}</p>
+    </div>
+  {% endfor %}
+</section>
+{% endblock %}

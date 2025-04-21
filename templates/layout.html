@@ -9,12 +9,13 @@
 
   <nav>
     <ul class="navbar">
-      <li><a href="/sleep_cycle">Sleep Cycles</a></li>
-      <li><a href="/sleep_disruptors">Sleep Disruptors</a></li>
-      <li><a href="/calculator">Sleep Calculator</a></li>
-      <li><a href="/quiz_start">Quiz</a></li>
+      <li><a href="{{ url_for('learn', section_id=1) }}" class="{% if active_page == 'sleep_cycles' %}active{% endif %}">Sleep Cycles</a></li>
+      <li><a href="{{ url_for('learn', section_id=2) }}" class="{% if active_page == 'sleep_disruptors' %}active{% endif %}">Sleep Disruptors</a></li>
+      <li><a href="{{ url_for('calculator') }}" class="{% if active_page == 'calculator' %}active{% endif %}">Sleep Calculator</a></li>
+      <li><a href="{{ url_for('quiz_start') }}" class="{% if active_page == 'quiz' %}active{% endif %}">Quiz</a></li>
     </ul>
   </nav>
+  
 
   <main>
     {% block content %}

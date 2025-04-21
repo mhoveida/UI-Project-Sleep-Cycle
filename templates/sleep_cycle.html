@@ -1,8 +1,31 @@
 {% extends "layout.html" %}
 
-{% block title %}Sleep Cycles{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1>Understanding Sleep Cycles</h1>
-<p>Learn about the different stages of sleep and how they impact your health and restfulness.</p>
+<section class="intro">
+  <h1>{{ content.intro.title }}</h1>
+  <h2>{{ content.intro.subtitle }}</h2>
+  <p>{{ content.intro.description }}</p>
+</section>
+
+<section class="sleep-stages">
+  {% for stage in content.stages %}
+    <div class="stage">
+      <h3>{{ stage.id }} - {{ stage.name }} ({{ stage.percentage }}%)</h3>
+      <p>{{ stage.description }}</p>
+      <ul class="characteristics">
+        {% for c in stage.characteristics %}
+          <li>
+            <img src="{{ url_for('static', filename='media/icons/' ~ c.icon) }}" alt="{{ c.title }}">
+            <strong>{{ c.title }}</strong>
+            {% if c.detail %}
+              <p>{{ c.detail }}</p>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</section>
 {% endblock %}

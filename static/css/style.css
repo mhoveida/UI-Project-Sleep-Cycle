@@ -34,3 +34,47 @@ body {
     padding: 2em;
   }
   
+  .intro {
+    margin-bottom: 2rem;
+  }
+  
+  .stage {
+    margin-bottom: 2.5rem;
+  }
+  
+  .characteristics {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .characteristics li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 200px;
+    text-align: center;
+  }
+  
+  .characteristics img,
+  .disruptor img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+  
+  .disruptor {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+  }
+
+  .navbar .active {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #f39c12;
+  }
+  
