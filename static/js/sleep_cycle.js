@@ -19,4 +19,39 @@ function showStage(stageId) {
       mainImg.alt = `${stageId} Sleep Stage`;
     }
   }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Handle clicks on characteristic titles
+    document.querySelectorAll('.characteristics').forEach(charList => {
+      const items = Array.from(charList.querySelectorAll('.characteristic-item'));
+      items.forEach((item, index) => {
+        const button = item.querySelector('.char-button');
+        if (button) {
+          button.addEventListener('click', () => {
+            // Show next item if exists
+            if (index + 1 < items.length) {
+              items[index + 1].style.display = 'block';
+            } else {
+              // Show next stage button if this was the last item
+              const nextButton = item.closest('.stage-info').querySelector('.next-stage-button');
+              if (nextButton) nextButton.style.display = 'inline-block';
+            }
+          });
+        }
+      });
+    });
+  
+    // Handle "Next Stage" button
+    document.querySelectorAll('.next-stage-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const currentId = btn.closest('.stage-info').id.replace('info-', '');
+        const stageOrder = ["N1", "N2", "N3", "REM"];
+        const nextIndex = stageOrder.indexOf(currentId) + 1;
+        const nextId = stageOrder[nextIndex];
+        if (nextId) {
+          showStage(nextId);
+        }
+      });
+    });
+  });
   
