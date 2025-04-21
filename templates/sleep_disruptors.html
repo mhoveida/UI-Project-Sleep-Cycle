@@ -1,14 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-  </style>
-</head>
-<body>
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="intro">
+  <h1>{{ content.intro.title }}</h1>
+  <h2>{{ content.intro.subtitle }}</h2>
+</section>
+
+<div class="drag-drop-container">
+  <!-- Left: Disruptors to drag -->
+  <div class="disruptor-list">
+    {% for d in content.disruptors %}
+      <div class="disruptor" draggable="true" id="{{ d.id }}" data-affects="{{ d.affectsStage }}">
+        <img src="{{ url_for('static', filename='media/Disruptors/' ~ d.icon) }}" alt="{{ d.title }}">
+        <h3>{{ d.title }}</h3>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Right: Stage drop zones -->
+  <div class="dropzones">
+    {% for s in content.stageTargets %}
+      <div class="dropzone" id="drop-{{ s.id }}" data-stage="{{ s.id }}">
+        <h3>{{ s.name }}</h3>
+        <div class="zone-content"></div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Navigation buttons -->
+<div class="page-nav">
+  <a href="{{ url_for('learn', section_id=1) }}" class="nav-button nav-back">← Back</a>
+  <a href="{{ url_for('real_world_examples') }}" class="nav-button nav-next">Next: Real World Examples →</a>
+</div>
+
+<script src="{{ url_for('static', filename='js/sleep_disruptors.js') }}"></script>
+{% endblock %}

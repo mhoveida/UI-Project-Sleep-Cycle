@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Sleep Project{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <nav>
+    <ul class="navbar">
+      <li><a href="/" class="{% if active_page == 'home' %}active{% endif %}">Sleep Start</a></li>
+      <li><a href="{{ url_for('learn', section_id=1) }}" class="{% if active_page == 'sleep_cycles' %}active{% endif %}">Sleep Cycles</a></li>
+      <li><a href="{{ url_for('learn', section_id=2) }}" class="{% if active_page in ['sleep_disruptors', 'real_world_examples'] %}active{% endif %}">Sleep Disruptors</a></li>
+      <li><a href="{{ url_for('calculator') }}" class="{% if active_page == 'calculator' %}active{% endif %}">Sleep Calculator</a></li>
+      <li><a href="{{ url_for('quiz_start') }}" class="{% if active_page == 'quiz' %}active{% endif %}">Quiz</a></li>
+    </ul>
+  </nav>
+  
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+</body>
+</html>

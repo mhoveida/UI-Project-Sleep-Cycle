@@ -1,0 +1,378 @@
+/* Global styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #2c3e50;
+  }
+  
+  main {
+    padding: 2em;
+  }
+  
+  /* Navbar styles */
+  nav {
+    background-color: #2c3e50;
+    padding: 1em 2em;
+  }
+  
+  .navbar {
+    list-style: none;
+    display: flex;
+    gap: 2em;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar li {
+    display: inline;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .navbar a:hover,
+  .navbar .active {
+    text-decoration: underline;
+    color: #f39c12;
+  }
+  
+  /* Intro styles */
+  .intro {
+    margin-bottom: 2rem;
+  }
+  
+  .intro-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 12px;
+  }
+  
+  /* Cycle layout */
+  .cycle-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 2rem 0;
+  }
+  
+  .stage-content {
+    flex: 1;
+  }
+  
+  .cycle-image {
+    flex: 1;
+    text-align: center;
+    padding-top: 1rem;
+  }
+  
+  .cycle-image img {
+    width: 1000px; /* Match image map coordinates */
+    height: auto;
+    border-radius: 12px;
+  }
+  
+  /* Stage content */
+  .stage-info {
+    margin-bottom: 2.5rem;
+  }
+  
+  .characteristics {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .characteristics li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 200px;
+    text-align: center;
+  }
+  
+  .characteristics img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Disruptors (if used elsewhere) */
+  .disruptor {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+  }
+  
+  .disruptor img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Navigation highlighting */
+  .navbar .active {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #f39c12;
+  }
+  
+  /* Page bottom navigation */
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+  }
+  
+  .nav-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #2c3e50;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-button:hover {
+    background-color: #34495e;
+  }
+  
+  .nav-back {
+    align-self: flex-start;
+  }
+  
+  .nav-next {
+    align-self: flex-end;
+  }
+  
+  /* For debugging map regions — remove after testing */
+  area {
+    cursor: pointer;
+  }
+
+  /* Scale down the entire image + map */
+.cycle-image-scaled {
+    transform: scale(0.75); /* Change this % as needed */
+    transform-origin: top right; /* Shrinks inward from the corner */
+    display: inline-block;
+  }
+
+  .image-wrapper {
+    position: relative;
+    width: 1000px;
+    height: auto;
+  }
+  
+  .highlight-overlay {
+    position: absolute;
+    pointer-events: none;
+    border: 3px solid #f39c12;
+    background-color: rgba(243, 156, 18, 0.3);
+    border-radius: 10px;
+    display: none;
+    z-index: 10;
+  }
+  
+  /* Position the highlights (fine-tune these) */
+  #highlight-N1 {
+    top: 260px;
+    left: 453px;
+    width: 115px;
+    height: 160px;
+  }
+  
+  #highlight-N2 {
+    top: 260px;
+    left: 572px;
+    width: 250px;
+    height: 350px;
+  }
+  
+  #highlight-N3 {
+    top: 600px;
+    left: 204px;
+    width: 360px;
+    height: 280px;
+  }
+  
+  #highlight-REM {
+    top: 300px;
+    left: 200px;
+    width: 270px;
+    height: 200px;
+  }
+
+  .char-button {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    background-color: #f1f1f1;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  .char-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .next-stage-button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  #wave-image-wrapper {
+    margin-top: 3rem;
+  }
+  
+  @media screen and (max-width: 768px) {
+    #wave-image-wrapper {
+      position: static;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+  }
+
+  /* Shrink the overall layout */
+.drag-drop-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    align-items: flex-start;
+  }
+  
+  /* Disruptor list on the left */
+  .disruptor-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  /* Disruptor box */
+  .disruptor {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #f7f7f7;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Disruptor image */
+  .disruptor img {
+    width: 45px;
+    height: auto;
+  }
+  
+  /* Dropzone container */
+  .dropzones {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Each dropzone */
+  .dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 0.75rem;
+    min-height: 80px;
+    background-color: #fafafa;
+    transition: background-color 0.2s ease;
+    font-size: 0.9rem;
+  }
+  
+  /* Dropzone header */
+  .dropzone h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  /* Inside drop zone where disruptors go */
+  .zone-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  /* Real-time green/red feedback while hovering */
+  .dropzone.correct-hover {
+    background-color: #d4edda;  /* light green */
+    border-color: #28a745;
+  }
+  
+  .dropzone.incorrect-hover {
+    background-color: #f8d7da;  /* light red */
+    border-color: #dc3545;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .example-card {
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .example-card:hover {
+    background: #eef6ff;
+  }
+  
+  .example-card img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+  
+  .explanation {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  .choice-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .choice-buttons .nav-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  

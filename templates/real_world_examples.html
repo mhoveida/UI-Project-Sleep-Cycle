@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="intro">
+  <h1>{{ content.title }}</h1>
+  <p>{{ content.description }}</p>
+</section>
+
+<div class="examples-grid">
+  {% for e in content.examples %}
+    <div class="example-card" onclick="toggleExplanation('{{ e.title | replace(' ', '_') }}')">
+      <img src="{{ url_for('static', filename='media/Examples/' ~ e.icon) }}" alt="{{ e.title }}">
+      <h3>{{ e.title }}</h3>
+      <p class="explanation" id="exp-{{ e.title | replace(' ', '_') }}" style="display: none;">
+        {{ e.explanation }}
+      </p>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="page-nav">
+    <a href="{{ url_for('learn', section_id=2) }}" class="nav-button nav-back">← Back</a>
+    <a href="{{ url_for('choice') }}" class="nav-button nav-next">Next: How to Improve →</a>
+</div>
+
+<script>
+function toggleExplanation(id) {
+  const el = document.getElementById("exp-" + id);
+  if (el.style.display === "none") {
+    el.style.display = "block";
+  } else {
+    el.style.display = "none";
+  }
+}
+</script>
+{% endblock %}
