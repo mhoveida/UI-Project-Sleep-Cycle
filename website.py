@@ -25,6 +25,12 @@ def learn(section_id):
         return render_template("sleep_cycle.html", title=title, content=content, active_page=active_page)
     elif section_id == 2:
         return render_template("sleep_disruptors.html", title=title, content=content, active_page=active_page)
+    
+
+@app.route("/learn/2/examples")
+def real_world_examples():
+    content = load_json("real_world_examples.json")
+    return render_template("real_world_examples.html", title=content["title"], content=content)
 
 
 @app.route('/')

@@ -4,37 +4,37 @@
   "examples": [
     {
       "title": "Improved sports performance",
-      "icon": "athlete.png",
+      "icon": "Sport.png",
       "explanation": "Growth hormone released during deep sleep helps muscle recovery and athletic improvement",
       "sleepStage": "N3"
     },
     {
       "title": "Solving a complex problem",
-      "icon": "thinking_person.png",
+      "icon": "Forget.png",
       "explanation": "REM sleep helps brain make unusual connections between ideas",
       "sleepStage": "REM"
     },
     {
       "title": "Getting sick after all-nighters",
-      "icon": "sick_person.png",
+      "icon": "Sick.png",
       "explanation": "Immune system strengthening happens during deep sleep",
       "sleepStage": "N3"
     },
     {
       "title": "Recovering from a breakup",
-      "icon": "emotional_person.png",
+      "icon": "Recovery.png",
       "explanation": "Emotional processing occurs during REM sleep",
       "sleepStage": "REM"
     },
     {
       "title": "Mastering guitar chords overnight",
-      "icon": "guitar_player.png",
+      "icon": "Guitar.png",
       "explanation": "Motor skill consolidation happens during N2 sleep",
       "sleepStage": "N2"
     },
     {
       "title": "Forgetting studied material",
-      "icon": "forgetful_person.png",
+      "icon": "Forget.png",
       "explanation": "Fact-based memories consolidate during deep sleep",
       "sleepStage": "N3"
     }

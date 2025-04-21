@@ -327,4 +327,38 @@ body {
     background-color: #f8d7da;  /* light red */
     border-color: #dc3545;
   }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .example-card {
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .example-card:hover {
+    background: #eef6ff;
+  }
+  
+  .example-card img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+  
+  .explanation {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
   
