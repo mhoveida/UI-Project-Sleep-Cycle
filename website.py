@@ -30,7 +30,13 @@ def learn(section_id):
 @app.route("/learn/2/examples")
 def real_world_examples():
     content = load_json("real_world_examples.json")
-    return render_template("real_world_examples.html", title=content["title"], content=content)
+    return render_template(
+        "real_world_examples.html",
+        title=content["title"],
+        content=content,
+        active_page="real_world_examples" 
+    )
+
 
 
 @app.route('/')
