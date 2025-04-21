@@ -361,4 +361,18 @@ body {
     color: #333;
   }
   
+  .choice-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .choice-buttons .nav-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
   

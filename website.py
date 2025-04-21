@@ -37,6 +37,14 @@ def real_world_examples():
         active_page="real_world_examples" 
     )
 
+@app.route("/choice")
+def choice():
+    return render_template(
+        "choice.html",
+        title="Want to sleep smarter tonight?",
+        subtitle="Apply what you've learned to improve your focus and learning tomorrow!",
+        active_page=None
+    )
 
 
 @app.route('/')

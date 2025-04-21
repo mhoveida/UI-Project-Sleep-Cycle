@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="intro" style="text-align: center;">
+  <h1>{{ title }}</h1>
+  <h2>{{ subtitle }}</h2>
+
+  <div class="choice-buttons">
+    <a href="{{ url_for('calculator') }}" class="nav-button">Use Sleep Calculator</a>
+    <a href="{{ url_for('quiz_start') }}" class="nav-button">Take Advanced Quiz</a>
+  </div>
+
+  <div class="page-nav">
+    <a href="/learn/2/examples" class="nav-button nav-back">← Back</a>
+</div>
+
+</section>
+{% endblock %}
