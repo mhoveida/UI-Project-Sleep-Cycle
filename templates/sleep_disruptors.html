@@ -30,5 +30,11 @@
   </div>
 </div>
 
+<!-- Navigation buttons -->
+<div class="page-nav">
+  <a href="{{ url_for('learn', section_id=1) }}" class="nav-button nav-back">← Back</a>
+  <a href="{{ url_for('learn', section_id=3) }}" class="nav-button nav-next">Next: Real World Examples →</a>
+</div>
+
 <script src="{{ url_for('static', filename='js/sleep_disruptors.js') }}"></script>
 {% endblock %}

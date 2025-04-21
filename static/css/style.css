@@ -250,68 +250,81 @@ body {
     }
   }
 
-  .drag-drop-container {
+  /* Shrink the overall layout */
+.drag-drop-container {
     display: flex;
-    gap: 3rem;
-    margin-top: 2rem;
+    gap: 2rem;
+    margin-top: 1rem;
+    align-items: flex-start;
   }
   
+  /* Disruptor list on the left */
   .disruptor-list {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
   }
   
+  /* Disruptor box */
   .disruptor {
-    padding: 1rem;
+    padding: 0.5rem 0.75rem;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fafafa;
+    border-radius: 6px;
+    background: #f7f7f7;
     cursor: grab;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    transition: background 0.2s ease;
+    gap: 0.75rem;
+    font-size: 0.85rem;
   }
   
+  /* Disruptor image */
   .disruptor img {
-    width: 60px;
+    width: 45px;
     height: auto;
   }
   
-  .disruptor.correct {
-    background-color: #d4edda;
-    border-color: #28a745;
-    cursor: default;
-  }
-  
+  /* Dropzone container */
   .dropzones {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
   
+  /* Each dropzone */
   .dropzone {
     border: 2px dashed #ccc;
-    border-radius: 10px;
-    padding: 1rem;
-    min-height: 100px;
-    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 0.75rem;
+    min-height: 80px;
+    background-color: #fafafa;
     transition: background-color 0.2s ease;
+    font-size: 0.9rem;
   }
   
-  .dropzone.highlight {
-    background-color: #eef;
+  /* Dropzone header */
+  .dropzone h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
   }
   
+  /* Inside drop zone where disruptors go */
   .zone-content {
-    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
-  .dropzone.incorrect {
-    background-color: #f8d7da;
+  
+  /* Real-time green/red feedback while hovering */
+  .dropzone.correct-hover {
+    background-color: #d4edda;  /* light green */
+    border-color: #28a745;
+  }
+  
+  .dropzone.incorrect-hover {
+    background-color: #f8d7da;  /* light red */
     border-color: #dc3545;
   }
-    
   

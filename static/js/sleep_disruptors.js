@@ -2,9 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const disruptors = document.querySelectorAll(".disruptor");
     const dropzones = document.querySelectorAll(".dropzone");
     const originalList = document.querySelector(".disruptor-list");
+    let currentDragged = null;
   
     disruptors.forEach(d => {
       d.addEventListener("dragstart", e => {
+        currentDragged = d;
         e.dataTransfer.setData("text/plain", d.id);
       });
     });
@@ -12,16 +14,27 @@ document.addEventListener("DOMContentLoaded", () => {
     dropzones.forEach(zone => {
       zone.addEventListener("dragover", e => {
         e.preventDefault();
-        zone.classList.add("highlight");
+  
+        const targetStage = zone.dataset.stage;
+        const correctStage = currentDragged?.dataset.affects;
+  
+        // Add correct or incorrect class based on matching stage
+        if (correctStage === targetStage) {
+          zone.classList.add("correct-hover");
+          zone.classList.remove("incorrect-hover");
+        } else {
+          zone.classList.add("incorrect-hover");
+          zone.classList.remove("correct-hover");
+        }
       });
   
       zone.addEventListener("dragleave", () => {
-        zone.classList.remove("highlight", "incorrect");
+        zone.classList.remove("correct-hover", "incorrect-hover");
       });
   
       zone.addEventListener("drop", e => {
         e.preventDefault();
-        zone.classList.remove("highlight");
+        zone.classList.remove("correct-hover", "incorrect-hover");
   
         const disruptorId = e.dataTransfer.getData("text/plain");
         const draggedElement = document.getElementById(disruptorId);
@@ -33,16 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
           draggedElement.setAttribute("draggable", "false");
           draggedElement.classList.add("correct");
         } else {
-          // Add temporary red border or effect
-          zone.classList.add("incorrect");
-          setTimeout(() => {
-            zone.classList.remove("incorrect");
-          }, 1000);
-  
-          // Snap the element back to original list
           originalList.appendChild(draggedElement);
         }
       });
     });
   });
-    
+      
