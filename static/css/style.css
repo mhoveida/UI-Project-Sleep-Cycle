@@ -237,4 +237,16 @@ body {
     border-radius: 8px;
     cursor: pointer;
   }
+
+  #wave-image-wrapper {
+    margin-top: 3rem;
+  }
+  
+  @media screen and (max-width: 768px) {
+    #wave-image-wrapper {
+      position: static;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+  }
   

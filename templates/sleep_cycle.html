@@ -23,6 +23,7 @@
     <!-- Stage info blocks -->
     {% for stage in content.stages %}
       <div class="stage-info" id="info-{{ stage.id }}" style="display: none;">
+        (Click on each button to see next characteristic)
         <ul class="characteristics" id="char-{{ stage.id }}">
             {% for c in stage.characteristics %}
               <li class="characteristic-item" style="{% if not loop.first %}display: none;{% endif %}">
@@ -68,6 +69,18 @@
 
 <!-- External script -->
 <script src="{{ url_for('static', filename='js/sleep_cycle.js') }}"></script>
+
+<!-- Hidden by default: main stage image -->
+<div id="stage-image-wrapper" style="display: none;">
+    <img id="stage-image" src="" alt="Stage Illustration" style="max-width: 100%; margin-bottom: 1rem;">
+  </div>
+  
+  <!-- Hidden by default: wave image at bottom left -->
+  <div id="wave-image-wrapper" style="display: none; position: absolute; bottom: 6rem; left: 2rem;">
+    <img id="wave-image" src="" alt="Sleep Wave" style="width: 200px; height: auto; border-radius: 8px;">
+  </div>
+  
+  
 
 <!-- Navigation buttons -->
 <div class="page-nav">

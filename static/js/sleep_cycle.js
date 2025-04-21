@@ -18,6 +18,14 @@ function showStage(stageId) {
       mainImg.src = `/static/media/Sleep-cycle/Characteristics/${stageId}.png`;
       mainImg.alt = `${stageId} Sleep Stage`;
     }
+
+    // Update the wave image at the bottom
+    const waveImg = document.getElementById('wave-image');
+    if (waveImg) {
+        waveImg.src = `/static/media/Sleep-cycle/Waves/${stageId}-cycle1.png`;
+        waveImg.alt = `${stageId} Sleep Wave`;
+    }
+
   }
 
   document.addEventListener('DOMContentLoaded', () => {
