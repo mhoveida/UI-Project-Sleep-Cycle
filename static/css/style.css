@@ -1,8 +1,16 @@
+/* Global styles */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #2c3e50;
   }
   
+  main {
+    padding: 2em;
+  }
+  
+  /* Navbar styles */
   nav {
     background-color: #2c3e50;
     padding: 1em 2em;
@@ -26,19 +34,50 @@ body {
     font-weight: bold;
   }
   
-  .navbar a:hover {
+  .navbar a:hover,
+  .navbar .active {
     text-decoration: underline;
+    color: #f39c12;
   }
   
-  main {
-    padding: 2em;
-  }
-  
+  /* Intro styles */
   .intro {
     margin-bottom: 2rem;
   }
   
-  .stage {
+  .intro-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 12px;
+  }
+  
+  /* Cycle layout */
+  .cycle-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 2rem 0;
+  }
+  
+  .stage-content {
+    flex: 1;
+  }
+  
+  .cycle-image {
+    flex: 1;
+    text-align: center;
+    padding-top: 1rem;
+  }
+  
+  .cycle-image img {
+    width: 1000px; /* Match image map coordinates */
+    height: auto;
+    border-radius: 12px;
+  }
+  
+  /* Stage content */
+  .stage-info {
     margin-bottom: 2.5rem;
   }
   
@@ -58,23 +97,72 @@ body {
     text-align: center;
   }
   
-  .characteristics img,
-  .disruptor img {
+  .characteristics img {
     width: 80px;
     height: auto;
     margin-bottom: 0.5rem;
   }
   
+  /* Disruptors (if used elsewhere) */
   .disruptor {
     margin-bottom: 2rem;
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 12px;
   }
-
+  
+  .disruptor img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Navigation highlighting */
   .navbar .active {
     text-decoration: underline;
     font-weight: bold;
     color: #f39c12;
+  }
+  
+  /* Page bottom navigation */
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+  }
+  
+  .nav-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #2c3e50;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-button:hover {
+    background-color: #34495e;
+  }
+  
+  .nav-back {
+    align-self: flex-start;
+  }
+  
+  .nav-next {
+    align-self: flex-end;
+  }
+  
+  /* For debugging map regions — remove after testing */
+  area {
+    cursor: pointer;
+  }
+
+  /* Scale down the entire image + map */
+.cycle-image-scaled {
+    transform: scale(0.75); /* Change this % as needed */
+    transform-origin: top right; /* Shrinks inward from the corner */
+    display: inline-block;
   }
   

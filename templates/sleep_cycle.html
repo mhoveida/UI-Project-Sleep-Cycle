@@ -3,29 +3,57 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<section class="intro">
-  <h1>{{ content.intro.title }}</h1>
-  <h2>{{ content.intro.subtitle }}</h2>
-  <p>{{ content.intro.description }}</p>
-</section>
+<div class="cycle-container">
 
-<section class="sleep-stages">
-  {% for stage in content.stages %}
-    <div class="stage">
-      <h3>{{ stage.id }} - {{ stage.name }} ({{ stage.percentage }}%)</h3>
-      <p>{{ stage.description }}</p>
-      <ul class="characteristics">
-        {% for c in stage.characteristics %}
-          <li>
-            <img src="{{ url_for('static', filename='media/icons/' ~ c.icon) }}" alt="{{ c.title }}">
-            <strong>{{ c.title }}</strong>
-            {% if c.detail %}
-              <p>{{ c.detail }}</p>
-            {% endif %}
-          </li>
-        {% endfor %}
-      </ul>
+  <!-- Left: Intro then dynamic stage info -->
+  <div class="stage-content">
+    <!-- Intro section (shown by default) -->
+    <div id="intro-content">
+      <h1>{{ content.intro.title }}</h1>
+      <h2>{{ content.intro.subtitle }}</h2>
+      <p>{{ content.intro.description }}</p>
     </div>
-  {% endfor %}
-</section>
+
+    <!-- Stage info (hidden until clicked) -->
+    {% for stage in content.stages %}
+      <div class="stage-info" id="info-{{ stage.id }}" style="display: none;">
+        <h2>{{ stage.id }} - {{ stage.name }} ({{ stage.percentage }}%)</h2>
+        <p>{{ stage.description }}</p>
+        <ul class="characteristics">
+          {% for c in stage.characteristics %}
+            <li>
+              <img src="{{ url_for('static', filename='media/icons/' ~ c.icon) }}" alt="{{ c.title }}">
+              <strong>{{ c.title }}</strong>
+              {% if c.detail %}
+                <p>{{ c.detail }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Right: Clickable sleep cycle image -->
+  <div class="cycle-image cycle-image-scaled">
+    <img src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/Sleep-cycles.png') }}"
+         usemap="#sleepmap"
+         alt="Sleep Cycle Diagram"
+         width="1000">
+    <map name="sleepmap">
+      <area shape="poly" coords="485,416,453,260,567,261,546,420,514,417" onclick="showStage('N1')" alt="N1">
+      <area shape="poly" coords="551,421,572,264,710,327,796,432,816,480,826,579,815,656,779,742,702,821,645,855,575,878,543,722,628,680,659,617,664,521,613,449" onclick="showStage('N2')" alt="N2">
+      <area shape="poly" coords="537,724,567,873,493,883,417,870,363,844,311,811,266,767,233,706,215,665,204,631,359,597,393,667,468,717" onclick="showStage('N3')" alt="N3">
+      <area shape="poly" coords="361,594,203,622,218,475,265,383,309,336,354,300,412,278,452,265,473,379,480,420,389,481" onclick="showStage('REM')" alt="REM">
+    </map>
+  </div>  
+</div>
+
+<!-- Load the external JavaScript file -->
+<script src="{{ url_for('static', filename='js/sleep_cycle.js') }}"></script>
+
+<div class="page-nav">
+    <a href="{{ url_for('home') }}" class="nav-button nav-back">← Back</a>
+    <a href="{{ url_for('learn', section_id=2) }}" class="nav-button nav-next">Next: Sleep Disruptors →</a>
+  </div>  
 {% endblock %}
