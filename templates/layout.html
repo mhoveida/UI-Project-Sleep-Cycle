@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Sleep Project{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <nav>
+    <ul class="navbar">
+      <li><a href="/">Sleep Cycles</a></li>
+      <li><a href="/">Sleep Disruptors</a></li>
+      <li><a href="/">Sleep Calculator</a></li>
+      <li><a href="/">Quiz</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+</body>
+</html>
