@@ -8,35 +8,35 @@
     {
       "id": "screen_blue_light",
       "title": "Screen blue light",
-      "icon": "screen.png",
+      "icon": "Blue-screen.png",
       "affectsStage": "N1",
       "explanation": "Blue light from screens suppresses melatonin production, making it harder to fall asleep initially."
     },
     {
       "id": "stress_anxiety",
       "title": "Stress & anxiety",
-      "icon": "stressed_person.png",
+      "icon": "Stress.png",
       "affectsStage": "REM",
       "explanation": "Stress and anxiety can significantly reduce REM sleep, disrupting emotional processing."
     },
     {
       "id": "late_caffeine",
       "title": "Late caffeine",
-      "icon": "coffee.png",
+      "icon": "Caffeine.png",
       "affectsStage": "N2",
       "explanation": "Caffeine consumed in the afternoon can prevent you from reaching deeper stages of sleep."
     },
     {
       "id": "irregular_schedule",
       "title": "Irregular schedule",
-      "icon": "calendar_clock.png",
+      "icon": "Irregular-schedule.png",
       "affectsStage": "N3",
       "explanation": "Changing sleep schedules disrupt your body's ability to enter deep sleep at the right times."
     },
     {
       "id": "exercising_late",
       "title": "Exercising late",
-      "icon": "exercise_warning.png",
+      "icon": "Exercise-late.png",
       "affectsStage": "N3",
       "explanation": "Late exercise raises your body temperature and heart rate, making it harder to enter deep sleep."
     },

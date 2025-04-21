@@ -8,14 +8,27 @@
   <h2>{{ content.intro.subtitle }}</h2>
 </section>
 
-<section class="disruptors">
-  {% for d in content.disruptors %}
-    <div class="disruptor">
-      <img src="{{ url_for('static', filename='media/Distruptors/' ~ d.icon) }}" alt="{{ d.title }}">
-      <h3>{{ d.title }}</h3>
-      <p><em>Affects: {{ d.affectsStage }}</em></p>
-      <p>{{ d.explanation }}</p>
-    </div>
-  {% endfor %}
-</section>
+<div class="drag-drop-container">
+  <!-- Left: Disruptors to drag -->
+  <div class="disruptor-list">
+    {% for d in content.disruptors %}
+      <div class="disruptor" draggable="true" id="{{ d.id }}" data-affects="{{ d.affectsStage }}">
+        <img src="{{ url_for('static', filename='media/Disruptors/' ~ d.icon) }}" alt="{{ d.title }}">
+        <h3>{{ d.title }}</h3>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Right: Stage drop zones -->
+  <div class="dropzones">
+    {% for s in content.stageTargets %}
+      <div class="dropzone" id="drop-{{ s.id }}" data-stage="{{ s.id }}">
+        <h3>{{ s.name }}</h3>
+        <div class="zone-content"></div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/sleep_disruptors.js') }}"></script>
 {% endblock %}

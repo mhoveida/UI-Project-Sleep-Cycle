@@ -249,4 +249,69 @@ body {
       margin-bottom: 1rem;
     }
   }
+
+  .drag-drop-container {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+  
+  .disruptor-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .disruptor {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fafafa;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: background 0.2s ease;
+  }
+  
+  .disruptor img {
+    width: 60px;
+    height: auto;
+  }
+  
+  .disruptor.correct {
+    background-color: #d4edda;
+    border-color: #28a745;
+    cursor: default;
+  }
+  
+  .dropzones {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    min-height: 100px;
+    background-color: #f9f9f9;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dropzone.highlight {
+    background-color: #eef;
+  }
+  
+  .zone-content {
+    margin-top: 0.5rem;
+  }
+  .dropzone.incorrect {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+  }
+    
   
