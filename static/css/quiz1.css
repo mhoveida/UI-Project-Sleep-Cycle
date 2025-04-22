@@ -1,0 +1,204 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #5f8d92;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .navbar a {
+    margin-right: 20px;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbar .active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  .hint {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .hint img {
+    width: 24px;
+    margin-right: 10px;
+  }
+  
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .drop-zone {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .empty {
+    width: 120px;
+    height: 60px;
+    border: 2px dashed #5f8d92;
+    margin: 10px;
+    border-radius: 10px;
+  }
+  
+  .drag-zone {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .draggable {
+    background-color: #a0d8e5;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: grab;
+    user-select: none;
+    font-weight: bold;
+  }
+  
+  .nav-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #91c9d0;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .progress-dots .dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 4px;
+    background-color: lightgray;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .progress-dots .dot.active {
+    background-color: #5f8d92;
+  }
+.draggable:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+.empty {
+    width: 160px;
+    height: 90px;
+    margin: 10px;
+    border: none;
+    position: relative;
+  }
+  
+  .empty img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  
+  /* 放置的拖拽图片显示在 empty 之上 */
+  .empty .dropped {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 160px;
+    height: 90px;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+    pointer-events: none;
+  }
+  
+  /* 原始可拖拽项样式 */
+  .draggable {
+    width: 160px;
+    height: 90px;
+    object-fit: contain;
+    background: none;   /* 🔥 去掉蓝色背景 */
+    border: none;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s ease;
+  }
+  
+  .draggable {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    cursor: grab;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+  }
+
+  .drop-zone-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .drop-column {
+    width: 180px;
+    min-height: 500px;      /* 固定高度，足够放 5 张图片 */
+    border: 2px dashed #999;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .drop-column.helps {
+    background-color: #e7fae7;
+    border-color: #6cc06c;
+  }
+  
+  .drop-column.hurts {
+    background-color: #fae7e7;
+    border-color: #e06c6c;
+  }
+  
+  .drag-zone.vertical {
+    display: grid;
+    grid-template-columns: repeat(2, 100px); /* 每行两个图片 */
+    grid-auto-rows: 100px;                   /* 每个格子高度一致 */
+    gap: 20px 40px;                          /* 行间距20px，列间距40px */
+    justify-content: center;                /* 水平居中 */
+    padding: 20px;
+  }
+  
+  .drag-zone img {
+    width: 100px;
+    height: auto;
+    cursor: grab;
+    border-radius: 5px;
+  }
+  
+  .drag-zone img {
+    width: 80px;
+    height: auto;
+    cursor: grab;
+    border-radius: 5px;
+  }

@@ -1,0 +1,27 @@
+.result-item {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .correct {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .incorrect {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .results-summary h2 {
+    text-align: center;
+    color: #0d3a5c;
+  }
+  
+  .results-actions {
+    text-align: center;
+    margin-top: 30px;
+  }

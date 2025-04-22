@@ -1,0 +1,97 @@
+/* quiz2.css - 仅包含Quiz 2特定的样式 */
+
+/* Quiz 2 布局：左右两列 + 中间网格图片 */
+.drop-zone-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  margin-top: 30px;
+  padding: 0 40px;
+}
+
+/* 左右拖放区域 */
+.drop-column {
+  width: 200px;
+  min-height: 500px;
+  border: 2px dashed #999;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.drop-column.helps {
+  background-color: #e7fae7;
+  border-color: #6cc06c;
+}
+
+.drop-column.hurts {
+  background-color: #fae7e7;
+  border-color: #e06c6c;
+}
+
+/* 中间区域为网格排列，每行 2 张图片 */
+.drag-zone.vertical {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+  grid-auto-rows: 100px;
+  gap: 20px 40px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Quiz 2 特定的图片样式 */
+.drag-zone img {
+  width: 80px;
+  height: auto;
+  cursor: grab;
+  border-radius: 5px;
+  transition: transform 0.2s;
+}
+
+.drag-zone img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 标题样式 */
+.column-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 1.1rem;
+}
+
+.helps .column-title {
+  background-color: #c9e6c9;
+  color: #2e7d32;
+}
+
+.hurts .column-title {
+  background-color: #e6c9c9;
+  color: #c62828;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .drop-zone-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .drop-column {
+    width: 90%;
+    min-height: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .drag-zone.vertical {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

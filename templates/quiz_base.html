@@ -1,0 +1,55 @@
+<!-- templates/quiz_base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Quiz{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz1.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz2.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz4.css') }}">
+</head>
+<body>
+  {% set back_url = back_url | default('/quiz_start') %}
+  <!-- Top Navbar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="/learn/1">Sleep Cycles</a>
+      <a href="/learn/2">Sleep Disruptors</a>
+      <a href="/calculator">Sleep Calculator</a>
+      <a href="/quiz_start" class="active">Quiz</a>
+    </div>
+    <div class="nav-right">
+      <input type="text" placeholder="Search">
+    </div>
+  </div>
+
+  <!-- Page Title -->
+  <h1>{% block heading %}Sleep Quiz{% endblock %}</h1>
+
+  <!-- Hint -->
+  <div class="hint">
+    <img src="{{ url_for('static', filename='media/hint.png') }}" alt="hint">
+    <span>{% block hint_text %}Your hint will go here.{% endblock %}</span>
+  </div>
+
+  <!-- Main Quiz Area -->
+  <div class="quiz-container">
+    {% block quiz_content %}{% endblock %}
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="nav-bottom">
+    <a href="{{ back_url }}" class="button back">&lt; Back</a>
+    <div class="progress-dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    <!-- 只保留一个 Next 按钮 -->
+    <a href="{{ next_url }}" class="button next">Next &gt;</a>
+  </div>
+
+  {% block script %}{% endblock %}
+</body>
+</html>
