@@ -100,7 +100,9 @@ def submit_quiz3():
 @app.route('/submit_quiz4', methods=['POST'])
 def submit_quiz4():
     data = request.get_json()
+    print("Received Quiz 4 submission:", data)
     session['quiz4_answer'] = data.get('answer', '')
+    print("Stored Quiz 4 answer in session:", session['quiz4_answer'])
     return jsonify(success=True)
 
 @app.route('/submit_quiz5', methods=['POST'])
@@ -150,6 +152,29 @@ def get_quiz5_data():
         'quiz5_answers': session.get('quiz5_answers', {})
     })
 
+@app.route('/save_quiz_answer', methods=['POST'])
+def save_quiz_answer():
+    data = request.get_json()
+    quiz_number = data.get('quiz_number')
+    
+    if quiz_number == 3:
+        connections = data.get('answer', [])
+        matches = {}
+        
+        for conn in connections:
+            left_index = conn.get('from')
+            right_index = conn.get('to')
+            
+            left_label = f"question_{left_index}"
+            right_match = f"answer_{right_index}"
+            
+            matches[left_label] = right_match
+        
+        session['quiz3_matches'] = matches
+        return jsonify(success=True)
+    
+    return jsonify(success=False, error="Unsupported quiz number"), 400
+
 @app.route('/quiz_results', methods=['POST', 'GET'])
 def quiz_results():
     if request.method == 'POST':
@@ -157,51 +182,95 @@ def quiz_results():
             quiz_data = json.load(f)
 
         total_score = 0
+        completed_quizzes = 0
+        max_possible_score = 5
+
+        # Helper to normalize strings
+        def normalize(value):
+            return value.strip().lower() if isinstance(value, str) else value
 
         # Quiz 1
-        if 'quiz1_answer' in session:
-            correct = quiz_data['questions'][0]['correctAnswer']
-            if session['quiz1_answer'] == correct:
+        correct = [normalize(x) for x in quiz_data['questions'][0]['correctAnswer']]
+        user_answer = [normalize(x) for x in session.get('quiz1_answer', [])]
+        if user_answer:
+            completed_quizzes += 1
+            if user_answer == correct:
                 total_score += 1
 
         # Quiz 2
-        if 'quiz2_helps' in session and 'quiz2_hurts' in session:
-            correct = quiz_data['questions'][1]['correctAnswer']
-            if set(session['quiz2_helps']) == set(correct['Helps Sleep']) and set(session['quiz2_hurts']) == set(correct['Hurts Sleep']):
+        correct_helps = set([normalize(x) for x in quiz_data['questions'][1]['correctAnswer']['Helps Sleep']])
+        correct_hurts = set([normalize(x) for x in quiz_data['questions'][1]['correctAnswer']['Hurts Sleep']])
+        user_helps = set([normalize(x) for x in session.get('quiz2_helps', [])])
+        user_hurts = set([normalize(x) for x in session.get('quiz2_hurts', [])])
+        if user_helps or user_hurts:
+            completed_quizzes += 1
+            if user_helps == correct_helps and user_hurts == correct_hurts:
                 total_score += 1
 
         # Quiz 3
-        if 'quiz3_matches' in session:
-            correct = {item['label']: item['match'] for item in quiz_data['questions'][2]['items']}
-            if session['quiz3_matches'] == correct:
+        correct = {normalize(item['label']): normalize(item['match']).replace('.png', '') for item in quiz_data['questions'][2]['items']}
+        user_matches = {normalize(k): normalize(v) for k, v in session.get('quiz3_matches', {}).items()}
+        if user_matches:
+            completed_quizzes += 1
+            if user_matches == correct:
                 total_score += 1
 
         # Quiz 4
-        if 'quiz4_answer' in session:
-            correct = quiz_data['questions'][3]['correctAnswer']
-            if session['quiz4_answer'] == correct:
+        correct = normalize(quiz_data['questions'][3]['correctAnswer'])
+        user_answer = normalize(session.get('quiz4_answer', ''))
+        print("Quiz 4 correct answer:", correct)
+        print("Quiz 4 user answer:", user_answer)
+        if user_answer:
+            completed_quizzes += 1
+            if user_answer == correct:
+                print("Quiz 4 correct!")
                 total_score += 1
+            else:
+                print("Quiz 4 incorrect.")
 
         # Quiz 5
-        if 'quiz5_answers' in session:
-            correct = {
-                'q1': quiz_data['questions'][4]['correctAnswer'],
-                'q2': quiz_data['questions'][5]['correctAnswer'],
-                'q3': quiz_data['questions'][6]['correctAnswer'],
-            }
-            quiz5_score = sum(1 for k in correct if session['quiz5_answers'].get(k) == correct[k])
+        quiz5_correct = {
+            'q1': normalize(quiz_data['questions'][4]['correctAnswer']),
+            'q2': set([normalize(x) for x in quiz_data['questions'][5]['correctAnswer']]),
+            'q3': normalize(quiz_data['questions'][6]['correctAnswer'])
+        }
+        user_answers = {
+            'q1': normalize(session.get('quiz5_answers', {}).get('q1', '')),
+            'q2': set([normalize(x) for x in session.get('quiz5_answers', {}).get('q2', [])]),
+            'q3': normalize(session.get('quiz5_answers', {}).get('q3', ''))
+        }
+        if user_answers['q1'] or user_answers['q2'] or user_answers['q3']:
+            completed_quizzes += 1
+            quiz5_score = 0
+            if user_answers['q1'] == quiz5_correct['q1']:
+                quiz5_score += 1
+            if user_answers['q2'] == quiz5_correct['q2']:
+                quiz5_score += 1
+            if user_answers['q3'] == quiz5_correct['q3']:
+                quiz5_score += 1
             total_score += quiz5_score / 3
+            print("Quiz 5 correct:", quiz5_correct)
+            print("Quiz 5 user answers:", user_answers)
+            print("Quiz 5 score:", quiz5_score)
 
         total_score = round(total_score, 1)
+        print("Total score:", total_score)
+        print("Completed quizzes:", completed_quizzes)
 
-        feedback = {}
         for r in quiz_data['results']['ranges']:
             if r['min'] <= total_score <= r['max']:
                 feedback = r
                 break
+        else:
+            feedback = {
+                "title": "Partial Completion",
+                "message": "You completed some quizzes. Try more!",
+                "score": f"{total_score}/5"
+            }
 
         return jsonify({
             'total_score': total_score,
+            'completed_quizzes': completed_quizzes,
             'feedback': feedback
         })
 

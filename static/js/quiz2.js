@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', function () {
     const draggables = document.querySelectorAll('.draggable');
     const dropColumns = document.querySelectorAll('.drop-column');
@@ -51,6 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 提交答案并跳转
 document.querySelector('.button.next').addEventListener('click', function (e) {
+    e.preventDefault(); // Prevent default action
+    
     const helps = [];
     const hurts = [];
 
@@ -62,30 +62,32 @@ document.querySelector('.button.next').addEventListener('click', function (e) {
         hurts.push(item.getAttribute('data-value'));
     });
 
-    // 使用 XMLHttpRequest 进行 AJAX 提交
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/submit_quiz2', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            // 成功后跳转
-            window.location.href = next_url;
-        } else {
-            // 处理错误情况
-            console.error('提交失败', xhr.statusText);
-            alert('提交失败，请重试');
+    // Use fetch instead of XMLHttpRequest
+    fetch('/submit_quiz2', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            helps: helps,
+            hurts: hurts
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
         }
-    };
-
-    xhr.onerror = function() {
-        console.error('网络错误');
-        alert('网络错误，请检查您的连接');
-    };
-
-    // 发送数据
-    xhr.send(JSON.stringify({
-        helps: helps,
-        hurts: hurts
-    }));
+        throw new Error('Submission failed');
+    })
+    .then(data => {
+        if (data.success) {
+            // Get next URL from button href or use hardcoded value
+            const nextUrl = document.querySelector('.button.next').getAttribute('href') || '/quiz3';
+            window.location.href = nextUrl;
+        } else {
+            alert('Submission failed, please try again');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Network error, please check your connection');
+    });
 });

@@ -165,25 +165,52 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     
-    // AJAX 提交 connections 数据
+    // 修改后的提交答案函数
     window.checkAnswer = function() {
-      fetch('/save_quiz_answer', {
+      // 将connections转换为服务器期望的格式
+      const matches = {};
+      
+      // 获取所有已连接的左侧连接点
+      const leftConnectors = document.querySelectorAll('.left-connector.connected');
+      
+      leftConnectors.forEach(connector => {
+        const leftIndex = parseInt(connector.dataset.index);
+        const leftLabel = connector.dataset.label || connector.textContent.trim();
+        
+        // 找到该连接点的连接
+        const connection = connections.find(conn => conn.from === leftIndex);
+        
+        if (connection) {
+          const rightConnector = document.querySelector(`.right-connector[data-index="${connection.to}"]`);
+          const rightValue = rightConnector.dataset.value || rightConnector.getAttribute('data-image');
+          
+          // 以服务器期望的格式存储
+          matches[leftLabel] = rightValue;
+        }
+      });
+
+      // 提交到正确的端点
+      fetch('/submit_quiz3', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          quiz_number: 3,
-          answer: connections
+          matches: matches
         })
       }).then(response => {
         if (response.ok) {
-          // 提交成功，跳转到 quiz4
-          window.location.href = next_url;
+          return response.json();
+        }
+        throw new Error("保存答案失败");
+      }).then(data => {
+        if (data.success) {
+          // 跳转到下一个测验
+          window.location.href = '/quiz4';
         } else {
-          alert("Failed to save your answer. Please try again.");
+          alert("保存答案失败，请重试。");
         }
       }).catch(error => {
         console.error('Error:', error);
-        alert("Network error. Please try again.");
+        alert("网络错误，请重试。");
       });
     };
   });

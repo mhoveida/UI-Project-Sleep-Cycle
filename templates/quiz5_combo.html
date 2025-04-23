@@ -2,7 +2,7 @@
 
 {% set next_url = url_for('quiz_results') %}
 {% set back_url = url_for('quiz4_multiple') %}
-{% set active_index = 4 %}  <!-- quiz5 -->
+{% set active_page = 'quiz5' %}
 
 {% block title %}Quiz 5: Mixed Sleep Questions{% endblock %}
 {% block heading %}Test Your Sleep Knowledge{% endblock %}
@@ -22,7 +22,7 @@ Answer by selecting or dragging the correct items!
       <div class="option" data-value="REM Sleep">REM Sleep</div>
       <div class="option" data-value="Deep Sleep">Deep Sleep</div>
       <div class="option" data-value="Light Sleep">Light Sleep</div>
-      <div class="option" data-value="Deeper Light Sleep">Deeper light Sleep</div>
+      <div class="option" data-value="Deeper light Sleep">Deeper light Sleep</div>
     </div>
   </div>
 
@@ -36,8 +36,8 @@ Answer by selecting or dragging the correct items!
       <div class="draggable" draggable="true" data-value="Video Game">Video Game</div>
     </div>
     <div class="drop-zone">
-  <span class="placeholder">Drag Zone</span>
-</div>
+      <span class="placeholder">Drag Zone</span>
+    </div>
   </div>
 
   <!-- 第三题：单选 -->
@@ -52,41 +52,11 @@ Answer by selecting or dragging the correct items!
   </div>
 
 </div>
-<script>
-  // Collect user answers from Quiz 5
-  function collectQuiz5Answers() {
-    const answers = {};
-    const q1Selected = document.querySelector('.options[data-question="q1"] .option.selected');
-    const q3Selected = document.querySelector('.options[data-question="q3"] .option.selected');
-    const dropZone = document.querySelector('.drop-zone');
-    const dragItem = dropZone.querySelector('.draggable');
-
-    answers.q1 = q1Selected ? q1Selected.getAttribute('data-value') : null;
-    answers.q2 = dragItem ? [dragItem.getAttribute('data-value')] : [];
-    answers.q3 = q3Selected ? q3Selected.getAttribute('data-value') : null;
-
-    return answers;
-  }
-
-  // Submit answers when moving to results
-  document.querySelector('.button.next').addEventListener('click', function(e) {
-    e.preventDefault();
-    const answers = collectQuiz5Answers();
-    fetch('/submit_quiz5', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(answers)
-    }).then(response => {
-      if (response.ok) {
-        window.location.href = "{{ next_url }}";
-      } else {
-        alert("Failed to submit answers.");
-      }
-    });
-  });
-</script>
 {% endblock %}
 
 {% block script %}
+<script>
+const next_url = "{{ next_url }}";
+</script>
 <script src="{{ url_for('static', filename='js/quiz5.js') }}"></script>
 {% endblock %}
