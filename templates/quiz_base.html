@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Quiz{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz1.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz2.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz4.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_base.css') }}">
+  {% block css %}{% endblock %}
 </head>
 <body>
   {% set back_url = back_url | default('/quiz_start') %}
@@ -37,18 +36,18 @@
     {% block quiz_content %}{% endblock %}
   </div>
 
-  <!-- Navigation Buttons -->
+  {% if not hide_nav %}
   <div class="nav-bottom">
     <a href="{{ back_url }}" class="button back">&lt; Back</a>
     <div class="progress-dots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+      {% for i in range(5) %}
+        <span class="dot {% if i == active_index %}active{% endif %}"></span>
+      {% endfor %}
     </div>
     <!-- 只保留一个 Next 按钮 -->
     <a href="{{ next_url }}" class="button next">Next &gt;</a>
   </div>
+  {% endif %}
 
   {% block script %}{% endblock %}
 </body>

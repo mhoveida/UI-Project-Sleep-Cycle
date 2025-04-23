@@ -1,20 +1,43 @@
 {% extends "quiz_base.html" %}
 {% block title %}Quiz Results{% endblock %}
-
-{% block heading %}Your Sleep Knowledge Score{% endblock %}
+{% set hide_nav = true %}
+{% block heading %}Loading your results...{% endblock %}
 {% block hint_text %}See how well you know your sleep cycles!{% endblock %}
 
 {% block quiz_content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
 
 <div class="result-container">
-  <h2>{{ title }}</h2>
-  <p class="score-text">Score: {{ score_text }}</p>
-  <p class="message">{{ message }}</p>
+  <h2 id="result-title">Loading...</h2>
+  <p class="score-text" id="score-text"></p>
+  <p class="message" id="result-message"></p>
 
   <div class="result-buttons">
-    <a href="/learn/1" class="button">Review Sleep Stages</a>
-    <a href="/quiz_start" class="button">Try Again</a>
+    <a href="/learn/1" class="button left-button">Review Sleep Stages</a>
+    <a href="/quiz_start" class="button right-button">Try Again</a>
   </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/quiz_results', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ submit: true })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('result-title').innerText = data.feedback.title;
+        document.getElementById('result-message').innerText = data.feedback.message;
+        document.getElementById('score-text').innerText = `Score: ${data.feedback.score}`;
+    })
+    .catch(error => {
+        console.error('Error submitting quiz:', error);
+    });
+});
+</script>
 {% endblock %}

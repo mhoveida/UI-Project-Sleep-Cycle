@@ -1,4 +1,4 @@
-const next_url = "/quiz3";
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const draggables = document.querySelectorAll('.draggable');
@@ -47,31 +47,45 @@ document.addEventListener('DOMContentLoaded', function () {
       draggedItem.style.display = 'block';
       draggedItem = null;
     }
-  });
+});
 
 // 提交答案并跳转
 document.querySelector('.button.next').addEventListener('click', function (e) {
-  const helps = [];
-  const hurts = [];
+    const helps = [];
+    const hurts = [];
 
-  document.querySelectorAll('.drop-column.helps .draggable').forEach(item => {
-    helps.push(item.getAttribute('data-value'));
-  });
+    document.querySelectorAll('.drop-column.helps .draggable').forEach(item => {
+        helps.push(item.getAttribute('data-value'));
+    });
 
-  document.querySelectorAll('.drop-column.hurts .draggable').forEach(item => {
-    hurts.push(item.getAttribute('data-value'));
-  });
+    document.querySelectorAll('.drop-column.hurts .draggable').forEach(item => {
+        hurts.push(item.getAttribute('data-value'));
+    });
 
-  fetch('/submit_quiz2', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      helps: helps,
-      hurts: hurts
-    })
-  }).then(() => {
-    window.location.href = next_url;
-  });
+    // 使用 XMLHttpRequest 进行 AJAX 提交
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/submit_quiz2', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // 成功后跳转
+            window.location.href = next_url;
+        } else {
+            // 处理错误情况
+            console.error('提交失败', xhr.statusText);
+            alert('提交失败，请重试');
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error('网络错误');
+        alert('网络错误，请检查您的连接');
+    };
+
+    // 发送数据
+    xhr.send(JSON.stringify({
+        helps: helps,
+        hurts: hurts
+    }));
 });

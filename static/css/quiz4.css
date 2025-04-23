@@ -62,12 +62,26 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   }
   
-  .option.selected {
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    border-color: #5f8d92;
-    border-width: 3px;
-  }
+.option.selected {
+    transform: scale(1.15);
+    box-shadow: 0 0 25px rgba(76, 161, 175, 0.6);
+    border: 4px solid #4ca1af;
+    background-color: #e0f7fa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    z-index: 5;
+    position: relative;
+}
+
+.option.selected img {
+    opacity: 0.95;
+    filter: brightness(1.05);
+}
+
+.option.selected .time {
+    color: #00796b;
+    font-weight: 800;
+    font-size: 26px;
+}
   
   .clock-img {
     width: 70px;
@@ -111,6 +125,9 @@
     .option {
       width: 220px;
     }
+    .option.selected {
+      transform: scale(1.2);
+    }
   }
   
   @media (max-width: 768px) {
@@ -121,6 +138,9 @@
     
     .option {
       width: 200px;
+    }
+    .option.selected {
+      transform: scale(1.2);
     }
   }
   
@@ -133,5 +153,9 @@
     .option {
       width: 90%;
       max-width: 280px;
+    }
+    .option.selected {
+      transform: scale(1.1);
+      width: 95% !important;
     }
   }

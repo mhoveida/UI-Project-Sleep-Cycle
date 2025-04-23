@@ -1,9 +1,13 @@
 {% extends "quiz_base.html" %}
 
 {% set next_url = url_for('quiz2_dragdrop') %}
-{% set active_page = 'quiz1' %}
+{% set active_index = 0 %}
 
 {% block title %}Quiz 1: Sequence the Sleep Cycle{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz1.css') }}">
+{% endblock %}
 
 {% block heading %}Correct Sequence the Sleep Cycle{% endblock %}
 
@@ -34,6 +38,9 @@ Think about how you transition from awake to deep sleep and back again during th
 
     <img id="rem" src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-rem.png') }}"
          alt="REM Sleep" class="draggable" draggable="true" data-value="REM Sleep">
+  </div>
+
+    <!-- 你的 quiz-container 或全部内容 -->
   </div>
 {% endblock %}
 

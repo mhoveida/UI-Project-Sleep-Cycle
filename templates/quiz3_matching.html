@@ -2,7 +2,11 @@
 
 {% set next_url = url_for('quiz4_multiple') %}
 {% set back_url = url_for('quiz2_dragdrop') %}
-{% set active_page = 'quiz3' %}
+{% set active_index = 2 %}  <!-- quiz3 -->
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz3.css') }}">
+{% endblock %}
 
 {% block title %}Quiz 3: Match Sleep Stages{% endblock %}
 {% block heading %}Match the Scenario to Sleep Stage{% endblock %}
@@ -11,7 +15,6 @@ Match each person's vibe to their sleep stage!
 {% endblock %}
 
 {% block quiz_content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz3.css') }}">
 
 <div class="match-container">
   <!-- 左侧标签 -->

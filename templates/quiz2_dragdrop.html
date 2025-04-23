@@ -2,10 +2,16 @@
 
 {% set next_url = url_for('quiz3_matching') %}
 {% set back_url = url_for('quiz1_sequence') %}
-{% set active_page = 'quiz2' %}
+{% set active_index = 1 %}
 
 {% block title %}Quiz 2: Sleep Disruptor Effects{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz2.css') }}">
+{% endblock %}
+
 {% block heading %}Sleep Disruptor Effects{% endblock %}
+
 {% block hint_text %}
 Think about which activities help and which ones hurt your sleep.
 {% endblock %}
@@ -38,5 +44,8 @@ Think about which activities help and which ones hurt your sleep.
 {% endblock %}
 
 {% block script %}
-  <script src="{{ url_for('static', filename='js/quiz2.js') }}"></script>
+<script>
+  const next_url = "{{ next_url }}";
+</script>
+<script src="{{ url_for('static', filename='js/quiz2.js') }}"></script>
 {% endblock %}

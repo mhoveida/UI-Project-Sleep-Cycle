@@ -1,12 +1,13 @@
 .match-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     position: relative;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px 0;
     min-height: 400px;
+    gap: 60px;
   }
   
   .left-side, .right-side {
@@ -100,9 +101,11 @@
   /* 调整整体容器样式 */
   .quiz-container {
     background-color: #fff;
-    padding: 10px;
     border-radius: 10px;
-    margin: 10px;
+    margin: 20px auto;
+    max-width: 1000px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   }
   
   /* 提示文字样式 */

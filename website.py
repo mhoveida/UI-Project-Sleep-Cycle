@@ -113,66 +113,95 @@ def submit_quiz5():
     }
     return jsonify(success=True)
 
-correct_answers = {
-    'quiz1_sequence': ['Light Sleep', 'Deeper Light Sleep', 'Deep Sleep', 'REM Sleep'],
-    'quiz2_helps': ['Shower', 'Meditation', 'Reading'],
-    'quiz2_hurts': ['Screen', 'Stress', 'Caffeine', 'Alcohol', 'Eating', 'Irregular-schedule', 'Exercising-late'],
-    'quiz3_matches': {
-        'Sufficient N3 Deep Sleep': 'Sport',
-        'Insufficient N3 Deep Sleep': 'Sick',
-        'Disrupted N3 Deep Sleep': 'Recovery',
-        'Complete REM Cycles': 'Solve',
-        'N2 Deeper Light Sleep': 'Guitar'
-    },
-    'quiz4_answer': '6:00 A.M.',
-    'quiz5': {
-        'q1': 'Deeper light Sleep',
-        'q2': 'Meditation',
-        'q3': 'REM Sleep'
-    }
-}
+# New endpoints to retrieve saved quiz data
+@app.route('/get_quiz1_data', methods=['GET'])
+def get_quiz1_data():
+    return jsonify({
+        'success': True,
+        'quiz1_answer': session.get('quiz1_answer', [])
+    })
+
+@app.route('/get_quiz2_data', methods=['GET'])
+def get_quiz2_data():
+    return jsonify({
+        'success': True,
+        'quiz2_helps': session.get('quiz2_helps', []),
+        'quiz2_hurts': session.get('quiz2_hurts', [])
+    })
+
+@app.route('/get_quiz3_data', methods=['GET'])
+def get_quiz3_data():
+    return jsonify({
+        'success': True,
+        'quiz3_matches': session.get('quiz3_matches', {})
+    })
+
+@app.route('/get_quiz4_data', methods=['GET'])
+def get_quiz4_data():
+    return jsonify({
+        'success': True,
+        'quiz4_answer': session.get('quiz4_answer', '')
+    })
+
+@app.route('/get_quiz5_data', methods=['GET'])
+def get_quiz5_data():
+    return jsonify({
+        'success': True,
+        'quiz5_answers': session.get('quiz5_answers', {})
+    })
 
 @app.route('/quiz_results', methods=['POST', 'GET'])
 def quiz_results():
     if request.method == 'POST':
-        quiz1_answer = session.get('quiz1_answer', [])
-        quiz2_helps = session.get('quiz2_helps', [])
-        quiz2_hurts = session.get('quiz2_hurts', [])
-        quiz3_matches = session.get('quiz3_matches', {})
-        quiz4_answer = session.get('quiz4_answer', '')
-        quiz5_answers = session.get('quiz5_answers', {})
+        with open('data/quiz.json') as f:
+            quiz_data = json.load(f)
 
-        quiz1_correct = quiz1_answer == correct_answers['quiz1_sequence']
-        quiz2_correct = (
-            set(quiz2_helps) == set(correct_answers['quiz2_helps']) and
-            set(quiz2_hurts) == set(correct_answers['quiz2_hurts'])
-        )
-        quiz3_correct = dict(sorted(quiz3_matches.items())) == dict(sorted(correct_answers['quiz3_matches'].items()))
-        quiz4_correct = quiz4_answer == correct_answers['quiz4_answer']
+        total_score = 0
 
-        quiz5_score = sum(
-            1 for key in correct_answers['quiz5']
-            if quiz5_answers.get(key) == correct_answers['quiz5'][key]
-        )
+        # Quiz 1
+        if 'quiz1_answer' in session:
+            correct = quiz_data['questions'][0]['correctAnswer']
+            if session['quiz1_answer'] == correct:
+                total_score += 1
 
-        total_score = round(int(quiz1_correct) + int(quiz2_correct) + int(quiz3_correct) + int(quiz4_correct) + (quiz5_score / 3), 1)
+        # Quiz 2
+        if 'quiz2_helps' in session and 'quiz2_hurts' in session:
+            correct = quiz_data['questions'][1]['correctAnswer']
+            if set(session['quiz2_helps']) == set(correct['Helps Sleep']) and set(session['quiz2_hurts']) == set(correct['Hurts Sleep']):
+                total_score += 1
 
-        if total_score >= 6:
-            feedback = {"title": "Excellent!", "message": "You're a sleep cycle expert!", "score": "5/5"}
-        elif total_score >= 4:
-            feedback = {"title": "Good work!", "message": "You understand most sleep concepts!", "score": "4/5"}
-        elif total_score >= 2:
-            feedback = {"title": "Keep improving!", "message": "You're making progress on understanding sleep cycles", "score": "3/5"}
-        else:
-            feedback = {"title": "Try again!", "message": "Learning about sleep will improve your health!", "score": "1/5"}
+        # Quiz 3
+        if 'quiz3_matches' in session:
+            correct = {item['label']: item['match'] for item in quiz_data['questions'][2]['items']}
+            if session['quiz3_matches'] == correct:
+                total_score += 1
+
+        # Quiz 4
+        if 'quiz4_answer' in session:
+            correct = quiz_data['questions'][3]['correctAnswer']
+            if session['quiz4_answer'] == correct:
+                total_score += 1
+
+        # Quiz 5
+        if 'quiz5_answers' in session:
+            correct = {
+                'q1': quiz_data['questions'][4]['correctAnswer'],
+                'q2': quiz_data['questions'][5]['correctAnswer'],
+                'q3': quiz_data['questions'][6]['correctAnswer'],
+            }
+            quiz5_score = sum(1 for k in correct if session['quiz5_answers'].get(k) == correct[k])
+            total_score += quiz5_score / 3
+
+        total_score = round(total_score, 1)
+
+        feedback = {}
+        for r in quiz_data['results']['ranges']:
+            if r['min'] <= total_score <= r['max']:
+                feedback = r
+                break
 
         return jsonify({
             'total_score': total_score,
-            'quiz1_correct': quiz1_correct,
-            'quiz2_correct': quiz2_correct,
-            'quiz3_correct': quiz3_correct,
-            'quiz4_correct': quiz4_correct,
-            'quiz5_score': quiz5_score,
             'feedback': feedback
         })
 

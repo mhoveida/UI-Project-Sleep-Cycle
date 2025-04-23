@@ -2,7 +2,7 @@
 
 {% set next_url = url_for('quiz5_combo') %}
 {% set back_url = url_for('quiz3_matching') %}
-{% set active_page = 'quiz4' %}
+{% set active_index = 3 %}  <!-- quiz4 -->
 
 {% block title %}Quiz 4: Best Wake-Up Time{% endblock %}
 {% block heading %}When to wake up?{% endblock %}
@@ -60,3 +60,6 @@ Timing is everything - which wake-up time feels just right?
 </div>
 {% endblock %}
 
+{% block script %}
+  <script src="{{ url_for('static', filename='js/quiz4.js') }}"></script>
+{% endblock %}
