@@ -73,3 +73,35 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Not quite! Try again.");
     }
   }    
+  // 提交所有 quiz 答案
+function submitAllAnswers() {
+  fetch('/quiz_results', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      quiz1_answer: ['Light Sleep', 'Deeper Light Sleep', 'Deep Sleep', 'REM Sleep'],  // 示例
+      quiz2_helps: ['Shower', 'Meditation', 'Reading'],
+      quiz2_hurts: ['Screen', 'Stress', 'Caffeine', 'Alcohol', 'Eating', 'Irregular-schedule', 'Exercising-late'],
+      quiz3_matches: {
+        'Sufficient N3 Deep Sleep': 'Sport',
+        'Insufficient N3 Deep Sleep': 'Sick',
+        'Disrupted N3 Deep Sleep': 'Recovery',
+        'Complete REM Cycles': 'Solve',
+        'N2 Deeper Light Sleep': 'Guitar'
+      },
+      quiz4_answer: '6:00 A.M.',
+      quiz5_answers: {
+        q1: 'Deeper light Sleep',
+        q2: 'Meditation',
+        q3: 'REM Sleep'
+      }
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log('Your Score:', result.total_score);
+    // 你可以跳转或者展示成绩页面
+  });
+}

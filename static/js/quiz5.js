@@ -1,5 +1,3 @@
-
-
 // Single Choice Logic
 document.querySelectorAll('.options.single-choice').forEach(group => {
   group.querySelectorAll('.option').forEach(option => {
@@ -32,7 +30,12 @@ dropZone.addEventListener('dragover', e => {
 dropZone.addEventListener('drop', e => {
   e.preventDefault();
   const draggingItem = document.querySelector('.dragging');
-  if (draggingItem && !dropZone.contains(draggingItem)) {
+  if (draggingItem) {
+    // Hide the placeholder text
+    const placeholder = dropZone.querySelector('.placeholder');
+    if (placeholder) {
+      placeholder.style.display = 'none';
+    }
     dropZone.appendChild(draggingItem);
   }
 });

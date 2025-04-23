@@ -165,33 +165,25 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     
-    // 提交答案（如果需要）
+    // AJAX 提交 connections 数据
     window.checkAnswer = function() {
-      const correctConnections = [
-        { from: 0, to: 0 },  // Sufficient N3 → Sick.png
-        { from: 1, to: 1 },  // Complete REM → Sport.png
-        { from: 2, to: 2 },  // Insufficient N3 → Forget.png
-        { from: 3, to: 3 },  // Multiple REM → Solve.png
-        { from: 4, to: 4 },  // N2 Deeper Light → Guitar.png
-        { from: 5, to: 5 }   // Disrupted N3 → Recovery.png
-      ];
-      
-      // 检查答案是否正确
-      if (connections.length === correctConnections.length) {
-        const isCorrect = correctConnections.every(correct => 
-          connections.some(conn => 
-            conn.from === correct.from && conn.to === correct.to
-          )
-        );
-        
-        if (isCorrect) {
-          // 答案正确，跳转到下一页
+      fetch('/save_quiz_answer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quiz_number: 3,
+          answer: connections
+        })
+      }).then(response => {
+        if (response.ok) {
+          // 提交成功，跳转到 quiz4
           window.location.href = next_url;
         } else {
-          alert("Some connections are incorrect. Please try again!");
+          alert("Failed to save your answer. Please try again.");
         }
-      } else {
-        alert("Please connect all pairs!");
-      }
+      }).catch(error => {
+        console.error('Error:', error);
+        alert("Network error. Please try again.");
+      });
     };
   });

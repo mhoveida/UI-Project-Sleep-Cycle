@@ -1,91 +1,20 @@
 {% extends "quiz_base.html" %}
-
 {% block title %}Quiz Results{% endblock %}
-{% block heading %}Your Quiz Results{% endblock %}
 
-{% block hint_text %}
-Here's how you did on each part of the Sleep Quiz!
-{% endblock %}
+{% block heading %}Your Sleep Knowledge Score{% endblock %}
+{% block hint_text %}See how well you know your sleep cycles!{% endblock %}
 
 {% block quiz_content %}
-<div class="results-summary">
-  <!-- 总分 -->
-  <h2>Total Score: {{ total_score }}/5</h2>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
 
-  <!-- Quiz 1 -->
-  <div class="result-item">
-    <h3>Quiz 1: Sleep Cycle Sequence</h3>
-    <p>Your Answer: {{ quiz1_user_answer }}</p>
-    {% if quiz1_correct %}
-      <p class="correct">Correct ✅</p>
-    {% else %}
-      <p class="incorrect">Incorrect ❌</p>
-      <p>Correct Sequence: Light Sleep → Deeper Light Sleep → Deep Sleep → REM Sleep</p>
-    {% endif %}
-  </div>
+<div class="result-container">
+  <h2>{{ title }}</h2>
+  <p class="score-text">Score: {{ score_text }}</p>
+  <p class="message">{{ message }}</p>
 
-  <!-- Quiz 2 -->
-  <div class="result-item">
-    <h3>Quiz 2: Sleep Disruptor Effects</h3>
-    <p>Your Answer: Helps - {{ quiz2_user_helps }}, Hurts - {{ quiz2_user_hurts }}</p>
-    {% if quiz2_correct %}
-      <p class="correct">Correct ✅</p>
-    {% else %}
-      <p class="incorrect">Incorrect ❌</p>
-      <p>Correct Helps: Shower, Meditation, Reading</p>
-      <p>Correct Hurts: Screen, Stress, Caffeine, Alcohol, Eating, Irregular Schedule, Exercising Late</p>
-    {% endif %}
-  </div>
-
-  <!-- Quiz 3 -->
-  <div class="result-item">
-    <h3>Quiz 3: Match Scenario to Sleep Stage</h3>
-    {% if quiz3_correct %}
-      <p class="correct">Correct ✅</p>
-    {% else %}
-      <p class="incorrect">Incorrect ❌</p>
-    {% endif %}
-    <p>Correct Matches:</p>
-    <ul>
-      <li>Sufficient N3 Deep Sleep → Sport</li>
-      <li>Insufficient N3 Deep Sleep → Sick</li>
-      <li>Disrupted N3 Deep Sleep → Recovery</li>
-      <li>Complete REM Cycles → Solve</li>
-      <li>N2 Deeper Light Sleep → Guitar</li>
-    </ul>
-  </div>
-
-  <!-- Quiz 4 -->
-  <div class="result-item">
-    <h3>Quiz 4: Best Wake-Up Time</h3>
-    <p>Your Answer: {{ quiz4_user_answer }}</p>
-    {% if quiz4_correct %}
-      <p class="correct">Correct ✅</p>
-    {% else %}
-      <p class="incorrect">Incorrect ❌</p>
-      <p>Correct Wake-Up Time: 6:00 A.M.</p>
-    {% endif %}
-  </div>
-
-  <!-- Quiz 5 -->
-  <div class="result-item">
-    <h3>Quiz 5: Mixed Questions</h3>
-    <p>You got {{ quiz5_score }}/3 correct.</p>
-    <p>Correct Answers:</p>
-    <ul>
-      <li>Longest Sleep Stage: Deeper Light Sleep</li>
-      <li>Good Activity Before Bed: Meditation</li>
-      <li>Sleep Affected by Alcohol: REM Sleep</li>
-    </ul>
-  </div>
-
-  <!-- 重新开始按钮 -->
-  <div class="results-actions">
-    <a href="/quiz_start" class="button">Retake Quiz</a>
+  <div class="result-buttons">
+    <a href="/learn/1" class="button">Review Sleep Stages</a>
+    <a href="/quiz_start" class="button">Try Again</a>
   </div>
 </div>
-{% endblock %}
-
-{% block script %}
-  <!-- 可选 JS -->
 {% endblock %}

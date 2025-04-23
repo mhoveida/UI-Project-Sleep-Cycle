@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import json
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key_here'
 
 def load_json(filename):
     with open(f'data/{filename}', 'r') as f:
@@ -77,6 +78,41 @@ def quiz4_multiple():
 def quiz5_combo():
     return render_template('quiz5_combo.html', active_page="quiz")
 
+@app.route('/submit_quiz1', methods=['POST'])
+def submit_quiz1():
+    data = request.get_json()
+    session['quiz1_answer'] = data.get('answer', [])
+    return jsonify(success=True)
+
+@app.route('/submit_quiz2', methods=['POST'])
+def submit_quiz2():
+    data = request.get_json()
+    session['quiz2_helps'] = data.get('helps', [])
+    session['quiz2_hurts'] = data.get('hurts', [])
+    return jsonify(success=True)
+
+@app.route('/submit_quiz3', methods=['POST'])
+def submit_quiz3():
+    data = request.get_json()
+    session['quiz3_matches'] = data.get('matches', {})
+    return jsonify(success=True)
+
+@app.route('/submit_quiz4', methods=['POST'])
+def submit_quiz4():
+    data = request.get_json()
+    session['quiz4_answer'] = data.get('answer', '')
+    return jsonify(success=True)
+
+@app.route('/submit_quiz5', methods=['POST'])
+def submit_quiz5():
+    data = request.get_json()
+    session['quiz5_answers'] = {
+        'q1': data.get('q1'),
+        'q2': data.get('q2', []),
+        'q3': data.get('q3')
+    }
+    return jsonify(success=True)
+
 correct_answers = {
     'quiz1_sequence': ['Light Sleep', 'Deeper Light Sleep', 'Deep Sleep', 'REM Sleep'],
     'quiz2_helps': ['Shower', 'Meditation', 'Reading'],
@@ -99,14 +135,12 @@ correct_answers = {
 @app.route('/quiz_results', methods=['POST', 'GET'])
 def quiz_results():
     if request.method == 'POST':
-        data = request.get_json()
-
-        quiz1_answer = data.get('quiz1_answer', [])
-        quiz2_helps = data.get('quiz2_helps', [])
-        quiz2_hurts = data.get('quiz2_hurts', [])
-        quiz3_matches = data.get('quiz3_matches', {})
-        quiz4_answer = data.get('quiz4_answer', '')
-        quiz5_answers = data.get('quiz5_answers', {})
+        quiz1_answer = session.get('quiz1_answer', [])
+        quiz2_helps = session.get('quiz2_helps', [])
+        quiz2_hurts = session.get('quiz2_hurts', [])
+        quiz3_matches = session.get('quiz3_matches', {})
+        quiz4_answer = session.get('quiz4_answer', '')
+        quiz5_answers = session.get('quiz5_answers', {})
 
         quiz1_correct = quiz1_answer == correct_answers['quiz1_sequence']
         quiz2_correct = (
@@ -123,13 +157,23 @@ def quiz_results():
 
         total_score = round(int(quiz1_correct) + int(quiz2_correct) + int(quiz3_correct) + int(quiz4_correct) + (quiz5_score / 3), 1)
 
+        if total_score >= 6:
+            feedback = {"title": "Excellent!", "message": "You're a sleep cycle expert!", "score": "5/5"}
+        elif total_score >= 4:
+            feedback = {"title": "Good work!", "message": "You understand most sleep concepts!", "score": "4/5"}
+        elif total_score >= 2:
+            feedback = {"title": "Keep improving!", "message": "You're making progress on understanding sleep cycles", "score": "3/5"}
+        else:
+            feedback = {"title": "Try again!", "message": "Learning about sleep will improve your health!", "score": "1/5"}
+
         return jsonify({
             'total_score': total_score,
             'quiz1_correct': quiz1_correct,
             'quiz2_correct': quiz2_correct,
             'quiz3_correct': quiz3_correct,
             'quiz4_correct': quiz4_correct,
-            'quiz5_score': quiz5_score
+            'quiz5_score': quiz5_score,
+            'feedback': feedback
         })
 
     return render_template('quiz_results.html', active_page="quiz", total_score=None)

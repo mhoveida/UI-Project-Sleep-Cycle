@@ -1,27 +1,41 @@
-.result-item {
-    border: 1px solid #ccc;
-    padding: 15px;
+.result-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+  }
+  
+  .result-container h2 {
+    font-size: 32px;
+    color: #2e7d32;
     margin-bottom: 20px;
-    border-radius: 10px;
-    background-color: #f9f9f9;
   }
   
-  .correct {
-    color: green;
+  .score-text {
+    font-size: 24px;
     font-weight: bold;
+    color: #333;
   }
   
-  .incorrect {
-    color: red;
-    font-weight: bold;
+  .message {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #555;
   }
   
-  .results-summary h2 {
-    text-align: center;
-    color: #0d3a5c;
-  }
-  
-  .results-actions {
-    text-align: center;
+  .result-buttons {
     margin-top: 30px;
+  }
+  
+  .result-buttons .button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    background-color: #5f8d92;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+  
+  .result-buttons .button:hover {
+    background-color: #417276;
   }

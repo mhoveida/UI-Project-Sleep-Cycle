@@ -56,4 +56,32 @@ Match each person's vibe to their sleep stage!
 const next_url = "{{ next_url }}";
 </script>
 <script src="{{ url_for('static', filename='js/quiz3.js') }}"></script>
+<script>
+// The 'Next' button acts as both a submit and navigation button.
+// It collects the user's matches, submits via AJAX, then navigates to the next page.
+const nextButton = document.querySelector('.button.next');
+nextButton.addEventListener('click', function(e) {
+  const matches = {};
+  document.querySelectorAll('.match-lines line').forEach(line => {
+    const leftIndex = line.dataset.leftIndex;
+    const rightIndex = line.dataset.rightIndex;
+    const labelText = document.querySelector(`.left-connector[data-index="${leftIndex}"]`).parentElement.querySelector('span').innerText;
+    const imageSrc = document.querySelector(`.right-connector[data-index="${rightIndex}"]`).nextElementSibling.getAttribute('src');
+    matches[labelText] = imageSrc.split('/').pop().replace('.png', '');
+  });
+
+  fetch('/submit_quiz3', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(matches)
+  }).then(() => {
+    window.location.href = next_url;
+  });
+});
+
+document.querySelector('.button.back').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.location.href = "{{ back_url }}";
+});
+</script>
 {% endblock %}

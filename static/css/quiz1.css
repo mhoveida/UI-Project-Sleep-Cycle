@@ -6,22 +6,35 @@ body {
   .navbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: #5f8d92;
-    padding: 10px 20px;
-    color: white;
+    padding: 12px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", sans-serif;
   }
   
   .navbar a {
     margin-right: 20px;
     color: white;
     text-decoration: none;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+  
+  .navbar a:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
   
   .navbar .active {
     font-weight: bold;
-    text-decoration: underline;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 6px 12px;
+    border-radius: 8px;
   }
-  
   .hint {
     display: flex;
     align-items: center;
@@ -77,13 +90,21 @@ body {
   }
   
   .button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 8px;
-    background-color: #91c9d0;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #6fa5aa, #5f8d92);
     color: white;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 16px;
     cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
   }
   
   .progress-dots .dot {

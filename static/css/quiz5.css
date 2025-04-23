@@ -48,11 +48,18 @@
   
   .draggable {
     border: 2px solid #000;
-    border-radius: 12px;
-    padding: 8px 16px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 200px;  /* 统一宽度 */
+    height: 50px;  /* 统一高度 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: grab;
     user-select: none;
-  }
+    font-size: 18px;
+    box-sizing: border-box;
+}
   
   .drop-zone {
     border: 2px dashed #5f8d92;
@@ -62,4 +69,20 @@
     background-color: #e6f7f9;
     text-align: center;
     font-weight: bold;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .drop-zone.empty::before {
+    content: "Drag Zone";
+    color: #5f8d92;
+    font-weight: bold;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .drop-zone.filled::before {
+    content: "";
   }

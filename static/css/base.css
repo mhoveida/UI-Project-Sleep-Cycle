@@ -1,0 +1,93 @@
+/* 基础样式 - 适用于所有页面 */
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    margin: 0;
+    color: #2c3e50;
+  }
+  
+  /* 导航栏 */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #5f8d92;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .navbar a {
+    margin-right: 20px;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbar .active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  /* 提示框 */
+  .hint {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .hint img {
+    width: 24px;
+    margin-right: 10px;
+  }
+  
+  /* 主容器 */
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* 底部导航 */
+  .nav-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #91c9d0;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* 进度点 */
+  .progress-dots .dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 4px;
+    background-color: lightgray;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .progress-dots .dot.active {
+    background-color: #5f8d92;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .quiz-container {
+      padding: 15px;
+    }
+    
+    .nav-bottom {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
