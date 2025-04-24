@@ -1,0 +1,70 @@
+{% extends "quiz_base.html" %}
+
+{% set next_url = url_for('quiz4_multiple') %}
+{% set back_url = url_for('quiz2_dragdrop') %}
+{% set active_page = 'quiz3' %}
+
+{% block title %}Quiz 3: Match Sleep Stages{% endblock %}
+{% block heading %}Match the Scenario to Sleep Stage{% endblock %}
+{% block hint_text %}
+Match each person's vibe to their sleep stage!
+{% endblock %}
+
+{% block quiz_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz3.css') }}">
+
+<div class="match-container">
+  <!-- 左侧标签 -->
+  <div class="left-side">
+    {% set labels = [
+      "Sufficient N3 Deep Sleep",
+      "Complete REM Cycles",
+      "Insufficient N3 Deep Sleep",
+      "Multiple REM cycles",
+      "N2 Deeper Light Sleep",
+      "Disrupted N3 Deep Sleep"
+    ] %}
+    {% for label in labels %}
+      <div class="match-item" data-label="{{ loop.index0 }}">
+        <span>{{ label }}</span>
+        <span class="connector left-connector" data-index="{{ loop.index0 }}"></span>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- 右侧图片 -->
+  <div class="right-side">
+    {% set images = [
+      "Sick.png", "Sport.png", "Forget.png",
+      "Solve.png", "Guitar.png", "Recovery.png"
+    ] %}
+    {% for img in images %}
+      <div class="match-item" data-label="{{ loop.index0 }}">
+        <span class="connector right-connector" data-index="{{ loop.index0 }}"></span>
+        <img src="{{ url_for('static', filename='media/Quiz/Q3/' ~ img) }}" alt="Scenario {{ loop.index0 }}">
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- SVG画幕：绘制线条 -->
+  <svg class="match-lines"></svg>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+const next_url = "{{ next_url }}";
+</script>
+<script src="{{ url_for('static', filename='js/quiz3.js') }}"></script>
+<script>
+document.querySelector('.button.next').addEventListener('click', function(e) {
+  e.preventDefault();
+  checkAnswer();  // 调用 quiz3.js 中的数据提交功能
+});
+
+document.querySelector('.button.back').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.location.href = "{{ back_url }}";
+});
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+.result-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+  }
+  
+  .result-container h2 {
+    font-size: 32px;
+    color: #2e7d32;
+    margin-bottom: 20px;
+  }
+  
+  .score-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .message {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #555;
+  }
+  
+  .result-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  .left-button, .right-button {
+    width: 45%;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #5f8d92;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+  
+  .left-button:hover, .right-button:hover {
+    background-color: #417276;
+  }

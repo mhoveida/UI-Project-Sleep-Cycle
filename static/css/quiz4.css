@@ -1,0 +1,161 @@
+/* 整体容器样式 */
+.quiz-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* 顶部区域样式 */
+  .quiz4-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 80px;
+    padding: 0 20px;
+  }
+  
+  .bedtime-section, .waketime-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+  }
+  
+  .bedtime-section .person, .waketime-section .person {
+    width: 180px;
+    height: auto;
+  }
+  
+  .bedtime-section .clock, .waketime-section .clock {
+    width: 90px;
+    height: auto;
+  }
+
+  /* 选项区域样式 */
+  .quiz4-options {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 20px;
+    width: 240px;
+    border: 2px solid #7aa1a6;
+    border-radius: 30px;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+  
+  .option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+.option.selected {
+    transform: scale(1.15);
+    box-shadow: 0 0 25px rgba(76, 161, 175, 0.6);
+    border: 4px solid #4ca1af;
+    background-color: #e0f7fa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    z-index: 5;
+    position: relative;
+}
+
+.option.selected img {
+    opacity: 0.95;
+    filter: brightness(1.05);
+}
+
+.option.selected .time {
+    color: #00796b;
+    font-weight: 800;
+    font-size: 26px;
+}
+  
+  .clock-img {
+    width: 70px;
+    height: auto;
+    margin-top: 5px;
+  }
+  
+  .time {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+  
+  .face-img {
+    width: 40px;
+    height: auto;
+    margin: 5px 0;
+  }
+  
+  .wave-container {
+    width: 100%;
+    position: relative;
+    height: 50px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  
+  .wave-img {
+    width: 100%;
+    position: relative;
+    height: auto;
+    max-height: 50px;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 992px) {
+    .quiz4-options {
+      gap: 30px;
+    }
+    
+    .option {
+      width: 220px;
+    }
+    .option.selected {
+      transform: scale(1.2);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .quiz4-top {
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .option {
+      width: 200px;
+    }
+    .option.selected {
+      transform: scale(1.2);
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .quiz4-options {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .option {
+      width: 90%;
+      max-width: 280px;
+    }
+    .option.selected {
+      transform: scale(1.1);
+      width: 95% !important;
+    }
+  }

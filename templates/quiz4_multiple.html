@@ -1,0 +1,65 @@
+{% extends "quiz_base.html" %}
+
+{% set next_url = url_for('quiz5_combo') %}
+{% set back_url = url_for('quiz3_matching') %}
+{% set active_index = 3 %}  <!-- quiz4 -->
+
+{% block title %}Quiz 4: Best Wake-Up Time{% endblock %}
+{% block heading %}When to wake up?{% endblock %}
+{% block hint_text %}
+Timing is everything - which wake-up time feels just right?
+{% endblock %}
+
+{% block quiz_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz4.css') }}">
+
+<!-- Top Section with Bedtime and Waketime Images -->
+<div class="quiz4-top">
+  <div class="bedtime-section">
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Bed.png') }}" alt="Bedtime Person" class="person">
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Bed-time.png') }}" alt="11 P.M. Clock" class="clock">
+  </div>
+
+  <div class="waketime-section">
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Wake-up.png') }}" alt="Wake-up Person" class="person">
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Wake-up-time.png') }}" alt="Wake-up Clock" class="clock">
+  </div>
+</div>
+
+<!-- Options Section -->
+<div class="quiz4-options">
+  <!-- Option 1 -->
+  <div class="option" data-answer="5:30 A.M.">
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Option1.png') }}" alt="5:30 A.M. Clock" class="clock-img">
+    <div class="time">5:30 A.M.</div>
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Sad.png') }}" alt="Sad Face" class="face-img">
+    <div class="wave-container">
+      <img src="{{ url_for('static', filename='media/Quiz/Q4/Option1-wave.png') }}" alt="Sleep Wave" class="wave-img">
+    </div>
+  </div>
+
+  <!-- Option 2 -->
+  <div class="option" data-answer="6:00 A.M.">
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Option2.png') }}" alt="6:00 A.M. Clock" class="clock-img">
+    <div class="time">6:00 A.M.</div>
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Happy.png') }}" alt="Happy Face" class="face-img">
+    <div class="wave-container">
+      <img src="{{ url_for('static', filename='media/Quiz/Q4/Option2-wave.png') }}" alt="Sleep Wave" class="wave-img">
+    </div>
+  </div>
+
+  <!-- Option 3 -->
+  <div class="option" data-answer="7:30 A.M.">
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Option3.png') }}" alt="7:30 A.M. Clock" class="clock-img">
+    <div class="time">7:30 A.M.</div>
+    <img src="{{ url_for('static', filename='media/Quiz/Q4/Groggy.png') }}" alt="Groggy Face" class="face-img">
+    <div class="wave-container">
+      <img src="{{ url_for('static', filename='media/Quiz/Q4/Option3-wave.png') }}" alt="Sleep Wave" class="wave-img">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+  <script src="{{ url_for('static', filename='js/quiz4.js') }}"></script>
+{% endblock %}

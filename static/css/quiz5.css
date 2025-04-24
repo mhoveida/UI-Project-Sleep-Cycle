@@ -1,0 +1,88 @@
+.quiz5-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  /* 通用问题块 */
+  .question-block {
+    border: 2px solid #000;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  
+  .question-text {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* 单选项样式 */
+  .options.single-choice {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .options.single-choice .option {
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .options.single-choice .option.selected {
+    background-color: #a0d8e5;
+  }
+  
+  /* 拖拽部分 */
+  .drag-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .draggable {
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 200px;  /* 统一宽度 */
+    height: 50px;  /* 统一高度 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    user-select: none;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+  
+  .drop-zone {
+    border: 2px dashed #5f8d92;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 50px;
+    background-color: #e6f7f9;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .drop-zone.empty::before {
+    content: "Drag Zone";
+    color: #5f8d92;
+    font-weight: bold;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .drop-zone.filled::before {
+    content: "";
+  }
