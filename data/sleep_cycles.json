@@ -14,11 +14,11 @@
       "characteristics": [
         {
           "title": "Easily woken",
-          "icon": "tired_person.png"
+          "icon": "N1-ch1.png"
         },
         {
           "title": "Falling Sensation",
-          "icon": "falling_person.png",
+          "icon": "N1-ch2.png",
           "detail": "Brain misinterprets muscle relaxation as falling"
         }
       ]
@@ -31,15 +31,15 @@
       "characteristics": [
         {
           "title": "Body temperature and heart beat slows",
-          "icon": "heart_thermometer.png"
+          "icon": "N2-ch1.png"
         },
         {
           "title": "Brain practices skills you learned during the day",
-          "icon": "brain_workout.png"
+          "icon": "N2-ch2.png"
         },
         {
           "title": "External sounds enter semi-conscious mind",
-          "icon": "ear_sound.png"
+          "icon": "N2-ch3.png"
         }
       ]
     },
@@ -51,15 +51,15 @@
       "characteristics": [
         {
           "title": "Hardest to wake, maximum disorientation if interrupted",
-          "icon": "sloth.png"
+          "icon": "N3-ch1.png"
         },
         {
           "title": "Physical repair infection-fighting cells activate",
-          "icon": "immune_system.png"
+          "icon": "N3-ch2.png"
         },
         {
           "title": "Transfers memories to long-term",
-          "icon": "memory_transfer.png"
+          "icon": "N3-ch3.png"
         }
       ]
     },
@@ -71,23 +71,23 @@
       "characteristics": [
         {
           "title": "Rapid Eye Movement",
-          "icon": "moving_eyes.png"
+          "icon": "REM-ch1.png"
         },
         {
           "title": "Dreaming occurs",
-          "icon": "dream_bubble.png"
+          "icon": "REM-ch2.png"
         },
         {
           "title": "Body freezes muscles to prevent acting out dreams",
-          "icon": "paralyzed_body.png"
+          "icon": "REM-ch3.png"
         },
         {
           "title": "Emotional Processing",
-          "icon": "brain_emotions.png"
+          "icon": "REM-ch4.png"
         },
         {
           "title": "Memory connection + creativity boost",
-          "icon": "creative_brain.png"
+          "icon": "REM-ch5.png"
         }
       ]
     }

@@ -5,12 +5,12 @@
     {
       "id": "wakeup",
       "title": "When to wake up",
-      "icon": "sun.png"
+      "icon": "calculator-wakeup-active.png"
     },
     {
       "id": "sleep",
       "title": "When to sleep",
-      "icon": "moon.png"
+      "icon": "calculator-sleep-active.png"
     }
   ],
   "inputs": {

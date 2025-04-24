@@ -32,32 +32,32 @@
       "items": [
         {
           "label": "Sufficient N3 Deep Sleep",
-          "match": "sick_person.png",
+          "match": "Sick.png",
           "explanation": "Better immune system functioning"
         },
         {
           "label": "Complete REM Cycles",
-          "match": "athlete.png", 
+          "match": "Sport.png", 
           "explanation": "Better athletic performance"
         },
         {
           "label": "Insufficient N3 Deep Sleep",
-          "match": "forgetful_person.png",
+          "match": "Forget.png",
           "explanation": "Memory consolidation issues"
         },
         {
           "label": "Multiple REM cycles",
-          "match": "thinking_person.png",
+          "match": "Solve.png",
           "explanation": "Creative problem solving"
         },
         {
           "label": "N2 Deeper Light Sleep",
-          "match": "guitar_player.png",
+          "match": "Guitar.png",
           "explanation": "Motor skill improvement"
         },
         {
           "label": "Disrupted N3 Deep Sleep",
-          "match": "emotional_person.png",
+          "match": "Recovery.png",
           "explanation": "Emotional regulation difficulties"
         }
       ]
