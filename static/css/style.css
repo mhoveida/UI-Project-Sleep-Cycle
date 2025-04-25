@@ -973,23 +973,136 @@ area {
   gap: 15rem;               
 }
 
-
-.nav-button {
-  background-color: #4ca1af;
-  width: 160px;     
-  height: 50px;     
-  line-height: 50px;
-  color: white;
-  font-size: 2rem;
-  padding: 1rem 3rem;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  min-width: 100px;
+.website-padding {
+  padding-left: 70px;
+  padding-right: 70px;
 }
 
-.nav-button:hover {
-  background-color: #417276;
+/* For calculator buttons*/
+.calculate-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #4ca1af, #2c3e50);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(76, 161, 175, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.calculate-btn:hover {
+  background: linear-gradient(135deg, #5dafbd, #3a4d61);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(76, 161, 175, 0.6);
+}
+/* ======= UNIFIED BUTTON STYLES ======= */
+/* Base button styling for all buttons */
+.button,
+.nav-button,
+.calculate-btn,
+.next-stage-button{
+  /* Appearance */
+  background: linear-gradient(135deg, #4ca1af, #2c3e50);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(76, 161, 175, 0.5);
+  
+  /* Typography */
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  text-align: center;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 25px;
+  min-width: 180px;
+  height: auto;
+  line-height: 1.2;
+  
+  /* Behavior */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+/* Hover effect for all buttons */
+.button:hover,
+.nav-button:hover,
+.calculate-btn:hover,
+.next-stage-button:hover{
+  background: linear-gradient(135deg, #5dafbd, #3a4d61);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(76, 161, 175, 0.6);
+}
+
+/* Back button variation */
+.nav-button.nav-back, 
+.button.back {
+  background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+  color: #00838f;
+  box-shadow: 0 4px 10px rgba(178, 235, 242, 0.5);
+}
+
+.nav-button.nav-back:hover,
+.button.back:hover {
+  background: linear-gradient(135deg, #b2ebf2, #80deea);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(178, 235, 242, 0.6);
+}
+
+/* Bottom navigation container */
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px auto;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .button,
+  .nav-button {
+    min-width: 140px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .hero-buttons .nav-button {
+    font-size: 1.2rem;
+  }
+  
+  .nav-bottom {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+.hero-buttons .nav-button {
+  width: 160px;
+  height: 50px;
+  font-size: 1.5rem;
+  padding: 12px 30px;
+  background: linear-gradient(90deg, #9edce8, #4f87c0);
+
+}
+.hero-buttons .nav-button {
+  border-radius: 25px;
+}
+.hero-buttons .nav-button:hover {
+  background: linear-gradient(135deg, #9edce8, #5e96cf);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(119, 216, 235, 0.6);
 }
