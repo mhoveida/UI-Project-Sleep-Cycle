@@ -3,10 +3,18 @@
 {% block title %}Home - Sleep Project{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Sleep Project</h1>
-<p>Explore tools and knowledge to optimize your sleep.</p>
+<div class="hero">
+    <img src="{{ url_for('static', filename='media/hero.png') }}" alt="Night Sky" class="hero-bg" />
+    
+    <h1 class="hero-title">Understanding and Optimizing Sleep Cycles</h1>    
 
-<a href="/learn/1" class="start-button">Learn About Sleep Cycles</a>
+    <div class="hero-buttons">
+        <a href="/learn/1" class="nav-button">Learn</a>
+        <a href="/quiz_start" class="nav-button">Quiz</a>
+    </div>
+</div>
+
+
 
 {% endblock %}
 
