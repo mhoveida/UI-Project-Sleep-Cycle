@@ -17,7 +17,7 @@
       <a href="{{ url_for('learn', section_id=1) }}" class="{% if active_page == 'sleep_cycles' %}active{% endif %}">Sleep Cycles</a>
       <a href="{{ url_for('learn', section_id=2) }}" class="{% if active_page in ['sleep_disruptors', 'real_world_examples'] %}active{% endif %}">Sleep Disruptors</a>
       <a href="{{ url_for('calculator') }}" class="{% if active_page == 'calculator' %}active{% endif %}">Sleep Calculator</a>
-      <a href="{{ url_for('quiz_start') }}" class="{% if active_page == 'quiz' %}active{% endif %}">Quiz</a>
+      <a href="{{ url_for('quiz1_sequence') }}" class="{% if active_page == 'quiz' %}active{% endif %}">Quiz</a>
     </div>
     <div class="nav-right">
       <form action="/search" method="get">
@@ -31,5 +31,8 @@
     {% endblock %}
   </main>
 
+  {% block script %}
+  {% endblock %}
+  
 </body>
 </html>
