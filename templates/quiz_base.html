@@ -1,27 +1,15 @@
-<!-- templates/quiz_base.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{% block title %}Quiz{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_base.css') }}">
-  {% block css %}{% endblock %}
-</head>
-<body>
-  {% set back_url = back_url | default('/quiz_start') %}
-  <!-- Top Navbar -->
-  <div class="navbar">
-    <div class="nav-left">
-      <a href="/learn/1">Sleep Cycles</a>
-      <a href="/learn/2">Sleep Disruptors</a>
-      <a href="/calculator">Sleep Calculator</a>
-      <a href="/quiz_start" class="active">Quiz</a>
-    </div>
-    <div class="nav-right">
-      <input type="text" placeholder="Search">
-    </div>
-  </div>
+{% extends "layout.html" %}
 
+{% block title %}Quiz{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_base.css') }}">
+{% endblock %}
+
+{% block content %}
+{% set back_url = back_url | default('/quiz_start') %}
+
+<div class="container-fluid-limited website-padding">
   <!-- Page Title -->
   <h1>{% block heading %}Sleep Quiz{% endblock %}</h1>
 
@@ -49,6 +37,7 @@
   </div>
   {% endif %}
 
-  {% block script %}{% endblock %}
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block script %}{% endblock %}
