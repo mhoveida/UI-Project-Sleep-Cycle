@@ -3,12 +3,12 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<section class="intro">
+<section class="intro website-padding">
   <h1>{{ content.intro.title }}</h1>
   <h2>{{ content.intro.subtitle }}</h2>
 </section>
 
-<div class="drag-drop-container">
+<div class="drag-drop-container website-padding">
   <!-- Left: Disruptors to drag -->
   <div class="disruptor-list">
     {% for d in content.disruptors %}

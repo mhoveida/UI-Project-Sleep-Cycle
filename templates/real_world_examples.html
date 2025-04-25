@@ -3,12 +3,12 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<section class="intro">
+<section class="intro website-padding">
   <h1>{{ content.title }}</h1>
   <p>{{ content.description }}</p>
 </section>
 
-<div class="examples-grid">
+<div class="examples-grid website-padding">
   {% for e in content.examples %}
     <div class="example-card" onclick="toggleExplanation('{{ e.title | replace(' ', '_') }}')">
       <img src="{{ url_for('static', filename='media/Examples/' ~ e.icon) }}" alt="{{ e.title }}">
@@ -20,7 +20,7 @@
   {% endfor %}
 </div>
 
-<div class="page-nav">
+<div class="page-nav website-padding">
     <a href="{{ url_for('learn', section_id=2) }}" class="nav-button nav-back">← Back</a>
     <a href="{{ url_for('choice') }}" class="nav-button nav-next">Next: How to Improve →</a>
 </div>
