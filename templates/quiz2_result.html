@@ -1,0 +1,61 @@
+{% extends "quiz_base.html" %}
+{% block title %}Quiz 2 Result{% endblock %}
+{% set hide_nav = true %}
+
+{% block heading %}
+  Quiz 2: Sleep Disruptor Effects
+{% endblock %}
+
+{% block hint_text %}
+See which activities help and which ones hurt your sleep.
+{% endblock %}
+
+{% block quiz_content %}
+  <!-- Original quiz‐2 styles -->
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/quiz2.css') }}">
+  <!-- Result‐page overrides (for fixed images & layout) -->
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/quiz_results.css') }}">
+
+  <div class="quiz-container">
+    <div class="disruptor-grid">
+      <!-- Helps Sleep column -->
+      <div class="helps-sleep">
+        <h3>Helps Sleep</h3>
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Shower.png') }}"
+             alt="Shower">
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Meditation.png') }}"
+             alt="Meditation">
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Reading.png') }}"
+             alt="Reading">
+      </div>
+
+      <!-- Hurts Sleep column -->
+      <div class="hurts-sleep">
+        <h3>Hurts Sleep</h3>
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Screen.png') }}"
+             alt="Screen Time">
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Caffeine.png') }}"
+             alt="Caffeine">
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Irregular-schedule.png') }}"
+             alt="Irregular Schedule">
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Exercising-late.png') }}"
+             alt="Exercising Late">
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Eating.png') }}"
+             alt="Eating">
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Alcohol.png') }}"
+             alt="Alcohol">
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/Stress.png') }}"
+             alt="Stress">
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="{{ url_for('quiz_results_question', num=1) }}"
+         class="button">← Prev</a>
+      <a href="{{ url_for('quiz_results_question', num=3) }}"
+         class="button">Next →</a>
+    </div>
+  </div>
+{% endblock %}
