@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+
 import json
 
 app = Flask(__name__)
@@ -275,6 +276,16 @@ def quiz_results():
         })
 
     return render_template('quiz_results.html', active_page="quiz", total_score=None)
+
+@app.route('/quiz_results/q<int:num>')
+def quiz_results_question(num):
+    # Map question number → title/template
+    if   num == 1: return render_template('quiz1_result.html', active_page='quiz')
+    elif num == 2: return render_template('quiz2_result.html', active_page='quiz')
+    elif num == 3: return render_template('quiz3_result.html', active_page='quiz')
+    elif num == 4: return render_template('quiz4_result.html', active_page='quiz')
+    elif num == 5: return render_template('quiz5_result.html', active_page='quiz')
+    else:           return redirect('/quiz_results')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
