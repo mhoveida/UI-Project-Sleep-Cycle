@@ -1,65 +1,494 @@
-function showStage(stageId) {
-    // Hide intro
-    const intro = document.getElementById('intro-content');
-    if (intro) intro.style.display = 'none';
-  
-    // Hide all stage content
-    document.querySelectorAll('.stage-info').forEach(el => {
-      el.style.display = 'none';
-    });
-  
-    // Show selected stage block
-    const target = document.getElementById('info-' + stageId);
-    if (target) target.style.display = 'block';
-  
-    // Swap the main image to the clicked stage
-    const mainImg = document.getElementById('sleep-cycle-img');
-    if (mainImg) {
-      mainImg.src = `/static/media/Sleep-cycle/Characteristics/${stageId}.png`;
-      mainImg.alt = `${stageId} Sleep Stage`;
-    }
+// Variables to control the animation
+let currentStage = -1; // Current stage (-1 means no stage selected yet)
+const stageOrder = ["N1", "N2", "N3", "REM"];
+let animationFrame = null;
+let waveX = 0; // Current position of the traveling wave (0-400)
+const waveSpeed = 2; // Speed of the wave movement
+let isAnimating = false;
+let targetX = 0; // Target position to stop at
 
-    // Update the wave image at the bottom
-    const waveImg = document.getElementById('wave-image');
-    if (waveImg) {
-        waveImg.src = `/static/media/Sleep-cycle/Waves/${stageId}-cycle1.png`;
-        waveImg.alt = `${stageId} Sleep Wave`;
-    }
-
+// Wave patterns for each stage
+const wavePatterns = {
+  N1: { 
+    amplitude: 15, 
+    frequency: 0.05, 
+    color: '#4ca1af' 
+  },
+  N2: { 
+    amplitude: 10, 
+    frequency: 0.1, 
+    spindles: true, 
+    color: '#4ca1af' 
+  },
+  N3: { 
+    amplitude: 30, 
+    frequency: 0.03, 
+    color: '#4ca1af' 
+  },
+  REM: { 
+    amplitude: 8, 
+    frequency: 0.15, 
+    eyeMovements: true, 
+    color: '#4ca1af' 
   }
+};
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // Handle clicks on characteristic titles
-    document.querySelectorAll('.characteristics').forEach(charList => {
-      const items = Array.from(charList.querySelectorAll('.characteristic-item'));
-      items.forEach((item, index) => {
-        const button = item.querySelector('.char-button');
-        if (button) {
-          button.addEventListener('click', () => {
-            // Show next item if exists
-            if (index + 1 < items.length) {
-              items[index + 1].style.display = 'block';
-            } else {
-              // Show next stage button if this was the last item
-              const nextButton = item.closest('.stage-info').querySelector('.next-stage-button');
-              if (nextButton) nextButton.style.display = 'inline-block';
-            }
-          });
-        }
-      });
-    });
+// Create a description for each sleep stage
+function createStageDescription() {
+  const description = document.createElement('div');
+  description.id = 'stage-description';
+  description.style.fontSize = '12px';
+  description.style.color = '#555';
+  description.style.textAlign = 'center';
+  description.style.marginTop = '5px';
+  description.style.fontStyle = 'italic';
+  description.style.height = '30px'; // Fixed height to prevent layout shifting
   
-    // Handle "Next Stage" button
-    document.querySelectorAll('.next-stage-button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const currentId = btn.closest('.stage-info').id.replace('info-', '');
-        const stageOrder = ["N1", "N2", "N3", "REM"];
-        const nextIndex = stageOrder.indexOf(currentId) + 1;
-        const nextId = stageOrder[nextIndex];
-        if (nextId) {
-          showStage(nextId);
-        }
-      });
-    });
+  return description;
+}
+
+// Update the stage description based on progress
+function updateStageDescription() {
+  const description = document.getElementById('stage-description');
+  if (!description) return;
+  
+  // If no stages completed yet
+  if (currentStage < 0) {
+    description.textContent = '';
+    return;
+  }
+  
+  // Get the furthest stage reached
+  const stage = stageOrder[currentStage];
+  
+  // Update text based on stage
+  switch(stage) {
+    case 'N1':
+      description.textContent = 'N1: Light sleep with slow theta waves. You can be easily awakened.';
+      break;
+    case 'N2':
+      description.textContent = 'N2: Sleep spindles and K-complexes appear. Body temperature drops.';
+      break;
+    case 'N3':
+      description.textContent = 'N3: Deep sleep with slow delta waves. Physical restoration occurs.';
+      break;
+    case 'REM':
+      description.textContent = 'REM: Rapid Eye Movement sleep. Dreams occur as brain activity increases.';
+      break;
+  }
+}
+
+// Create the wave animation container
+function createWaveAnimation() {
+  // If container already exists, don't create it again
+  if (document.getElementById('wave-container')) return;
+  
+  console.log("Creating wave animation container");
+  
+  // Create the container
+  const container = document.createElement('div');
+  container.id = 'wave-container';
+  //container.style.position = 'fixed';
+  //container.style.bottom = '2rem';
+  //container.style.left = '2rem';
+  //container.style.width = '400px';
+  //container.style.height = '180px';
+  //container.style.background = 'white';
+  //container.style.borderRadius = '12px';
+  //container.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)';
+  //container.style.padding = '15px';
+  //container.style.zIndex = '1000';
+  //container.style.display = 'none';
+
+
+
+
+  container.style.position = 'absolute';  // not fixed
+  container.style.bottom = '8rem';        // a bit above back button
+  container.style.right = '2rem';           // near the right side
+  container.style.width = '400px';
+  container.style.height = '180px';
+  container.style.background = 'white';
+  container.style.borderRadius = '12px';
+  container.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)';
+  container.style.padding = '15px';
+  container.style.zIndex = '1';            // not too high
+  container.style.display = 'none';        // still hidden initially
+
+
+  
+  // Add title
+  const title = document.createElement('div');
+  title.innerHTML = '<strong>Brain Wave Patterns During Sleep</strong>';
+  title.style.fontWeight = 'bold';
+  title.style.textAlign = 'center';
+  title.style.marginBottom = '5px';
+  title.style.color = '#2c3e50';
+  title.style.fontSize = '16px';
+  
+  // Add description
+  const description = document.createElement('div');
+  description.textContent = 'This animation shows how brain wave patterns change as you progress through different sleep stages.';
+  description.style.textAlign = 'center';
+  description.style.fontSize = '12px';
+  description.style.color = '#555';
+  description.style.marginBottom = '10px';
+  
+  // Create canvas for drawing
+  const canvas = document.createElement('canvas');
+  canvas.id = 'wave-canvas';
+  canvas.width = 400;
+  canvas.height = 100;
+  canvas.style.display = 'block';
+  
+  // Create stage markers
+  const markers = document.createElement('div');
+  markers.style.display = 'flex';
+  markers.style.justifyContent = 'space-between';
+  markers.style.marginTop = '5px';
+  
+  stageOrder.forEach((stage, index) => {
+    const marker = document.createElement('div');
+    marker.textContent = stage;
+    marker.id = `stage-marker-${stage}`;
+    marker.style.fontWeight = 'bold';
+    marker.style.color = '#888';
+    markers.appendChild(marker);
   });
   
+  // Add stage description element
+  const stageDescription = createStageDescription();
+  
+  // Add reset button
+  const resetButton = document.createElement('button');
+  resetButton.textContent = 'Reset';
+  resetButton.style.position = 'absolute';
+  resetButton.style.top = '10px';
+  resetButton.style.right = '10px';
+  resetButton.style.padding = '4px 8px';
+  resetButton.style.background = '#f8f9fa';
+  resetButton.style.border = '1px solid #ddd';
+  resetButton.style.borderRadius = '4px';
+  resetButton.style.cursor = 'pointer';
+  resetButton.onclick = resetWaveAnimation;
+  
+  // Add all elements to the container
+  container.appendChild(title);
+  container.appendChild(description);
+  container.appendChild(canvas);
+  container.appendChild(markers);
+  container.appendChild(stageDescription);
+  container.appendChild(resetButton);
+  
+  // Add container to the document
+  //document.body.appendChild(container);
+  document.querySelector('.cycle-container').appendChild(container);
+
+
+  
+  console.log("Wave animation container created");
+}
+
+// Calculate the Y position for a point at position X in the given stage
+function getWaveY(x, stage) {
+  const baseY = 50; // Center line
+  const pattern = wavePatterns[stage];
+  
+  if (!pattern) return baseY;
+  
+  // Calculate position within the stage section (0-1)
+  const stageIndex = stageOrder.indexOf(stage);
+  const stageStart = stageIndex * 100;
+  const stagePos = (x - stageStart) / 100;
+  
+  let y = baseY;
+  
+  // Basic sine wave
+  y = baseY - Math.sin(stagePos * Math.PI * 2 * pattern.frequency * 10) * pattern.amplitude;
+  
+  // Add special patterns for different stages
+  if (stage === 'N2' && pattern.spindles) {
+    // Add occasional K-complex (sharp spike)
+    if (x % 50 > 40 && x % 50 < 45) {
+      y = baseY + 25;
+    }
+  }
+  
+  if (stage === 'REM' && pattern.eyeMovements) {
+    // Create more subtle eye movements using a different sine wave pattern
+    // This creates a more "chaotic" pattern but without abrupt jumps
+    const fastWave = Math.sin(stagePos * Math.PI * 5) * 4;
+    const mediumWave = Math.sin(stagePos * Math.PI * 12) * 3;
+    
+    // Add a bit of variation but smooth it out
+    if (x % 30 > 25) {
+      // Use a smoother transition instead of random jumps
+      const eyeMovementIntensity = 8 * Math.sin(x * 0.8);
+      y += eyeMovementIntensity * 0.5 + fastWave + mediumWave;
+    }
+  }
+  
+  // If we're at a boundary between N3 and REM, apply smoothing
+  if (stage === 'REM') {
+    const distanceFromBoundary = x - 300; // REM starts at x=300
+    if (distanceFromBoundary < 15) {
+      // Blend between N3 and REM in the first 15 pixels for a smooth transition
+      const blendFactor = distanceFromBoundary / 15;
+      const n3Y = getWaveY(x, 'N3');
+      return n3Y * (1 - blendFactor) + y * blendFactor;
+    }
+  }
+  
+  return y;
+}
+
+// Draw the current state of the wave
+function drawWave() {
+  const canvas = document.getElementById('wave-canvas');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Draw center line
+  ctx.beginPath();
+  ctx.strokeStyle = '#e0e0e0';
+  ctx.setLineDash([5, 5]);
+  ctx.moveTo(0, 50);
+  ctx.lineTo(400, 50);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  
+  // Draw stage dividers
+  for (let i = 1; i < stageOrder.length; i++) {
+    ctx.beginPath();
+    ctx.strokeStyle = '#e0e0e0';
+    ctx.setLineDash([3, 3]);
+    ctx.moveTo(i * 100, 10);
+    ctx.lineTo(i * 100, 90);
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+  
+  // Don't draw the wave if we haven't started yet
+  if (currentStage < 0 || waveX <= 0) return;
+  
+  // Draw the wave line
+  ctx.beginPath();
+  ctx.strokeStyle = '#4ca1af';
+  ctx.lineWidth = 2;
+  ctx.moveTo(0, 50); // Start at center left
+  
+  // Draw the line up to the current position
+  for (let x = 0; x <= Math.min(waveX, 400); x += 2) {
+    // Determine which stage this point is in
+    const stageIndex = Math.floor(x / 100);
+    
+    // Only draw up to the current stage
+    if (stageIndex > currentStage) break;
+    
+    const stage = stageOrder[stageIndex];
+    const y = getWaveY(x, stage);
+    
+    ctx.lineTo(x, y);
+  }
+  
+  ctx.stroke();
+}
+
+// Start or continue the wave animation to the specified stage
+function animateWave(stageId) {
+  const stageIndex = stageOrder.indexOf(stageId);
+  if (stageIndex === -1) return;
+  
+  console.log(`Animating wave to stage: ${stageId} (index ${stageIndex})`);
+  
+  // Show the container
+  const container = document.getElementById('wave-container');
+  if (container) {
+    container.style.display = 'block';
+  }
+  
+  // Update current stage if advancing
+  if (stageIndex > currentStage) {
+    currentStage = stageIndex;
+  }
+  
+  // Set the target position (end of the current stage)
+  targetX = (stageIndex + 1) * 100;
+  
+  // Start the animation if not already running
+  if (!isAnimating) {
+    isAnimating = true;
+    animateFrame();
+  }
+  
+  // Update stage markers
+  updateStageMarkers();
+  
+  // Update stage description
+  updateStageDescription();
+}
+
+// Animate a single frame and schedule the next one
+function animateFrame() {
+  // Advance the wave position
+  waveX += waveSpeed;
+  
+  // Stop at the target position
+  if (waveX >= targetX) {
+    waveX = targetX;
+    
+    // If we've completed a full cycle, show message
+    if (currentStage === stageOrder.length - 1 && !document.getElementById('cycle-complete')) {
+      showCycleComplete();
+    }
+  }
+  
+  // Draw the current state
+  drawWave();
+  
+  // Schedule the next frame if we haven't reached the target
+  if (waveX < targetX) {
+    animationFrame = requestAnimationFrame(animateFrame);
+  } else {
+    isAnimating = false;
+  }
+}
+
+// Update the stage markers based on progress
+function updateStageMarkers() {
+  // Calculate which stages have been reached by the wave
+  const reachedStage = Math.floor(waveX / 100);
+  
+  stageOrder.forEach((stage, index) => {
+    const marker = document.getElementById(`stage-marker-${stage}`);
+    if (marker) {
+      if (index <= reachedStage) {
+        marker.style.color = '#4ca1af';
+      } else {
+        marker.style.color = '#888';
+      }
+    }
+  });
+}
+
+// Show the cycle complete message
+function showCycleComplete() {
+  const container = document.getElementById('wave-container');
+  if (!container) return;
+  
+  const message = document.createElement('div');
+  message.id = 'cycle-complete';
+  message.textContent = 'Full Sleep Cycle Complete! (90 minutes)';
+  message.style.textAlign = 'center';
+  message.style.fontWeight = 'bold';
+  message.style.color = '#27ae60';
+  message.style.marginTop = '10px';
+  container.appendChild(message);
+}
+
+// Reset the wave animation
+function resetWaveAnimation() {
+  console.log("Resetting wave animation");
+  
+  // Cancel any ongoing animation
+  if (animationFrame) {
+    cancelAnimationFrame(animationFrame);
+    animationFrame = null;
+  }
+  
+  // Reset variables
+  currentStage = -1;
+  waveX = 0;
+  isAnimating = false;
+  
+  // Redraw the wave (will be empty)
+  drawWave();
+  
+  // Reset stage markers
+  stageOrder.forEach(stage => {
+    const marker = document.getElementById(`stage-marker-${stage}`);
+    if (marker) {
+      marker.style.color = '#888';
+    }
+  });
+  
+  // Reset stage description
+  updateStageDescription();
+  
+  // Remove completion message
+  const message = document.getElementById('cycle-complete');
+  if (message) {
+    message.remove();
+  }
+}
+
+// Modify your existing showStage function to include the wave animation
+function showStage(stageId) {
+  console.log("Show stage called for:", stageId);
+  
+  // Hide intro
+  const intro = document.getElementById('intro-content');
+  if (intro) intro.style.display = 'none';
+
+  // Hide all stage content
+  document.querySelectorAll('.stage-info').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  // Show selected stage block
+  const target = document.getElementById('info-' + stageId);
+  if (target) target.style.display = 'block';
+
+  // Swap the main image to the clicked stage
+  const mainImg = document.getElementById('sleep-cycle-img');
+  if (mainImg) {
+    mainImg.src = `/static/media/Sleep-cycle/Characteristics/${stageId}.png`;
+    mainImg.alt = `${stageId} Sleep Stage`;
+  }
+  
+  // Animate the wave to this stage
+  animateWave(stageId);
+}
+
+// Initialize everything when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("Page loaded, initializing sleep cycle animation");
+  
+  // Create the wave animation container
+  createWaveAnimation();
+  
+  // Handle clicks on characteristic titles
+  document.querySelectorAll('.characteristics').forEach(charList => {
+    const items = Array.from(charList.querySelectorAll('.characteristic-item'));
+    items.forEach((item, index) => {
+      const button = item.querySelector('.char-button');
+      if (button) {
+        button.addEventListener('click', () => {
+          // Show next item if exists
+          if (index + 1 < items.length) {
+            items[index + 1].style.display = 'block';
+          } else {
+            // Show next stage button if this was the last item
+            const nextButton = item.closest('.stage-info').querySelector('.next-stage-button');
+            if (nextButton) nextButton.style.display = 'inline-block';
+          }
+        });
+      }
+    });
+  });
+
+  // Handle "Next Stage" button
+  document.querySelectorAll('.next-stage-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const currentId = btn.closest('.stage-info').id.replace('info-', '');
+      const stageOrder = ["N1", "N2", "N3", "REM"];
+      const nextIndex = stageOrder.indexOf(currentId) + 1;
+      const nextId = stageOrder[nextIndex];
+      if (nextId) {
+        showStage(nextId);
+      }
+    });
+  });
+});

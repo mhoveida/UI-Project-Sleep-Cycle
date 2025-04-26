@@ -211,12 +211,26 @@ h1, h2, h3, h4, h5, h6 {
 
 .stage-content {
   flex: 1;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem 0;
 }
 
 .cycle-image {
   flex: 1;
-  text-align: center;
+  text-align: left;
   padding-top: 1rem;
+}
+.text-and-image {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.characteristics-side {
+  flex: 1;
 }
 
 .cycle-image img {
@@ -1105,5 +1119,255 @@ area {
   background: linear-gradient(135deg, #9edce8, #5e96cf);
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(119, 216, 235, 0.6);
+}
+
+/* Sleep wave animation container */
+#wave-animation-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 400px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  z-index: 1000;
+  display: none;
+  transition: all 0.3s ease;
+}
+
+/* Animation title */
+#wave-animation-container div:first-child {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Wave SVG styles */
+#wave-svg {
+  width: 100%;
+  height: 75%;
+  margin-bottom: 5px;
+}
+
+#wave-path {
+  stroke: #4ca1af;
+  stroke-width: 2;
+  fill: none;
+  transition: d 0.5s ease;
+}
+
+/* Reset button */
+#wave-animation-container button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+#wave-animation-container button:hover {
+  background: #e9ecef;
+  border-color: #ccc;
+}
+
+/* Stage markers */
+#wave-animation-container div:nth-child(3) {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  padding: 0 10px;
+}
+
+/* Each stage marker */
+#wave-animation-container div:nth-child(3) div {
+  font-weight: bold;
+  color: #888;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+/* Completion message */
+#cycle-complete-message {
+  text-align: center;
+  color: #27ae60;
+  font-weight: bold;
+  margin-top: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  #wave-animation-container {
+    position: static;
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 400px;
+  }
+}
+/* Sleep wave animation container */
+#wave-animation-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 400px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Wave SVG styles */
+#wave-svg {
+  width: 100%;
+  height: 75%;
+  margin-bottom: 5px;
+}
+
+#wave-path {
+  stroke: #4ca1af;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Reset button */
+#wave-animation-container button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Completion message */
+#cycle-complete-message {
+  text-align: center;
+  color: #27ae60;
+  font-weight: bold;
+  margin-top: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* Sleep wave animation container */
+#wave-animation-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 400px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Animation title */
+#wave-animation-container div:first-child {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Wave SVG styles */
+#wave-svg {
+  width: 100%;
+  height: 75%;
+  margin-bottom: 5px;
+}
+
+#wave-path {
+  stroke: #4ca1af;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Reset button */
+#wave-animation-container button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#wave-animation-container button:hover {
+  background: #e9ecef;
+  border-color: #ccc;
+}
+
+/* Stage markers */
+#wave-animation-container div:nth-child(3) {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  padding: 0 10px;
+}
+
+/* Each stage marker */
+#wave-animation-container div:nth-child(3) div {
+  font-weight: bold;
+  color: #888;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+/* Completion message */
+#cycle-complete-message {
+  text-align: center;
+  color: #27ae60;
+  font-weight: bold;
+  margin-top: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  #wave-animation-container {
+    position: static;
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 400px;
+  }
 }
 

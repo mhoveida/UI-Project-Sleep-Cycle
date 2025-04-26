@@ -4,22 +4,17 @@
 
 {% block content %}
 <div class="cycle-container website-padding">
-
-  <!-- Left: Intro, then image + stage info -->
   <div class="stage-content">
-
     <!-- Intro shown first -->
     <div id="intro-content">
       <h1>{{ content.intro.subtitle }}</h1>
       <h2>{{ content.intro.title }}</h2>
       <p>{{ content.intro.description }}</p>
     </div>
-
     <!-- Dynamic image for selected stage -->
     <div id="stage-image-wrapper" style="display: none;">
       <img id="stage-image" src="" alt="Stage Illustration" style="max-width: 100%; margin-bottom: 1rem;">
     </div>
-
     <!-- Stage info blocks -->
     {% for stage in content.stages %}
       <div class="stage-info" id="info-{{ stage.id }}" style="display: none;">
@@ -36,7 +31,6 @@
               </li>
             {% endfor %}
           </ul>
-          
           <!-- Next Stage button (hidden until last characteristic) -->
           {% if not loop.last %}
             <button class="next-stage-button" data-next="{{ content.stages[loop.index].id }}" style="display: none;">
@@ -46,7 +40,6 @@
       </div>
     {% endfor %}
   </div>
-
   <!-- Right: Clickable sleep cycle image -->
   <div class="cycle-image cycle-image-scaled">
     <div class="image-wrapper">
@@ -65,22 +58,16 @@
       </map>
     </div>
   </div>  
+  <!-- Left: Intro, then image + stage info -->
 </div>
 
 <!-- External script -->
 <script src="{{ url_for('static', filename='js/sleep_cycle.js') }}"></script>
 
-<!-- Hidden by default: main stage image -->
-<div id="stage-image-wrapper" style="display: none;">
-    <img id="stage-image" src="" alt="Stage Illustration" style="max-width: 100%; margin-bottom: 1rem;">
-  </div>
-  
-  <!-- Hidden by default: wave image at bottom left -->
-  <div id="wave-image-wrapper" style="display: none; position: absolute; bottom: 6rem; left: 2rem;">
-    <img id="wave-image" src="" alt="Sleep Wave" style="width: 200px; height: auto; border-radius: 8px;">
-  </div>
-  
-  
+<!-- Hidden by default: wave image at bottom left -->
+<div id="wave-image-wrapper" style="display: none; position: fixed; bottom: 6rem; left: 2rem; z-index: 100;">
+  <img id="wave-image" src="" alt="Sleep Wave" style="width: 200px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+</div>
 
 <!-- Navigation buttons -->
 <div class="page-nav">
