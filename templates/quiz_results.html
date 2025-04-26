@@ -13,10 +13,12 @@
   <p class="message" id="result-message"></p>
   <p class="completed" id="completed-quizzes"></p>
 
-  <div class="result-buttons">
-    <a href="/learn/1" class="button left-button">Review Sleep Stages</a>
-    <a href="{{ url_for('quiz1_sequence') }}" class="button right-button">Try Again</a>
-  </div>
+<div class="result-buttons">
+  <a href="/learn/1"                       class="left-button">Review Sleep Stages</a>
+  <a href="/quiz_results/q1"               class="middle-button">View Correct Choices</a>
+  <a href="{{ url_for('quiz1_sequence') }}" class="right-button">Try Again</a>
+</div>
+
 </div>
 {% endblock %}
 
