@@ -1,3 +1,5 @@
+{% set use_bootstrap = True %}
+
 {% extends "layout.html" %}
 
 {% block title %}{{ title }}{% endblock %}
@@ -11,45 +13,49 @@
       <h2>{{ content.intro.title }}</h2>
       <p>{{ content.intro.description }}</p>
     </div>
+    
     <!-- Dynamic image for selected stage -->
     <div id="stage-image-wrapper" style="display: none;">
       <img id="stage-image" src="" alt="Stage Illustration" style="max-width: 100%; margin-bottom: 1rem;">
     </div>
+
     <!-- Stage info blocks -->
     {% for stage in content.stages %}
       <div class="stage-info" id="info-{{ stage.id }}" style="display: none;">
         (Click on each button to see next characteristic)
         <ul class="characteristics" id="char-{{ stage.id }}">
-            {% for c in stage.characteristics %}
-              <li class="characteristic-item" style="{% if not loop.first %}display: none;{% endif %}">
-                <button class="char-button">{{ c.title }}</button>
-                <img src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/' ~ stage.id ~ '-ch' ~ loop.index ~ '.png') }}"
-                     alt="{{ c.title }}">
-                {% if c.detail %}
-                  <p>{{ c.detail }}</p>
-                {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-          <!-- Next Stage button (hidden until last characteristic) -->
-          {% if not loop.last %}
-            <button class="next-stage-button" data-next="{{ content.stages[loop.index].id }}" style="display: none;">
-              Next Stage →
-            </button>
-          {% endif %}          
+          {% for c in stage.characteristics %}
+            <li class="characteristic-item" style="{% if not loop.first %}display: none;{% endif %}">
+              <button class="char-button">{{ c.title }}</button>
+              <img src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/' ~ stage.id ~ '-ch' ~ loop.index ~ '.png') }}"
+                   alt="{{ c.title }}">
+              {% if c.detail %}
+                <p>{{ c.detail }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        
+        <!-- Next Stage button (hidden until last characteristic) -->
+        {% if not loop.last %}
+          <button class="next-stage-button" data-next="{{ content.stages[loop.index].id }}" style="display: none;">
+            Next Stage →
+          </button>
+        {% endif %}
       </div>
     {% endfor %}
   </div>
-  <!-- Right: Clickable sleep cycle image -->
+
+  <!-- Right side: Sleep cycle image and wave animation -->
   <div class="cycle-image cycle-image-scaled">
     <div class="image-wrapper">
-      <!-- This image src will be swapped -->
+      <!-- Sleep Cycle Main Image -->
       <img id="sleep-cycle-img"
            src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/Sleep-cycles.png') }}"
            usemap="#sleepmap"
            alt="Sleep Cycle Diagram"
-           width="1000">
-  
+           >
+
       <map name="sleepmap">
         <area shape="poly" coords="485,416,453,260,567,261,546,420,514,417" onclick="showStage('N1')" alt="N1" data-stage="N1">
         <area shape="poly" coords="551,421,572,264,710,327,796,432,816,480,826,579,815,656,779,742,702,821,645,855,575,878,543,722,628,680,659,617,664,521,613,449" onclick="showStage('N2')" alt="N2" data-stage="N2">
@@ -57,19 +63,18 @@
         <area shape="poly" coords="361,594,203,622,218,475,265,383,309,336,354,300,412,278,452,265,473,379,480,420,389,481" onclick="showStage('REM')" alt="REM" data-stage="REM">
       </map>
     </div>
-  </div>  
-  <!-- Left: Intro, then image + stage info -->
+
+    <!-- NEW: Brainwave Animation will be created here -->
+    <div id="wave-animation-container"></div>
+  </div>
 </div>
 
 <!-- External script -->
 <script src="{{ url_for('static', filename='js/sleep_cycle.js') }}"></script>
 
-<!-- Hidden by default: wave image at bottom left -->
-<div id="wave-image-wrapper" style="display: none; position: fixed; bottom: 6rem; left: 2rem; z-index: 100;">
-  <img id="wave-image" src="" alt="Sleep Wave" style="width: 200px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
-</div>
+<!-- (Not needed anymore unless you still use #wave-image-wrapper elsewhere) -->
 
-<!-- Navigation buttons -->
+<!-- Navigation buttons at bottom -->
 <div class="page-nav">
   <a href="{{ url_for('home') }}" class="nav-button nav-back">← Back</a>
   <a href="{{ url_for('learn', section_id=2) }}" class="nav-button nav-next">Next: Sleep Disruptors →</a>

@@ -206,22 +206,23 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
+  flex-wrap: wrap; /* Important for mobile responsiveness */
   padding: 2rem 0;
 }
 
 .stage-content {
-  flex: 1;
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  padding: 2rem 0;
+  flex: 1 1 400px;
+  min-width: 300px;
 }
 
 .cycle-image {
-  flex: 1;
-  text-align: left;
-  padding-top: 1rem;
+  flex: 1 1 500px;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
+
 .text-and-image {
   flex: 1;
   display: flex;
@@ -234,10 +235,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .cycle-image img {
-  width: 1000px; /* Match image map coordinates */
   height: auto;
-  border-radius: 12px;
+  transform: scale(0.75);
+  transform-origin: top left;  /* <-- CHANGE TO CENTER */
 }
+
   
 /* Stage content */
 .stage-info {
@@ -323,8 +325,8 @@ area {
 }
 
 .image-wrapper {
-  position: relative;
-  width: 1000px;
+  /*position: relative;*/
+  /*width: 1000px;*/
   height: auto;
 }
 
@@ -1123,17 +1125,16 @@ area {
 
 /* Sleep wave animation container */
 #wave-animation-container {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  width: 400px;
-  height: 200px;
+  position: relative; /* normal flow */
+  width: 90%;
+  max-width: 600px;
+  margin: 2rem auto 0 auto; /* center it nicely */
   background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   padding: 15px;
-  z-index: 1000;
-  display: none;
+  z-index: 1;
+  display: none; /* still hidden until shown */
   transition: all 0.3s ease;
 }
 

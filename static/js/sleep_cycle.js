@@ -105,7 +105,7 @@ function createWaveAnimation() {
 
   container.style.position = 'absolute';  // not fixed
   container.style.bottom = '8rem';        // a bit above back button
-  container.style.right = '2rem';           // near the right side
+  container.style.left = '10rem';           // near the right side
   container.style.width = '400px';
   container.style.height = '180px';
   container.style.background = 'white';
@@ -182,8 +182,7 @@ function createWaveAnimation() {
   
   // Add container to the document
   //document.body.appendChild(container);
-  document.querySelector('.cycle-container').appendChild(container);
-
+  document.querySelector('.cycle-image').appendChild(container);
 
   
   console.log("Wave animation container created");
