@@ -265,7 +265,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .characteristics img {
-  width: 150px; /* was 80px */
+  width: 200px; /* was 80px */
   height: auto;
   margin-bottom: 1rem; /* increase breathing room */
 }
@@ -389,16 +389,6 @@ area {
   background-color: #e0e0e0;
 }
 
-.next-stage-button {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: bold;
-  background-color: #2c3e50;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
 
 #wave-image-wrapper {
   margin-top: 3rem;

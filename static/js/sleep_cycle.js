@@ -468,19 +468,31 @@ document.addEventListener('DOMContentLoaded', () => {
           if (index + 1 < items.length) {
             const nextItem = items[index + 1];
             nextItem.style.display = 'block';
-    
-            // Smooth scroll to the next characteristic
             nextItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
           } else {
             const nextButton = item.closest('.stage-info').querySelector('.next-stage-button');
+    
             if (nextButton) {
               nextButton.style.display = 'inline-block';
+              nextButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+              console.log("Reached end of final stage.");
     
-              // ✅ Instead of scrollIntoView, scroll window to nextButton's top position
-              const buttonTop = nextButton.getBoundingClientRect().top + window.scrollY;
-              window.scrollTo({
-                top: buttonTop - 100, // slight offset so it's not glued to very top
-                behavior: 'smooth'
+              const restartButton = document.createElement('button');
+              restartButton.textContent = "Restart Cycle";
+              restartButton.className = "next-stage-button"; // 👈 same styling
+              restartButton.style.marginTop = "2rem";
+    
+              item.closest('.stage-info').appendChild(restartButton);
+    
+              restartButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+              restartButton.addEventListener('click', () => {
+                showStage('N1');
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
               });
             }
           }
