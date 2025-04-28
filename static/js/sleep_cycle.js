@@ -11,23 +11,23 @@ let targetX = 0; // Target position to stop at
 const wavePatterns = {
   N1: { 
     amplitude: 15, 
-    frequency: 0.05, 
+    frequency: 0.40,  // Increased from 0.05
     color: '#4ca1af' 
   },
   N2: { 
     amplitude: 10, 
-    frequency: 0.1, 
+    frequency: 0.50,  // Increased from 0.1
     spindles: true, 
     color: '#4ca1af' 
   },
   N3: { 
     amplitude: 30, 
-    frequency: 0.03, 
+    frequency: 0.50,  // Increased from 0.03
     color: '#4ca1af' 
   },
   REM: { 
     amplitude: 8, 
-    frequency: 0.15, 
+    frequency: 0.9,   // Increased from 0.15
     eyeMovements: true, 
     color: '#4ca1af' 
   }
