@@ -465,17 +465,28 @@ document.addEventListener('DOMContentLoaded', () => {
       const button = item.querySelector('.char-button');
       if (button) {
         button.addEventListener('click', () => {
-          // Show next item if exists
           if (index + 1 < items.length) {
-            items[index + 1].style.display = 'block';
+            const nextItem = items[index + 1];
+            nextItem.style.display = 'block';
+    
+            // Smooth scroll to the next characteristic
+            nextItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
           } else {
-            // Show next stage button if this was the last item
             const nextButton = item.closest('.stage-info').querySelector('.next-stage-button');
-            if (nextButton) nextButton.style.display = 'inline-block';
+            if (nextButton) {
+              nextButton.style.display = 'inline-block';
+    
+              // ✅ Instead of scrollIntoView, scroll window to nextButton's top position
+              const buttonTop = nextButton.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo({
+                top: buttonTop - 100, // slight offset so it's not glued to very top
+                behavior: 'smooth'
+              });
+            }
           }
         });
       }
-    });
+    });    
   });
 
   // Handle "Next Stage" button
@@ -485,9 +496,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const stageOrder = ["N1", "N2", "N3", "REM"];
       const nextIndex = stageOrder.indexOf(currentId) + 1;
       const nextId = stageOrder[nextIndex];
+  
       if (nextId) {
         showStage(nextId);
+  
+        // ✅ Reset the page scroll to the top
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       }
     });
-  });
+  });  
 });
