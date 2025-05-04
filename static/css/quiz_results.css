@@ -264,3 +264,52 @@
   padding: 6px 0;
   font-size: 0.8rem;
 }
+/* Add these rules to your existing quiz_results.css file */
+
+.score-breakdown {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.score-breakdown h3 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.quiz-breakdown {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  border-left: 4px solid #6c757d;
+}
+
+.quiz-breakdown h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #495057;
+}
+
+.quiz-breakdown p {
+  margin: 5px 0 0 0;
+  font-weight: 500;
+}
+
+/* Colored indicators for scores */
+.quiz-breakdown p.good-score {
+  color: #28a745;
+}
+
+.quiz-breakdown p.medium-score {
+  color: #ffc107;
+}
+
+.quiz-breakdown p.low-score {
+  color: #dc3545;
+}
