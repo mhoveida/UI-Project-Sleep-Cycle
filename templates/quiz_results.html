@@ -12,32 +12,19 @@
   <p class="score-text" id="result-score"></p>
   <p class="message" id="result-message"></p>
   <p class="completed" id="completed-quizzes"></p>
+  <p class="total" id="total-score"></p>
+  
+  <!-- New div for detailed score breakdown -->
+  <div id="score-breakdown" class="score-breakdown"></div>
 
-<div class="result-buttons">
-  <a href="/learn/1"                       class="left-button">Review Sleep Stages</a>
-  <a href="/quiz_results/q1"               class="middle-button">View Correct Choices</a>
-  <a href="{{ url_for('quiz1_sequence') }}" class="right-button">Try Again</a>
-</div>
-
+  <div class="result-buttons">
+    <a href="/learn/1" class="left-button">Review Sleep Stages</a>
+    <a href="/quiz_results/q1" class="middle-button">View Correct Choices</a>
+    <a href="{{ url_for('quiz1_sequence') }}" class="right-button">Try Again</a>
+  </div>
 </div>
 {% endblock %}
 
 {% block script %}
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    fetch('/quiz_results', {
-        method: 'POST'
-    }).then(response => response.json())
-      .then(data => {
-        document.getElementById('result-title').innerText = data.feedback.title;
-        document.getElementById('result-score').innerText = 'Score: ' + data.feedback.score;
-        document.getElementById('result-message').innerText = data.feedback.message;
-        document.getElementById('completed-quizzes').innerText = 'Quizzes Completed: 5';
-      }).catch(error => {
-        console.error('Error fetching results:', error);
-        document.getElementById('result-title').innerText = 'Error';
-        document.getElementById('result-message').innerText = 'Unable to load quiz results.';
-      });
-});
-</script>
+<script src="{{ url_for('static', filename='js/quiz_results.js') }}"></script>
 {% endblock %}
