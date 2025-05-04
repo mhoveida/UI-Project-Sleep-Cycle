@@ -245,27 +245,55 @@ def quiz_results():
                     questions_details.append({"quiz": 2, "question": item, "correct": False})
 
         # Quiz 3 - Each correct match counts as 1 point (6 points total)
-        correct_matches = {normalize(item['label']): normalize(item['match']).replace('.png', '') 
-                          for item in quiz_data['questions'][2]['items']}
-        user_matches = {normalize(k): normalize(v) for k, v in session.get('quiz3_matches', {}).items()}
+        print("QUIZ 3 DEBUGGING - Starting quiz 3 scoring")
+        
+        # Get the correct matches from the quiz data using the explicit indices
+        correct_matches = {}
+        for item in quiz_data['questions'][2]['items']:
+            if 'leftIndex' in item and 'rightIndex' in item:
+                correct_matches[f"question_{item['leftIndex']}"] = f"answer_{item['rightIndex']}"
+        
+        print("Correct matches from data:", correct_matches)
+        
+        user_matches = session.get('quiz3_matches', {})
+        print("User submitted matches:", user_matches)
         
         if user_matches:
             completed_questions += len(correct_matches)
             
-            for label, correct_match in correct_matches.items():
-                user_match = None
-                
-                # Find the user's match for this label
-                for user_label, user_match_value in user_matches.items():
-                    if label in user_label:
-                        user_match = user_match_value
+            for question_key, correct_answer in correct_matches.items():
+                # Find if this question was answered
+                base_question_key = None
+                for user_key in user_matches.keys():
+                    if user_key.startswith(question_key):
+                        base_question_key = user_key
                         break
                 
-                if user_match and correct_match in user_match:
+                if base_question_key and user_matches[base_question_key] == correct_answer:
                     total_score += 1
-                    questions_details.append({"quiz": 3, "question": label, "correct": True})
+                    print(f"Correct! {base_question_key} -> {user_matches[base_question_key]} matches {correct_answer}")
+                    # Find the original label using the index from the question key
+                    question_index = int(question_key.split('_')[1])
+                    original_label = None
+                    for item in quiz_data['questions'][2]['items']:
+                        if item.get('leftIndex') == question_index:
+                            original_label = item['label']
+                            break
+                    
+                    questions_details.append({"quiz": 3, "question": original_label or question_key, "correct": True})
                 else:
-                    questions_details.append({"quiz": 3, "question": label, "correct": False})
+                    print(f"Incorrect! {base_question_key} -> {user_matches.get(base_question_key, 'Not found')} does not match {correct_answer}")
+                    # Find the original label using the index from the question key
+                    question_index = int(question_key.split('_')[1])
+                    original_label = None
+                    for item in quiz_data['questions'][2]['items']:
+                        if item.get('leftIndex') == question_index:
+                            original_label = item['label']
+                            break
+                    
+                    questions_details.append({"quiz": 3, "question": original_label or question_key, "correct": False})
+            
+            print(f"Quiz 3 score: {total_score} / 6")
 
         # Quiz 4 - Single question worth 1 point
         correct_answer = normalize(quiz_data['questions'][3]['correctAnswer'])
