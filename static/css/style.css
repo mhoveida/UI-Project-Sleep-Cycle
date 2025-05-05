@@ -1366,3 +1366,31 @@ area {
   }
 }
 
+.char-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.hint-icon {
+  width: 50px !important;
+  height: 50px !important;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.hint-icon:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.hint-text {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+  max-width: 250px;
+  margin-top: 0.5rem;
+}
+

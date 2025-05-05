@@ -25,14 +25,19 @@
         (Click on each button to see next characteristic)
         <ul class="characteristics" id="char-{{ stage.id }}">
           {% for c in stage.characteristics %}
-            <li class="characteristic-item" style="{% if not loop.first %}display: none;{% endif %}">
+          <li class="characteristic-item" style="{% if not loop.first %}display: none;{% endif %}">
+            <div class="char-button-wrapper">
               <button class="char-button">{{ c.title }}</button>
-              <img src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/' ~ stage.id ~ '-ch' ~ loop.index ~ '.png') }}"
-                   alt="{{ c.title }}">
               {% if c.detail %}
-                <p>{{ c.detail }}</p>
+                <img src="{{ url_for('static', filename='media/hint.png') }}" alt="Hint" class="hint-icon" onclick="toggleHint(this)">
               {% endif %}
-            </li>
+            </div>
+            <img src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/' ~ stage.id ~ '-ch' ~ loop.index ~ '.png') }}"
+                 alt="{{ c.title }}">
+            {% if c.detail %}
+              <p class="hint-text" style="display: none;">{{ c.detail }}</p>
+            {% endif %}
+          </li>          
           {% endfor %}
         </ul>
         

@@ -521,3 +521,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });  
 });
+
+function toggleHint(iconElement) {
+  const parent = iconElement.closest('.characteristic-item');
+  const hintText = parent.querySelector('.hint-text');
+  if (hintText) {
+    hintText.style.display = hintText.style.display === 'none' ? 'block' : 'none';
+  }
+}
