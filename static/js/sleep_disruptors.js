@@ -52,3 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
       
+
+  function toggleDisruptorHint(icon) {
+    const hintText = icon.nextElementSibling;
+    if (hintText) {
+      hintText.style.display = hintText.style.display === "none" ? "inline" : "none";
+    }
+  }
+  

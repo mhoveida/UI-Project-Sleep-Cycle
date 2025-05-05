@@ -12,10 +12,27 @@
   <!-- Left: Disruptors to drag -->
   <div class="disruptor-list">
     {% for d in content.disruptors %}
-      <div class="disruptor" draggable="true" id="{{ d.id }}" data-affects="{{ d.affectsStage }}">
-        <img src="{{ url_for('static', filename='media/Disruptors/' ~ d.icon) }}" alt="{{ d.title }}">
-        <h3>{{ d.title }}</h3>
-      </div>
+      {% if d.id == 'alcohol_bed' %}
+        <div class="disruptor disruptor-with-hint" draggable="true" id="{{ d.id }}" data-affects="{{ d.affectsStage }}">
+            <img src="{{ url_for('static', filename='media/Disruptors/' ~ d.icon) }}" alt="{{ d.title }}">
+            
+            <div class="disruptor-title-row">
+              <h3 class="disruptor-title">{{ d.title }}</h3>
+              <img src="{{ url_for('static', filename='media/hint.png') }}"
+                  alt="Hint"
+                  class="hint-icon disruptor-hint-icon"
+                  onclick="toggleDisruptorHint(this)">
+              <span class="hint-inline-text" style="display: none;">
+                <strong>Did you know?</strong> Alcohol might help you fall asleep faster, but it severely reduces REM sleep, leaving you feeling mentally foggy even after 8 hours in bed!
+              </span>
+            </div>
+          </div>
+        {% else %}
+        <div class="disruptor" draggable="true" id="{{ d.id }}" data-affects="{{ d.affectsStage }}">
+          <img src="{{ url_for('static', filename='media/Disruptors/' ~ d.icon) }}" alt="{{ d.title }}">
+          <h3>{{ d.title }}</h3>
+        </div>
+      {% endif %}  
     {% endfor %}
   </div>
 
