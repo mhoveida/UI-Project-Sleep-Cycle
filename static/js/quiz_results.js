@@ -1,3 +1,5 @@
+// Changes to quiz_results.js to fix the "total questions" display for Quiz 5
+
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('result-title')) {
         fetch('/quiz_results', {
@@ -38,8 +40,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     
                     // Create breakdown by quiz
                     for (const [quizNum, questions] of Object.entries(quizGroups)) {
-                        const correctCount = questions.filter(q => q.correct).length;
-                        const totalQuestions = questions.length;
+                        // For quiz 5, ensure we count only unique question numbers
+                        const uniqueQuestions = new Set();
+                        questions.forEach(q => {
+                            // Extract the base question number (before any dash)
+                            const baseQuestion = String(q.question).split('-')[0];
+                            uniqueQuestions.add(baseQuestion);
+                        });
+                        
+                        // Count correctly answered questions
+                        const correctQuestions = new Set();
+                        questions.filter(q => q.correct).forEach(q => {
+                            const baseQuestion = String(q.question).split('-')[0];
+                            correctQuestions.add(baseQuestion);
+                        });
+                        
+                        const correctCount = correctQuestions.size;
+                        
+                        // Special handling for Quiz 5 to always show 3 total questions
+                        let totalQuestions = uniqueQuestions.size;
+                        if (quizNum === '5') {
+                            totalQuestions = 3; // Force Quiz 5 to always show 3 total questions
+                        }
                         
                         breakdownHTML += `
                             <div class="quiz-breakdown">

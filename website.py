@@ -320,7 +320,7 @@ def quiz_results():
             'q3': normalize(session.get('quiz5_answers', {}).get('q3', ''))
         }
         
-        # Q1 - Single choice
+        # Q1 - Single choice - worth 1 point
         if user_answers['q1']:
             completed_questions += 1
             if user_answers['q1'] == quiz5_correct['q1']:
@@ -328,21 +328,29 @@ def quiz_results():
                 questions_details.append({"quiz": 5, "question": 1, "correct": True})
             else:
                 questions_details.append({"quiz": 5, "question": 1, "correct": False})
-                
-        # Q2 - Multiple draggable items
+                    
+        # Q2 - Drag and drop activity - worth 1 point total
         if user_answers['q2']:
-            # Check each correct item
-            correct_items = quiz5_correct['q2']
-            completed_questions += len(correct_items)
+            completed_questions += 1  # Count as ONE question total
             
-            for item in correct_items:
-                if item in user_answers['q2']:
-                    total_score += 1
-                    questions_details.append({"quiz": 5, "question": f"2-{item}", "correct": True})
-                else:
+            # Check if user dragged the correct item(s)
+            all_correct = True
+            for item in quiz5_correct['q2']:
+                if item not in user_answers['q2']:
+                    all_correct = False
                     questions_details.append({"quiz": 5, "question": f"2-{item}", "correct": False})
-                
-        # Q3 - Single choice
+            
+            # Also check if user included any wrong items
+            for item in user_answers['q2']:
+                if item not in quiz5_correct['q2']:
+                    all_correct = False
+                    questions_details.append({"quiz": 5, "question": f"2-{item}", "correct": False})
+            
+            if all_correct:
+                total_score += 1
+                questions_details.append({"quiz": 5, "question": 2, "correct": True})
+
+        # Q3 - Single choice - worth 1 point
         if user_answers['q3']:
             completed_questions += 1
             if user_answers['q3'] == quiz5_correct['q3']:
