@@ -175,17 +175,17 @@ document.addEventListener("DOMContentLoaded", () => {
       
       leftConnectors.forEach(connector => {
         const leftIndex = parseInt(connector.dataset.index);
-        const leftLabel = connector.dataset.label || connector.textContent.trim();
+        const leftKey = `question_${leftIndex}`;
         
         // 找到该连接点的连接
         const connection = connections.find(conn => conn.from === leftIndex);
         
         if (connection) {
-          const rightConnector = document.querySelector(`.right-connector[data-index="${connection.to}"]`);
-          const rightValue = rightConnector.dataset.value || rightConnector.getAttribute('data-image');
+          const rightIndex = connection.to;
+          const rightKey = `answer_${rightIndex}`;
           
           // 以服务器期望的格式存储
-          matches[leftLabel] = rightValue;
+          matches[leftKey] = rightKey;
         }
       });
 
