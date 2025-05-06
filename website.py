@@ -226,7 +226,8 @@ def quiz_results():
         helps_mapping = {
             "meditation": "meditation",
             "reading": "reading physical book",
-            "shower": "shower"
+            "shower": "shower",
+            "regular-schedule": "regular schedule"  # 添加正则表达式匹配项
         }
         
         # 其他全部属于伤害睡眠的项目
@@ -274,19 +275,29 @@ def quiz_results():
             helps_correct = mapped_helps.intersection(correct_helps)
             hurts_correct = mapped_hurts.intersection(correct_hurts)
             
-            # helps得分分配（共5分）
+            # 额外打印调试信息
+            print(f"Helps correct items: {helps_correct} out of {correct_helps}")
+            print(f"Hurts correct items: {hurts_correct} out of {correct_hurts}")
+            
+            # helps得分分配（共5分）- 增加更宽松的得分条件
             if "meditation" in mapped_helps and "reading physical book" in mapped_helps:
                 helps_score = 5  # 如果meditation和reading都正确，满分
+            elif len(helps_correct) >= 2:  # 至少有两个正确
+                helps_score = 4
             elif len(helps_correct) > 0:
                 helps_score = 3  # 至少有一个正确
             else:
                 helps_score = 0
                 
-            # hurts得分分配（共5分）
+            # hurts得分分配（共5分）- 增加更宽松的得分条件
             if len(hurts_correct) >= 5:  # 至少5个正确
                 hurts_score = 5
+            elif len(hurts_correct) >= 4:  # 至少4个正确
+                hurts_score = 4
             elif len(hurts_correct) >= 3:  # 至少3个正确
                 hurts_score = 3
+            elif len(hurts_correct) > 0:   # 至少有1个正确
+                hurts_score = 1
             else:
                 hurts_score = 0
             
@@ -353,17 +364,28 @@ def quiz_results():
                 else:
                     expected = correct_q3_pairs.get(label, "unknown")
                     print(f"Incorrect match: {label} -> {match}, expected: {expected}")
-                    
-            # 全部正确得满分
-            if match_count == len(correct_q3_pairs):
-                quiz3_score = 6
+            
+            # 对于未完成的匹配，不计入错误
+            incomplete_matches = len(correct_q3_pairs) - len(processed_matches)
+            print(f"Incomplete matches: {incomplete_matches}")
+            
+            # 全部正确得满分 - 宽松处理未完成的匹配
+            if match_count == len(processed_matches) and len(processed_matches) >= 4:
+                quiz3_score = 6  # 如果用户提交了至少4个匹配并且全部正确，给满分
+                print("All submitted matches correct! Full score awarded.")
+            elif match_count == len(correct_q3_pairs):
+                quiz3_score = 6  # 如果用户提交了所有匹配并且全部正确，给满分
                 print("All matches correct! Full score awarded.")
             else:
-                # 按正确率计算分数
-                quiz3_score = round(6 * (match_count / len(correct_q3_pairs)))
+                # 按正确率计算分数，但对未完成的匹配采取宽松处理
+                effective_total = max(len(processed_matches), 1)  # 防止除以零
+                quiz3_score = round(6 * (match_count / effective_total))
+                # 确保至少1个正确答案得1分
+                if match_count > 0 and quiz3_score == 0:
+                    quiz3_score = 1
             
             total_score += quiz3_score
-            print(f"Quiz 3 score: {quiz3_score}/6 ({match_count}/{len(correct_q3_pairs)} correct matches)")
+            print(f"Quiz 3 score: {quiz3_score}/6 ({match_count}/{len(processed_matches)} correct matches)")
 
         # Quiz 4 (1分)
         quiz4_score = 0
@@ -463,6 +485,8 @@ def quiz_results():
                 correct_q2_items = [x.lower().strip() for x in quiz5_correct['q2']]
                 user_q2_items = [x.lower().strip() for x in user_answers['q2']]
                 
+                print(f"Q5.2 normalized items: {user_q2_items}")
+                
                 # 检查是否包含meditation
                 has_meditation = any(item == "meditation" or "meditation" in item for item in user_q2_items)
                 
@@ -471,13 +495,19 @@ def quiz_results():
                     quiz5_score += 1
                     print(f"Quiz 5.2: Correct (1/1 matches) - Selected Meditation")
                 else:
-                    print(f"Quiz 5.2: Incorrect - Meditation not selected")
+                    # 尝试更宽松的匹配
+                    has_meditation_loose = any('med' in item for item in user_q2_items)
+                    if has_meditation_loose:
+                        quiz5_score += 1
+                        print(f"Quiz 5.2: Correct with loose matching - Found meditation-like item")
+                    else:
+                        print(f"Quiz 5.2: Incorrect - Meditation not selected")
             else:
                 print("Quiz 5.2: No answer provided")
             
             # Q5.3 - 选择题 (1分) - 更宽松的匹配
             q3_correct = check_answer(user_answers['q3'], quiz5_correct['q3'], 3) or \
-                       user_answers['q3'] and "rem" in user_answers['q3'].lower()
+                       (user_answers['q3'] and ("rem" in user_answers['q3'].lower() or "r.e.m" in user_answers['q3'].lower()))
             if q3_correct:
                 quiz5_score += 1
             
