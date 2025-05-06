@@ -11,23 +11,23 @@ let targetX = 0; // Target position to stop at
 const wavePatterns = {
   N1: { 
     amplitude: 15, 
-    frequency: 0.05, 
+    frequency: 0.40,  // Increased from 0.05
     color: '#4ca1af' 
   },
   N2: { 
     amplitude: 10, 
-    frequency: 0.1, 
+    frequency: 0.50,  // Increased from 0.1
     spindles: true, 
     color: '#4ca1af' 
   },
   N3: { 
     amplitude: 30, 
-    frequency: 0.03, 
+    frequency: 0.50,  // Increased from 0.03
     color: '#4ca1af' 
   },
   REM: { 
     amplitude: 8, 
-    frequency: 0.15, 
+    frequency: 0.9,   // Increased from 0.15
     eyeMovements: true, 
     color: '#4ca1af' 
   }
@@ -105,7 +105,7 @@ function createWaveAnimation() {
 
   container.style.position = 'absolute';  // not fixed
   container.style.bottom = '8rem';        // a bit above back button
-  container.style.right = '2rem';           // near the right side
+  container.style.left = '10rem';           // near the right side
   container.style.width = '400px';
   container.style.height = '180px';
   container.style.background = 'white';
@@ -182,8 +182,7 @@ function createWaveAnimation() {
   
   // Add container to the document
   //document.body.appendChild(container);
-  document.querySelector('.cycle-container').appendChild(container);
-
+  document.querySelector('.cycle-image').appendChild(container);
 
   
   console.log("Wave animation container created");
@@ -466,17 +465,40 @@ document.addEventListener('DOMContentLoaded', () => {
       const button = item.querySelector('.char-button');
       if (button) {
         button.addEventListener('click', () => {
-          // Show next item if exists
           if (index + 1 < items.length) {
-            items[index + 1].style.display = 'block';
+            const nextItem = items[index + 1];
+            nextItem.style.display = 'block';
+            nextItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
           } else {
-            // Show next stage button if this was the last item
             const nextButton = item.closest('.stage-info').querySelector('.next-stage-button');
-            if (nextButton) nextButton.style.display = 'inline-block';
+    
+            if (nextButton) {
+              nextButton.style.display = 'inline-block';
+              nextButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+              console.log("Reached end of final stage.");
+    
+              const restartButton = document.createElement('button');
+              restartButton.textContent = "Restart Cycle";
+              restartButton.className = "next-stage-button"; // 👈 same styling
+              restartButton.style.marginTop = "2rem";
+    
+              item.closest('.stage-info').appendChild(restartButton);
+    
+              restartButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+              restartButton.addEventListener('click', () => {
+                showStage('N1');
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+              });
+            }
           }
         });
       }
-    });
+    });    
   });
 
   // Handle "Next Stage" button
@@ -486,9 +508,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const stageOrder = ["N1", "N2", "N3", "REM"];
       const nextIndex = stageOrder.indexOf(currentId) + 1;
       const nextId = stageOrder[nextIndex];
+  
       if (nextId) {
         showStage(nextId);
+  
+        // ✅ Reset the page scroll to the top
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       }
     });
-  });
+  });  
 });
+
+function toggleHint(iconElement) {
+  const parent = iconElement.closest('.characteristic-item');
+  const hintText = parent.querySelector('.hint-text');
+  if (hintText) {
+    hintText.style.display = hintText.style.display === 'none' ? 'block' : 'none';
+  }
+}
