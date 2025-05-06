@@ -457,26 +457,21 @@ def quiz_results():
             if q1_correct:
                 quiz5_score += 1
             
-            # Q5.2 - 拖拽题 (1分) - 更宽松的匹配
+            # Q5.2 - 拖拽题 (1分) - 更新为只接受Meditation作为唯一正确答案
             if user_answers['q2']:
                 # 规范化数据
                 correct_q2_items = [x.lower().strip() for x in quiz5_correct['q2']]
                 user_q2_items = [x.lower().strip() for x in user_answers['q2']]
                 
-                # 计算匹配数
-                matches = sum(1 for user_item in user_q2_items if any(
-                    user_item == correct_item or 
-                    user_item in correct_item or 
-                    correct_item in user_item
-                    for correct_item in correct_q2_items
-                ))
+                # 检查是否包含meditation
+                has_meditation = any(item == "meditation" or "meditation" in item for item in user_q2_items)
                 
-                # 任何匹配都给分，因为选择比较少
-                if matches > 0 or "meditation" in user_q2_items:
+                # 如果包含meditation，给予满分
+                if has_meditation:
                     quiz5_score += 1
-                    print(f"Quiz 5.2: Correct ({matches}/{len(correct_q2_items)} matches)")
+                    print(f"Quiz 5.2: Correct (1/1 matches) - Selected Meditation")
                 else:
-                    print(f"Quiz 5.2: Incorrect. {matches}/{len(correct_q2_items)} matches")
+                    print(f"Quiz 5.2: Incorrect - Meditation not selected")
             else:
                 print("Quiz 5.2: No answer provided")
             
