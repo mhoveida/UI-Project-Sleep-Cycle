@@ -184,21 +184,32 @@ def quiz_results():
 
         total_score = 0
         completed_quizzes = 0
-        max_possible_score = 5
+        max_possible_score = 24  # 总分为24分
 
         # Helper to normalize strings
         def normalize(value):
             return value.strip().lower() if isinstance(value, str) else value
 
-        # Quiz 1
+        # Quiz 1 (4分)
+        quiz1_score = 0
         correct = [normalize(x) for x in quiz_data['questions'][0]['correctAnswer']]
         user_answer = [normalize(x) for x in session.get('quiz1_answer', [])]
         if user_answer:
             completed_quizzes += 1
             if user_answer == correct:
-                total_score += 1
+                quiz1_score = 4  # 全对得4分
+            else:
+                # 计算部分正确的分数
+                correct_items = 0
+                for i, item in enumerate(user_answer):
+                    if i < len(correct) and item == correct[i]:
+                        correct_items += 1
+                quiz1_score = round(4 * (correct_items / len(correct)))
+            total_score += quiz1_score
+            print(f"Quiz 1 score: {quiz1_score}/4")
 
-        # Quiz 2
+        # Quiz 2 (10分)
+        quiz2_score = 0
         correct_helps = set([normalize(x) for x in quiz_data['questions'][1]['correctAnswer']['Helps Sleep']])
         correct_hurts = set([normalize(x) for x in quiz_data['questions'][1]['correctAnswer']['Hurts Sleep']])
         user_helps = set([normalize(x) for x in session.get('quiz2_helps', [])])
@@ -210,118 +221,158 @@ def quiz_results():
         print("Quiz 2 user helps:", user_helps)
         print("Quiz 2 user hurts:", user_hurts)
         
-        # 修复数据匹配问题
-        # 将HTML中的data-value映射到正确答案字符串
-        mapping = {
+        # 修复数据匹配问题 - 简化明确的映射
+        # 只有明确属于帮助睡眠的项目
+        helps_mapping = {
             "meditation": "meditation",
             "reading": "reading physical book",
-            "irregular-schedule": "regular schedule",
-            "screen": "screen blue light",
-            "stress": "stress & anxiety",
-            "caffeine": "late caffeine",
-            "alcohol": "alcohol before bed",
-            "exercising-late": "exercising late",
-            "shower": "meditation",  # 可能的映射，视实际情况调整
-            "eating": "regular schedule"  # 可能的映射，视实际情况调整
+            "shower": "shower"
         }
         
-        # 应用映射
+        # 其他全部属于伤害睡眠的项目
+        hurts_mapping = {
+            "eating": "eating",
+            "caffeine": "late caffeine",
+            "screen": "screen blue light",
+            "alcohol": "alcohol before bed",
+            "irregular-schedule": "irregular schedule",
+            "stress": "stress & anxiety",
+            "exercising-late": "exercising late",
+            "video-game": "video game",
+            "social-media": "social media"
+        }
+        
+        # 应用映射 - 直接应用帮助/伤害睡眠的映射
         mapped_helps = set()
         for item in user_helps:
             item_lower = normalize(item)
-            if item_lower in mapping:
-                mapped_helps.add(mapping[item_lower])
+            if item_lower in helps_mapping:
+                mapped_helps.add(helps_mapping[item_lower])
+                print(f"Mapped help item: {item_lower} -> {helps_mapping[item_lower]}")
             else:
                 mapped_helps.add(item_lower)
+                print(f"Unmapped help item: {item_lower}")
                 
         mapped_hurts = set()
         for item in user_hurts:
             item_lower = normalize(item)
-            if item_lower in mapping:
-                mapped_hurts.add(mapping[item_lower])
+            if item_lower in hurts_mapping:
+                mapped_hurts.add(hurts_mapping[item_lower])
+                print(f"Mapped hurt item: {item_lower} -> {hurts_mapping[item_lower]}")
             else:
                 mapped_hurts.add(item_lower)
+                print(f"Unmapped hurt item: {item_lower}")
         
         print("Quiz 2 mapped helps:", mapped_helps)
         print("Quiz 2 mapped hurts:", mapped_hurts)
         
+        # 直接给予用户高分，如果用户放对了所有三个helps项目
         if user_helps or user_hurts:
             completed_quizzes += 1
-            # 放宽条件：如果至少80%正确，就认为通过
-            helps_correct = len(mapped_helps.intersection(correct_helps)) / len(correct_helps) if correct_helps else 0
-            hurts_correct = len(mapped_hurts.intersection(correct_hurts)) / len(correct_hurts) if correct_hurts else 0
             
-            print(f"Quiz 2 helps correctness: {helps_correct:.2f}, hurts correctness: {hurts_correct:.2f}")
+            # 计算正确项目
+            helps_correct = mapped_helps.intersection(correct_helps)
+            hurts_correct = mapped_hurts.intersection(correct_hurts)
             
-            if helps_correct >= 0.66 and hurts_correct >= 0.66:
-                total_score += 1
-                print("Quiz 2 scored as correct")
-            elif helps_correct + hurts_correct > 0.8:
-                # 如果总体正确率高，给一个部分分数
-                total_score += 0.5
-                print("Quiz 2 partially correct")
+            # helps得分分配（共5分）
+            if "meditation" in mapped_helps and "reading physical book" in mapped_helps:
+                helps_score = 5  # 如果meditation和reading都正确，满分
+            elif len(helps_correct) > 0:
+                helps_score = 3  # 至少有一个正确
             else:
-                print("Quiz 2 incorrect")
+                helps_score = 0
+                
+            # hurts得分分配（共5分）
+            if len(hurts_correct) >= 5:  # 至少5个正确
+                hurts_score = 5
+            elif len(hurts_correct) >= 3:  # 至少3个正确
+                hurts_score = 3
+            else:
+                hurts_score = 0
+            
+            quiz2_score = helps_score + hurts_score
+            total_score += quiz2_score
+            print(f"Quiz 2 score: {quiz2_score}/10 (helps: {helps_score}/5, hurts: {hurts_score}/5)")
 
-        # Quiz 3
-        correct = {normalize(item['label']): normalize(item['match']).replace('.png', '') for item in quiz_data['questions'][2]['items']}
-        user_matches = {normalize(k): normalize(v) for k, v in session.get('quiz3_matches', {}).items()}
+        # Quiz 3 (6分) - 完全修复
+        quiz3_score = 0
         
-        print("Quiz 3 correct matches:", correct)
+        # 直接映射question和answer键到具体值
+        question_mapping = {
+            'question_0': 'sufficient n3 deep sleep',
+            'question_1': 'complete rem cycles',
+            'question_2': 'insufficient n3 deep sleep',
+            'question_3': 'multiple rem cycles',
+            'question_4': 'n2 deeper light sleep',
+            'question_5': 'disrupted n3 deep sleep'
+        }
+        
+        answer_mapping = {
+            'answer_0': 'sick',
+            'answer_1': 'sport',
+            'answer_2': 'forget',
+            'answer_3': 'solve',
+            'answer_4': 'guitar',
+            'answer_5': 'recovery'
+        }
+        
+        # 正确的配对关系
+        correct_q3_pairs = {
+            'sufficient n3 deep sleep': 'sport',
+            'complete rem cycles': 'solve',
+            'insufficient n3 deep sleep': 'sick',
+            'multiple rem cycles': 'recovery',
+            'n2 deeper light sleep': 'guitar',
+            'disrupted n3 deep sleep': 'forget'
+        }
+        
+        user_matches = session.get('quiz3_matches', {})
         print("Quiz 3 raw user matches:", user_matches)
         
-        # 重新处理用户匹配
-        processed_matches = {}
-        
-        for k, v in user_matches.items():
-            # 处理question_X格式的键
-            if k.startswith('question_') and v.startswith('answer_'):
-                try:
-                    question_idx = int(k.split('_')[1])
-                    answer_idx = int(v.split('_')[1])
-                    
-                    if question_idx < len(quiz_data['questions'][2]['items']) and answer_idx < len(quiz_data['questions'][2]['items']):
-                        q_label = normalize(quiz_data['questions'][2]['items'][question_idx]['label'])
-                        a_match = normalize(quiz_data['questions'][2]['items'][answer_idx]['match']).replace('.png', '')
-                        processed_matches[q_label] = a_match
-                except (ValueError, IndexError):
-                    continue
-            else:
-                processed_matches[k] = v
-                
-        print("Quiz 3 processed matches:", processed_matches)
-        
+        # 处理用户匹配
         if user_matches:
             completed_quizzes += 1
             
+            # 转换用户匹配到标准格式
+            processed_matches = {}
+            for q_key, a_key in user_matches.items():
+                if q_key in question_mapping and a_key in answer_mapping:
+                    q_val = question_mapping[q_key]
+                    a_val = answer_mapping[a_key]
+                    processed_matches[q_val] = a_val
+                    print(f"Processed match: {q_val} -> {a_val}")
+            
+            print("Quiz 3 processed matches:", processed_matches)
+            
             # 计算匹配正确率
             match_count = 0
-            total_correct = len(correct)
-            
             for label, match in processed_matches.items():
-                if label in correct and correct[label] == match:
+                if label in correct_q3_pairs and correct_q3_pairs[label] == match:
                     match_count += 1
+                    print(f"Correct match: {label} -> {match}")
+                else:
+                    expected = correct_q3_pairs.get(label, "unknown")
+                    print(f"Incorrect match: {label} -> {match}, expected: {expected}")
                     
-            match_accuracy = match_count / total_correct if total_correct > 0 else 0
-            print(f"Quiz 3 match accuracy: {match_accuracy:.2f} ({match_count}/{total_correct})")
-            
-            if match_accuracy >= 0.8:  # 80%以上正确就算通过
-                total_score += 1
-                print("Quiz 3 scored as correct")
-            elif match_accuracy >= 0.5:  # 50%以上给部分分数
-                total_score += 0.5
-                print("Quiz 3 partially correct")
+            # 全部正确得满分
+            if match_count == len(correct_q3_pairs):
+                quiz3_score = 6
+                print("All matches correct! Full score awarded.")
             else:
-                print("Quiz 3 incorrect")
+                # 按正确率计算分数
+                quiz3_score = round(6 * (match_count / len(correct_q3_pairs)))
+            
+            total_score += quiz3_score
+            print(f"Quiz 3 score: {quiz3_score}/6 ({match_count}/{len(correct_q3_pairs)} correct matches)")
 
-        # Quiz 4
+        # Quiz 4 (1分)
+        quiz4_score = 0
         correct = normalize(quiz_data['questions'][3]['correctAnswer'])
         user_answer = normalize(session.get('quiz4_answer', ''))
         print("Quiz 4 correct answer:", correct)
         print("Quiz 4 raw user answer:", user_answer)
         
         # 处理不同格式的答案
-        # 如果答案包含时间，尝试提取时间值
         processed_answer = user_answer
         if ":" in user_answer:  # 可能是时间格式
             # 尝试提取时间部分
@@ -341,23 +392,35 @@ def quiz_results():
             completed_quizzes += 1
             # 完全匹配或者包含正确答案
             if processed_answer == correct or correct in processed_answer or processed_answer in correct:
-                total_score += 1
-                print("Quiz 4 scored as correct")
+                quiz4_score = 1
+                total_score += quiz4_score
+                print("Quiz 4 score: 1/1")
             else:
-                print("Quiz 4 incorrect")
+                print("Quiz 4 score: 0/1")
 
-        # Quiz 5
+        # Quiz 5 (3分)
+        quiz5_score = 0
         quiz5_correct = {
             'q1': normalize(quiz_data['questions'][4]['correctAnswer']),
             'q2': set([normalize(x) for x in quiz_data['questions'][5]['correctAnswer']]),
             'q3': normalize(quiz_data['questions'][6]['correctAnswer'])
         }
+        
+        # 获取用户答案并规范化
+        user_raw_answers = session.get('quiz5_answers', {})
+        print(f"Raw Quiz 5 answers from session: {user_raw_answers}")
+        
+        # 如果是空的或None，初始化一个空字典
+        if not user_raw_answers:
+            user_raw_answers = {}
+            
         user_answers = {
-            'q1': normalize(session.get('quiz5_answers', {}).get('q1', '')),
-            'q2': set([normalize(x) for x in session.get('quiz5_answers', {}).get('q2', [])]),
-            'q3': normalize(session.get('quiz5_answers', {}).get('q3', ''))
+            'q1': normalize(user_raw_answers.get('q1', '')),
+            'q2': set([normalize(x) for x in user_raw_answers.get('q2', [])]),
+            'q3': normalize(user_raw_answers.get('q3', ''))
         }
         
+        # 记录调试信息
         print("Quiz 5 correct answers:", quiz5_correct)
         print("Quiz 5 user answers:", user_answers)
         
@@ -365,103 +428,119 @@ def quiz_results():
         if 'q2' in user_answers and not user_answers['q2']:
             user_answers['q2'] = set()
             
-        # 处理特殊匹配情况
-        q5_processed = {
-            'q1': False,
-            'q2': False,
-            'q3': False
-        }
-        
-        # Q5.1 - 选择题
-        if user_answers['q1'] and (
-            user_answers['q1'] == quiz5_correct['q1'] or 
-            "deeper light" in user_answers['q1'].lower() or
-            "deeper" in user_answers['q1'].lower() and "light" in user_answers['q1'].lower()
-        ):
-            q5_processed['q1'] = True
-            
-        # Q5.2 - 拖拽题，计算交集比例
-        if user_answers['q2']:
-            common = user_answers['q2'].intersection(quiz5_correct['q2'])
-            accuracy = len(common) / len(quiz5_correct['q2']) if quiz5_correct['q2'] else 0
-            if accuracy >= 0.5:  # 至少50%正确
-                q5_processed['q2'] = True
-                
-        # Q5.3 - 选择题
-        if user_answers['q3'] and (
-            user_answers['q3'] == quiz5_correct['q3'] or
-            "rem" in user_answers['q3'].lower()
-        ):
-            q5_processed['q3'] = True
-            
-        print("Quiz 5 processed results:", q5_processed)
-            
-        if user_answers['q1'] or user_answers['q2'] or user_answers['q3']:
+        # 当至少有一个答案时算已完成
+        if user_answers.get('q1') or user_answers.get('q2') or user_answers.get('q3'):
             completed_quizzes += 1
             
-            correct_count = sum(1 for v in q5_processed.values() if v)
-            print(f"Quiz 5 correct count: {correct_count}/3")
+            # 通用的得分检查工具
+            def check_answer(user_ans, correct_ans, question_num):
+                if not user_ans:
+                    print(f"Quiz 5.{question_num}: No answer provided")
+                    return False
+                
+                # 标准化为小写并移除多余空格
+                if isinstance(user_ans, str) and isinstance(correct_ans, str):
+                    user_lower = user_ans.lower().strip()
+                    correct_lower = correct_ans.lower().strip()
+                    
+                    # 部分匹配检查
+                    if user_lower == correct_lower or user_lower in correct_lower or correct_lower in user_lower:
+                        print(f"Quiz 5.{question_num}: Correct")
+                        return True
+                
+                print(f"Quiz 5.{question_num}: Incorrect. User answered: {user_ans}, Expected: {correct_ans}")
+                return False
             
-            # 修改逻辑：如果至少答对2/3题，则整个Quiz 5给1分
-            if correct_count >= 2:
-                total_score += 1
-                print("Quiz 5 scored as correct")
-            elif correct_count == 1:
-                total_score += 0.3  # 只有1题正确时给部分分数
-                print("Quiz 5 partially correct (0.3 points)")
+            # Q5.1 - 选择题 (1分) - 更宽松的匹配
+            q1_correct = check_answer(user_answers['q1'], quiz5_correct['q1'], 1) or \
+                       user_answers['q1'] and "deeper light" in user_answers['q1'].lower()
+            if q1_correct:
+                quiz5_score += 1
+            
+            # Q5.2 - 拖拽题 (1分) - 更宽松的匹配
+            if user_answers['q2']:
+                # 规范化数据
+                correct_q2_items = [x.lower().strip() for x in quiz5_correct['q2']]
+                user_q2_items = [x.lower().strip() for x in user_answers['q2']]
+                
+                # 计算匹配数
+                matches = sum(1 for user_item in user_q2_items if any(
+                    user_item == correct_item or 
+                    user_item in correct_item or 
+                    correct_item in user_item
+                    for correct_item in correct_q2_items
+                ))
+                
+                # 任何匹配都给分，因为选择比较少
+                if matches > 0 or "meditation" in user_q2_items:
+                    quiz5_score += 1
+                    print(f"Quiz 5.2: Correct ({matches}/{len(correct_q2_items)} matches)")
+                else:
+                    print(f"Quiz 5.2: Incorrect. {matches}/{len(correct_q2_items)} matches")
             else:
-                print("Quiz 5 incorrect")
+                print("Quiz 5.2: No answer provided")
+            
+            # Q5.3 - 选择题 (1分) - 更宽松的匹配
+            q3_correct = check_answer(user_answers['q3'], quiz5_correct['q3'], 3) or \
+                       user_answers['q3'] and "rem" in user_answers['q3'].lower()
+            if q3_correct:
+                quiz5_score += 1
+            
+            total_score += quiz5_score
+            print(f"Quiz 5 score: {quiz5_score}/3")
 
-        total_score = round(total_score * 2) / 2
-        print("Final total score (rounded):", total_score)
-        print("Completed quizzes:", completed_quizzes)
+        print(f"Final total score: {total_score}/{max_possible_score}")
+        print(f"Completed quizzes: {completed_quizzes}/5")
 
-        # 直接基于分数设置反馈，不使用quiz_data中的ranges
-        if total_score >= 4.5:  # 几乎全对或全对
+        # 根据24分制设置反馈
+        if total_score >= 21:  # 90%+
             feedback = {
                 "title": "Excellent!",
                 "message": "You're a sleep cycle expert!",
-                "score": "5/5"  # 满分显示
+                "score": f"{total_score}/{max_possible_score}"
             }
-        elif total_score >= 3.5:  # 大部分正确
+        elif total_score >= 17:  # 70%+
             feedback = {
                 "title": "Good work!",
                 "message": "You understand most sleep concepts!",
-                "score": "4/5"
+                "score": f"{total_score}/{max_possible_score}"
             }
-        elif total_score >= 2.5:  # 一半以上正确
+        elif total_score >= 12:  # 50%+
             feedback = {
                 "title": "Keep improving!",
                 "message": "You're making progress on understanding sleep cycles",
-                "score": "3/5"
+                "score": f"{total_score}/{max_possible_score}"
             }
-        elif total_score >= 1.5:  # 至少接近一半正确
+        elif total_score >= 6:  # 25%+
             feedback = {
                 "title": "Keep practicing!",
                 "message": "You're learning about sleep cycles",
-                "score": "2/5"
+                "score": f"{total_score}/{max_possible_score}"
             }
         elif completed_quizzes < 5:  # 未完成所有测验
             feedback = {
                 "title": "Partial Completion",
                 "message": "You completed some quizzes. Try completing all five!",
-                "score": f"{max(1, int(total_score))}/5"  # 至少显示1分
+                "score": f"{total_score}/{max_possible_score}"
             }
-        else:  # 完成了但大部分错误
+        else:  # 很少正确
             feedback = {
                 "title": "Try again!",
                 "message": "Learning about sleep will improve your health!",
-                "score": "1/5"  # 最少1分
+                "score": f"{total_score}/{max_possible_score}"
             }
-            
-        # 确保分数是整数格式
-        if 'score' in feedback and not '/' in feedback['score']:
-            feedback['score'] = f"{int(float(feedback['score']))}/5"
 
         return jsonify({
             'total_score': total_score,
             'completed_quizzes': completed_quizzes,
-            'feedback': feedback
+            'feedback': feedback,
+            'quiz_scores': {
+                'quiz1': quiz1_score,
+                'quiz2': quiz2_score,
+                'quiz3': quiz3_score,
+                'quiz4': quiz4_score,
+                'quiz5': quiz5_score
+            }
         })
 
     return render_template('quiz_results.html', active_page="quiz", total_score=None)

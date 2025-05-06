@@ -37,18 +37,18 @@
         },
         {
           "label": "Complete REM Cycles",
-          "match": "Sick.png", 
-          "explanation": "Better immune system functioning"
+          "match": "Solve.png", 
+          "explanation": "Creative problem solving"
         },
         {
           "label": "Insufficient N3 Deep Sleep",
-          "match": "Forget.png",
-          "explanation": "Memory consolidation issues"
+          "match": "Sick.png",
+          "explanation": "Better immune system functioning"
         },
         {
           "label": "Multiple REM cycles",
-          "match": "Solve.png",
-          "explanation": "Creative problem solving"
+          "match": "Recovery.png",
+          "explanation": "Emotional regulation improvements"
         },
         {
           "label": "N2 Deeper Light Sleep",
@@ -57,8 +57,8 @@
         },
         {
           "label": "Disrupted N3 Deep Sleep",
-          "match": "Recovery.png",
-          "explanation": "Emotional regulation difficulties"
+          "match": "Forget.png",
+          "explanation": "Memory consolidation issues"
         }
       ]
     },
