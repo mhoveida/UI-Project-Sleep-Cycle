@@ -32,13 +32,13 @@
       "items": [
         {
           "label": "Sufficient N3 Deep Sleep",
-          "match": "Sick.png",
-          "explanation": "Better immune system functioning"
+          "match": "Sport.png",
+          "explanation": "Better athletic performance"
         },
         {
           "label": "Complete REM Cycles",
-          "match": "Sport.png", 
-          "explanation": "Better athletic performance"
+          "match": "Sick.png", 
+          "explanation": "Better immune system functioning"
         },
         {
           "label": "Insufficient N3 Deep Sleep",
