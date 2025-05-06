@@ -183,30 +183,38 @@ def quiz_results():
             quiz_data = json.load(f)
 
         total_score = 0
-        completed_quizzes = 0
+        completed_quizzes = 0  # 使用quizzes而不是questions
         max_possible_score = 24  # 总分为24分
+        questions_details = []  # 跟踪每个问题的得分
 
-        # Helper to normalize strings
+        # 规范化函数
         def normalize(value):
             return value.strip().lower() if isinstance(value, str) else value
 
         # Quiz 1 (4分)
         quiz1_score = 0
-        correct = [normalize(x) for x in quiz_data['questions'][0]['correctAnswer']]
-        user_answer = [normalize(x) for x in session.get('quiz1_answer', [])]
-        if user_answer:
-            completed_quizzes += 1
-            if user_answer == correct:
-                quiz1_score = 4  # 全对得4分
+        correct_sequence = [normalize(x) for x in quiz_data['questions'][0]['correctAnswer']]
+        user_sequence = [normalize(x) for x in session.get('quiz1_answer', [])]
+        
+        if user_sequence:
+            completed_quizzes += 1  # 完成了一个quiz
+            correct_positions = 0
+            for i in range(min(len(correct_sequence), len(user_sequence))):
+                if i < len(user_sequence) and i < len(correct_sequence):
+                    if user_sequence[i] == correct_sequence[i]:
+                        correct_positions += 1
+                        quiz1_score += 1
+                        questions_details.append({"quiz": 1, "question": i+1, "correct": True})
+                    else:
+                        questions_details.append({"quiz": 1, "question": i+1, "correct": False})
+            
+            # 全部顺序正确给予满分
+            if correct_positions == len(correct_sequence):
+                print(f"Quiz 1 score: 4/4 (Full credit)")
             else:
-                # 计算部分正确的分数
-                correct_items = 0
-                for i, item in enumerate(user_answer):
-                    if i < len(correct) and item == correct[i]:
-                        correct_items += 1
-                quiz1_score = round(4 * (correct_items / len(correct)))
+                print(f"Quiz 1 score: {quiz1_score}/4")
+                
             total_score += quiz1_score
-            print(f"Quiz 1 score: {quiz1_score}/4")
 
         # Quiz 2 (10分)
         quiz2_score = 0
@@ -304,6 +312,19 @@ def quiz_results():
             quiz2_score = helps_score + hurts_score
             total_score += quiz2_score
             print(f"Quiz 2 score: {quiz2_score}/10 (helps: {helps_score}/5, hurts: {hurts_score}/5)")
+            
+            # 更新问题详情
+            for item in correct_helps:
+                if item in mapped_helps:
+                    questions_details.append({"quiz": 2, "question": item, "correct": True})
+                else:
+                    questions_details.append({"quiz": 2, "question": item, "correct": False})
+            
+            for item in correct_hurts:
+                if item in mapped_hurts:
+                    questions_details.append({"quiz": 2, "question": item, "correct": True})
+                else:
+                    questions_details.append({"quiz": 2, "question": item, "correct": False})
 
         # Quiz 3 (6分) - 完全修复
         quiz3_score = 0
@@ -361,9 +382,11 @@ def quiz_results():
                 if label in correct_q3_pairs and correct_q3_pairs[label] == match:
                     match_count += 1
                     print(f"Correct match: {label} -> {match}")
+                    questions_details.append({"quiz": 3, "question": label, "correct": True})
                 else:
                     expected = correct_q3_pairs.get(label, "unknown")
                     print(f"Incorrect match: {label} -> {match}, expected: {expected}")
+                    questions_details.append({"quiz": 3, "question": label, "correct": False})
             
             # 对于未完成的匹配，不计入错误
             incomplete_matches = len(correct_q3_pairs) - len(processed_matches)
@@ -417,8 +440,10 @@ def quiz_results():
                 quiz4_score = 1
                 total_score += quiz4_score
                 print("Quiz 4 score: 1/1")
+                questions_details.append({"quiz": 4, "question": 1, "correct": True})
             else:
                 print("Quiz 4 score: 0/1")
+                questions_details.append({"quiz": 4, "question": 1, "correct": False})
 
         # Quiz 5 (3分)
         quiz5_score = 0
@@ -478,6 +503,9 @@ def quiz_results():
                        user_answers['q1'] and "deeper light" in user_answers['q1'].lower()
             if q1_correct:
                 quiz5_score += 1
+                questions_details.append({"quiz": 5, "question": 1, "correct": True})
+            else:
+                questions_details.append({"quiz": 5, "question": 1, "correct": False})
             
             # Q5.2 - 拖拽题 (1分) - 更新为只接受Meditation作为唯一正确答案
             if user_answers['q2']:
@@ -494,22 +522,29 @@ def quiz_results():
                 if has_meditation:
                     quiz5_score += 1
                     print(f"Quiz 5.2: Correct (1/1 matches) - Selected Meditation")
+                    questions_details.append({"quiz": 5, "question": 2, "correct": True})
                 else:
                     # 尝试更宽松的匹配
                     has_meditation_loose = any('med' in item for item in user_q2_items)
                     if has_meditation_loose:
                         quiz5_score += 1
                         print(f"Quiz 5.2: Correct with loose matching - Found meditation-like item")
+                        questions_details.append({"quiz": 5, "question": 2, "correct": True})
                     else:
                         print(f"Quiz 5.2: Incorrect - Meditation not selected")
+                        questions_details.append({"quiz": 5, "question": 2, "correct": False})
             else:
                 print("Quiz 5.2: No answer provided")
+                questions_details.append({"quiz": 5, "question": 2, "correct": False})
             
             # Q5.3 - 选择题 (1分) - 更宽松的匹配
             q3_correct = check_answer(user_answers['q3'], quiz5_correct['q3'], 3) or \
                        (user_answers['q3'] and ("rem" in user_answers['q3'].lower() or "r.e.m" in user_answers['q3'].lower()))
             if q3_correct:
                 quiz5_score += 1
+                questions_details.append({"quiz": 5, "question": 3, "correct": True})
+            else:
+                questions_details.append({"quiz": 5, "question": 3, "correct": False})
             
             total_score += quiz5_score
             print(f"Quiz 5 score: {quiz5_score}/3")
@@ -565,7 +600,8 @@ def quiz_results():
                 'quiz3': quiz3_score,
                 'quiz4': quiz4_score,
                 'quiz5': quiz5_score
-            }
+            },
+            'questions_details': questions_details
         })
 
     return render_template('quiz_results.html', active_page="quiz", total_score=None)
