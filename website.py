@@ -191,13 +191,13 @@ def quiz_results():
         def normalize(value):
             return value.strip().lower() if isinstance(value, str) else value
 
-        # Quiz 1 (4分)
-        quiz1_score = 0
+        # Quiz 1 - Each item in the sequence counts as 1 point (4 points total)
         correct_sequence = [normalize(x) for x in quiz_data['questions'][0]['correctAnswer']]
         user_sequence = [normalize(x) for x in session.get('quiz1_answer', [])]
         
+        quiz1_score = 0
         if user_sequence:
-            completed_quizzes += 1  # 完成了一个quiz
+            completed_quizzes += 1  # 完成了一个quiz，而不是4个问题
             correct_positions = 0
             for i in range(min(len(correct_sequence), len(user_sequence))):
                 if i < len(user_sequence) and i < len(correct_sequence):
@@ -213,11 +213,10 @@ def quiz_results():
                 print(f"Quiz 1 score: 4/4 (Full credit)")
             else:
                 print(f"Quiz 1 score: {quiz1_score}/4")
-                
+            
             total_score += quiz1_score
 
-        # Quiz 2 (10分)
-        quiz2_score = 0
+        # Quiz 2 - 修改为您喜欢的评分逻辑
         correct_helps = set([normalize(x) for x in quiz_data['questions'][1]['correctAnswer']['Helps Sleep']])
         correct_hurts = set([normalize(x) for x in quiz_data['questions'][1]['correctAnswer']['Hurts Sleep']])
         user_helps = set([normalize(x) for x in session.get('quiz2_helps', [])])
@@ -275,9 +274,9 @@ def quiz_results():
         print("Quiz 2 mapped helps:", mapped_helps)
         print("Quiz 2 mapped hurts:", mapped_hurts)
         
-        # 直接给予用户高分，如果用户放对了所有三个helps项目
+        quiz2_score = 0
         if user_helps or user_hurts:
-            completed_quizzes += 1
+            completed_quizzes += 1  # 完成了一个quiz
             
             # 计算正确项目
             helps_correct = mapped_helps.intersection(correct_helps)
@@ -327,7 +326,7 @@ def quiz_results():
                     questions_details.append({"quiz": 2, "question": item, "correct": False})
 
         # Quiz 3 (6分) - 完全修复
-        quiz3_score = 0
+        print("QUIZ 3 DEBUGGING - Starting quiz 3 scoring")
         
         # 直接映射question和answer键到具体值
         question_mapping = {
@@ -358,12 +357,20 @@ def quiz_results():
             'disrupted n3 deep sleep': 'forget'
         }
         
-        user_matches = session.get('quiz3_matches', {})
-        print("Quiz 3 raw user matches:", user_matches)
+        # Get the correct matches from the quiz data
+        correct_matches = {}
+        for item in quiz_data['questions'][2]['items']:
+            if 'leftIndex' in item and 'rightIndex' in item:
+                correct_matches[f"question_{item['leftIndex']}"] = f"answer_{item['rightIndex']}"
         
-        # 处理用户匹配
+        print("Correct matches from data:", correct_matches)
+        
+        user_matches = session.get('quiz3_matches', {})
+        print("User submitted matches:", user_matches)
+        
+        quiz3_score = 0
         if user_matches:
-            completed_quizzes += 1
+            completed_quizzes += 1  # 完成了一个quiz
             
             # 转换用户匹配到标准格式
             processed_matches = {}
@@ -434,7 +441,7 @@ def quiz_results():
         print("Quiz 4 processed answer:", processed_answer)
         
         if user_answer:
-            completed_quizzes += 1
+            completed_quizzes += 1  # 完成了一个quiz
             # 完全匹配或者包含正确答案
             if processed_answer == correct or correct in processed_answer or processed_answer in correct:
                 quiz4_score = 1
@@ -477,7 +484,7 @@ def quiz_results():
             
         # 当至少有一个答案时算已完成
         if user_answers.get('q1') or user_answers.get('q2') or user_answers.get('q3'):
-            completed_quizzes += 1
+            completed_quizzes += 1  # 完成了一个quiz
             
             # 通用的得分检查工具
             def check_answer(user_ans, correct_ans, question_num):
