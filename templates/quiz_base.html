@@ -13,11 +13,13 @@
   <!-- Page Title -->
   <h1>{% block heading %}Sleep Quiz{% endblock %}</h1>
 
-  <!-- Hint -->
+  <!-- Hint-->
+  {% if not hide_hint %}
   <div class="hint">
     <img src="{{ url_for('static', filename='media/hint.png') }}" alt="hint">
     <span>{% block hint_text %}Your hint will go here.{% endblock %}</span>
   </div>
+  {% endif %}
 
   <!-- Main Quiz Area -->
   <div class="quiz-container">
