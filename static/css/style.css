@@ -2,7 +2,7 @@
 :root {
   --base-color: #4ca1af; 
   --accent-color: #a0d8e5;
-  --light-gray: #f8f9fa;
+  --light-gray: #efefef;
   --dark-gray: #343a40;
 }
 .text-base {
@@ -41,15 +41,18 @@ body {
   padding-top: 150px;
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #fff;
+  background-color: #f5f9fa;
   color: #2c3e50;
+}
+h1 {
+  white-space: nowrap;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--dark-gray);
   font-weight: 600;
-  white-space: nowrap;
 }
+  
 .container-fluid-limited {
   width: 90%;
   max-width: 1600px;
@@ -257,6 +260,17 @@ h1, h2, h3, h4, h5, h6 {
 .nav-next {
   align-self: flex-end;
 }
+.nav-button.nav-back {
+  min-width: 80px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.nav-button.nav-back,
+.nav-button.nav-next {
+  border-radius: 8px !important;
+}
+
 
 /* For debugging map regions — remove after testing */
 area {
@@ -367,7 +381,7 @@ area {
   padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  background: #f7f7f7;
+  background: var(--light-gray);
   cursor: grab;
   display: flex;
   align-items: center;
@@ -395,7 +409,7 @@ area {
   border-radius: 8px;
   padding: 0.75rem;
   min-height: 80px;
-  background-color: #fafafa;
+  background-color: var(--light-gray);
   transition: background-color 0.2s ease;
   font-size: 0.9rem;
 }
@@ -432,7 +446,7 @@ area {
 }
 
 .example-card {
-  background: #f8f8f8;
+  background: var(--light-gray);
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 1rem;
@@ -487,12 +501,13 @@ area {
 
 /* Info box */
 .info-box {
-  background-color: #e3f2fd;
+  background-color: var(--light-gray);
   border-radius: 10px;
   padding: 10px 20px;
   margin-bottom: 20px;
-  color: #0277bd;
+  color: var(--base-color);
   text-align: center;
+  font-weight: bold;
   font-size: 1.1rem;
 }
 
@@ -965,7 +980,7 @@ area {
   background: linear-gradient(135deg, #4ca1af, #2c3e50);
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 8px;
   box-shadow: 0 4px 10px rgba(76, 161, 175, 0.5);
   
   /* Typography */

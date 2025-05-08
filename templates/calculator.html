@@ -124,11 +124,11 @@
     <!-- Results will be displayed here -->
     <div id="results-container"></div>
 </div>
-<!-- Add this right after the results container div -->
-<div class="nav-bottom" style="margin-top: 40px;">
-    <a href="{{ url_for('learn', section_id=2) }}" class="button back">← BACK TO SLEEP DISRUPTORS</a>
-    <a href="{{ url_for('quiz1_sequence') }}" class="button next">NEXT: QUIZ →</a>
-  </div>
+
+<div class="page-nav website-padding">
+    <a href="{{ url_for('learn', section_id=2) }}" class="nav-button nav-back">← Back</a>
+    <a href="{{ url_for('quiz1_sequence') }}" class="nav-button nav-next">Next: Sleep Disruptors →</a>
+</div>
 <!-- Include the Sleep Calculator JavaScript -->
 <script src="{{ url_for('static', filename='js/sleep_calculator.js') }}"></script>
 {% endblock %}
