@@ -48,6 +48,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   color: var(--dark-gray);
   font-weight: 600;
+  white-space: nowrap;
 }
 .container-fluid-limited {
   width: 90%;
@@ -1374,5 +1375,3 @@ area {
   font-style: italic;
   color: #444;
 }
-
-
