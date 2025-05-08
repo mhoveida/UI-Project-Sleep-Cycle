@@ -1,5 +1,3 @@
-// Changes to quiz_results.js to fix the "total questions" display for Quiz 5
-
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('result-title')) {
         fetch('/quiz_results', {
@@ -10,8 +8,19 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.feedback) {
-                document.getElementById('result-title').innerText = data.feedback.title;
-                document.getElementById('result-message').innerText = data.feedback.message;
+                // Check if the user got a perfect score
+                const isPerfectScore = data.total_score === data.max_score;
+                
+                // Set title based on score
+                document.getElementById('result-title').innerText = isPerfectScore 
+                    ? "Perfect Score!" 
+                    : data.feedback.title;
+                
+                // Set message based on score
+                document.getElementById('result-message').innerText = isPerfectScore 
+                    ? "Congratulations! You understand all sleep concepts perfectly!" 
+                    : data.feedback.message;
+                
                 document.getElementById('result-score').innerText = `Score: ${data.feedback.score}`;
                 
                 const totalScoreElement = document.getElementById('total-score');
@@ -63,10 +72,20 @@ document.addEventListener('DOMContentLoaded', function () {
                             totalQuestions = 3; // Force Quiz 5 to always show 3 total questions
                         }
                         
+                        // Add review link for each quiz
+                        const reviewUrl = `/quiz_results/q${quizNum}`;
+                        
+                        // Add perfect quiz indicator
+                        const isPerfectQuiz = correctCount === totalQuestions;
+                        const quizClass = isPerfectQuiz ? 'quiz-breakdown perfect' : 'quiz-breakdown';
+                        
                         breakdownHTML += `
-                            <div class="quiz-breakdown">
-                                <h4>Quiz ${quizNum}</h4>
-                                <p>Score: ${correctCount}/${totalQuestions}</p>
+                            <div class="${quizClass}">
+                                <div class="quiz-breakdown-header">
+                                    <h4>Quiz ${quizNum}</h4>
+                                    <a href="${reviewUrl}" class="review-link">View Answers</a>
+                                </div>
+                                <p>Score: ${correctCount}/${totalQuestions} ${isPerfectQuiz ? '✓' : ''}</p>
                             </div>
                         `;
                     }
