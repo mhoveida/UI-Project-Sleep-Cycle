@@ -25,7 +25,7 @@
         (Click on each button to see next characteristic)
         <ul class="characteristics" id="char-{{ stage.id }}">
           {% for c in stage.characteristics %}
-          <li class="characteristic-item" style="{% if not loop.first %}display: none;{% endif %}">
+          <li class="characteristic-item" {% if not loop.first %}style="display: none;"{% endif %}>
             <div class="char-button-wrapper">
               <button class="char-button">{{ c.title }}</button>
               {% if c.detail %}
@@ -33,11 +33,11 @@
               {% endif %}
             </div>
             <img src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/' ~ stage.id ~ '-ch' ~ loop.index ~ '.png') }}"
-                 alt="{{ c.title }}">
+                alt="{{ c.title }}">
             {% if c.detail %}
               <p class="hint-text" style="display: none;">{{ c.detail }}</p>
             {% endif %}
-          </li>          
+          </li>
           {% endfor %}
         </ul>
         
@@ -56,10 +56,10 @@
     <div class="image-wrapper">
       <!-- Sleep Cycle Main Image -->
       <img id="sleep-cycle-img"
-           src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/Sleep-cycles.png') }}"
-           usemap="#sleepmap"
-           alt="Sleep Cycle Diagram"
-           >
+          src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/Sleep-cycles.png') }}"
+          usemap="#sleepmap"
+          alt="Sleep Cycle Diagram"
+          >
 
       <map name="sleepmap">
         <area shape="poly" coords="485,416,453,260,567,261,546,420,514,417" onclick="showStage('N1')" alt="N1" data-stage="N1">
@@ -83,5 +83,17 @@
 <div class="page-nav">
   <a href="{{ url_for('home') }}" class="nav-button nav-back">← Back</a>
   <a href="{{ url_for('learn', section_id=2) }}" class="nav-button nav-next">Next: Sleep Disruptors →</a>
+</div>
+
+<div class="examples-grid website-padding">
+  {% for e in content.examples %}
+    <div class="example-card" onclick="toggleExplanation('{{ e.title|replace(' ', '_') }}')">
+      <img src="{{ url_for('static', filename='media/Examples/' ~ e.icon) }}" alt="{{ e.title }}">
+      <h3>{{ e.title }}</h3>
+      <p class="explanation" id="exp-{{ e.title|replace(' ', '_') }}" style="display: none;">
+        {{ e.explanation }}
+      </p>
+    </div>
+  {% endfor %}
 </div>
 {% endblock %}
