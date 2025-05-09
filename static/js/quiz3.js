@@ -165,9 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     
-    // 修改后的提交答案函数
+    // Replace your checkAnswer function with this version
     window.checkAnswer = function() {
-      // 将connections转换为服务器期望的格式
+      // Create a simple mapping for the connections
       const matches = {};
       
       // 获取所有已连接的左侧连接点
@@ -200,17 +200,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           return response.json();
         }
-        throw new Error("保存答案失败");
+        throw new Error("Failed to save answer");
       }).then(data => {
         if (data.success) {
-          // 跳转到下一个测验
+          // Redirect to the next quiz
           window.location.href = '/quiz4';
         } else {
-          alert("保存答案失败，请重试。");
+          alert("Failed to save answer, please try again.");
         }
       }).catch(error => {
         console.error('Error:', error);
-        alert("网络错误，请重试。");
+        alert("Network error, please try again.");
       });
     };
   });

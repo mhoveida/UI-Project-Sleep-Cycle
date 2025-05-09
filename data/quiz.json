@@ -16,12 +16,12 @@
       "question": "Sleep Disruptor Effects",
       "hint": "Some habits help, some hurt - can you spot which is which?",
       "options": {
-        "all": ["Meditation", "Screen blue light", "Stress & anxiety", "Late caffeine", "Reading Ebook", "Video Game", "Exercising late", "Alcohol before bed", "Regular schedule"],
+        "all": ["Screen", "Shower", "Stress", "Caffeine", "Meditation", "Alcohol", "Eating", "Irregular-schedule", "Reading", "Exercising-late.png"],
         "categories": ["Helps Sleep", "Hurts Sleep"]
       },
       "correctAnswer": {
-        "Helps Sleep": ["Meditation", "Reading physical book", "Regular schedule"],
-        "Hurts Sleep": ["Screen blue light", "Stress & anxiety", "Late caffeine", "Video Game", "Exercising late", "Alcohol before bed"]
+        "Helps Sleep": ["Meditation", "Reading", "Shower"],
+        "Hurts Sleep": ["Screen", "Stress", "Caffeine", "Exercising-late", "Alcohol", "Irregular-schedule", "Eating"]
       }
     },
     {
@@ -53,7 +53,9 @@
         {
           "label": "N2 Deeper Light Sleep",
           "match": "Guitar.png",
-          "explanation": "Motor skill improvement"
+          "explanation": "Motor skill improvement",
+          "leftIndex": 4,
+          "rightIndex": 4
         },
         {
           "label": "Disrupted N3 Deep Sleep",
@@ -101,6 +103,7 @@
       "type": "dragDrop",
       "question": "Drag activities that are good before bedtime",
       "options": ["Meditation", "Social Media", "Reading Ebook", "Video Game"],
+      "correctAnswer": ["Meditation"]
       "correctAnswer": ["Meditation"]
     },
     {

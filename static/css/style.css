@@ -1,8 +1,8 @@
 /* Global styles */
 :root {
   --base-color: #4ca1af; 
-  --accent-color: #63d9f9;
-  --light-gray: #f8f9fa;
+  --accent-color: #a0d8e5;
+  --light-gray: #efefef;
   --dark-gray: #343a40;
 }
 .text-base {
@@ -35,59 +35,24 @@
   background-color: var(--dark-gray) !important;
   color: white;
 }
-
-.btn-base {
-  background-color: var(--base-color) !important;
-  color: white;
-}
-
-.btn-base:hover {
-  background-color:#69d6ea;
-  border-color:#12a8c3;
-  color: white;
-}
-
-.btn-accent {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
-  color: white;
-}
-
-.btn-accent:hover {
-  background-color:#de62ae;
-  border-color:#97025e;
-  color: white;
-}
-
-.btn-outline-base {
-  border-color: var(--base-color);
-  color: var(--base-color);
-}
-
-.btn-outline-accent {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
-}
-
-.btn-outline-accent:hover {
-  background-color: var(--accent-color);
-  color: white;
-}
-
 body {
   color: var(--dark-gray);
   line-height: 1.6;
   padding-top: 150px;
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #fff;
+  background-color: #f5f9fa;
   color: #2c3e50;
+}
+h1 {
+  white-space: nowrap;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--dark-gray);
   font-weight: 600;
 }
+  
 .container-fluid-limited {
   width: 90%;
   max-width: 1600px;
@@ -97,7 +62,7 @@ h1, h2, h3, h4, h5, h6 {
   padding-right: 15px;
 }
 
-.website-padding{
+.website-padding {
   padding-left: 70px;
   padding-right: 70px;
 }
@@ -114,11 +79,6 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1000;
 }
 .nav-left {
-  display: flex;
-  align-items: center;
-}
-
-.nav-right {
   display: flex;
   align-items: center;
 }
@@ -140,7 +100,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   width: 0;
   height: 2px;
-  background-color: #a0d8e5; /* Use your preferred blue color */
+  background-color: #a0d8e5;
   bottom: 0;
   left: 0;
   transition: width 0.3s ease;
@@ -154,27 +114,17 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold
 }
 
-.nav-right input {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 20px;
-  background-color:white;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.nav-right input::placeholder {
-  color: #a1a6a7;
-  }
-
-.nav-right input:focus {
-  box-shadow: 0 0 20px rgba(249, 250, 251, 0.5);
-}
+/* Logo styles */
 .logo {
   margin-right: 80px;
   padding-right: 80px !important;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
-
+.logo:hover{
+  transform: scale(1.1);
+  opacity: 1;
+}
 .logo img {
   height: 60px;
   vertical-align: middle;
@@ -187,9 +137,6 @@ h1, h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
-.navbar a.logo:hover::after {
-  width: 0 !important;
-}
   /* Intro styles */
   .intro {
     margin-bottom: 2rem;
@@ -207,10 +154,13 @@ h1, h2, h3, h4, h5, h6 {
   gap: 2rem;
   align-items: flex-start;
   flex-wrap: wrap; /* Important for mobile responsiveness */
+  flex-wrap: wrap; /* Important for mobile responsiveness */
   padding: 2rem 0;
 }
 
 .stage-content {
+  flex: 1 1 400px;
+  min-width: 300px;
   flex: 1 1 400px;
   min-width: 300px;
 }
@@ -221,7 +171,13 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex: 1 1 500px;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
+
 
 .text-and-image {
   flex: 1;
@@ -238,7 +194,10 @@ h1, h2, h3, h4, h5, h6 {
   height: auto;
   transform: scale(0.75);
   transform-origin: top left;  /* <-- CHANGE TO CENTER */
+  transform: scale(0.75);
+  transform-origin: top left;  /* <-- CHANGE TO CENTER */
 }
+
 
   
 /* Stage content */
@@ -252,7 +211,10 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-direction: column; /* <-- make it a vertical column */
   gap: 2rem; /* space between each characteristic */
+  flex-direction: column; /* <-- make it a vertical column */
+  gap: 2rem; /* space between each characteristic */
 }
+
 
 
 .characteristics li {
@@ -260,13 +222,18 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   align-items: center;
   max-width: 300px; /* was 200px */
+  max-width: 300px; /* was 200px */
   text-align: center;
+  gap: 1rem; /* add nice spacing */
   gap: 1rem; /* add nice spacing */
 }
 
+
 .characteristics img {
   width: 200px; /* was 80px */
+  width: 200px; /* was 80px */
   height: auto;
+  margin-bottom: 1rem; /* increase breathing room */
   margin-bottom: 1rem; /* increase breathing room */
 }
 
@@ -313,6 +280,17 @@ h1, h2, h3, h4, h5, h6 {
 .nav-next {
   align-self: flex-end;
 }
+.nav-button.nav-back {
+  min-width: 80px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.nav-button.nav-back,
+.nav-button.nav-next {
+  border-radius: 8px !important;
+}
+
 
 /* For debugging map regions — remove after testing */
 area {
@@ -327,6 +305,8 @@ area {
 }
 
 .image-wrapper {
+  /*position: relative;*/
+  /*width: 1000px;*/
   /*position: relative;*/
   /*width: 1000px;*/
   height: auto;
@@ -374,14 +354,19 @@ area {
 .char-button {
   display: inline-block;
   margin-bottom: 1rem; /* increase margin below button */
+  margin-bottom: 1rem; /* increase margin below button */
   background-color: #f1f1f1;
   border: none;
+  padding: 0.75rem 1.25rem; /* bigger padding */
+  font-size: 1.1rem; /* larger text */
+  border-radius: 8px;
   padding: 0.75rem 1.25rem; /* bigger padding */
   font-size: 1.1rem; /* larger text */
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   color: #2c3e50;
+  transition: background-color 0.3s ease;
   transition: background-color 0.3s ease;
 }
   
@@ -423,7 +408,7 @@ area {
   padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  background: #f7f7f7;
+  background: var(--light-gray);
   cursor: grab;
   display: flex;
   align-items: center;
@@ -451,7 +436,7 @@ area {
   border-radius: 8px;
   padding: 0.75rem;
   min-height: 80px;
-  background-color: #fafafa;
+  background-color: var(--light-gray);
   transition: background-color 0.2s ease;
   font-size: 0.9rem;
 }
@@ -488,7 +473,7 @@ area {
 }
 
 .example-card {
-  background: #f8f8f8;
+  background: var(--light-gray);
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 1rem;
@@ -543,12 +528,13 @@ area {
 
 /* Info box */
 .info-box {
-  background-color: #e3f2fd;
+  background-color: var(--light-gray);
   border-radius: 10px;
   padding: 10px 20px;
   margin-bottom: 20px;
-  color: #0277bd;
+  color: var(--base-color);
   text-align: center;
+  font-weight: bold;
   font-size: 1.1rem;
 }
 
@@ -962,6 +948,7 @@ area {
   z-index: 2;
   color: white;
   font-size: 3.5rem;
+  font-size: 3.5rem;
   font-weight: bold;
   margin: 0;
   /* Background styling */
@@ -1021,7 +1008,7 @@ area {
   background: linear-gradient(135deg, #4ca1af, #2c3e50);
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 8px;
   box-shadow: 0 4px 10px rgba(76, 161, 175, 0.5);
   
   /* Typography */
@@ -1094,25 +1081,20 @@ area {
   .hero-buttons .nav-button {
     font-size: 1.2rem;
   }
-  
-  .nav-bottom {
-    flex-direction: column;
-    gap: 10px;
-  }
 }
 .hero-buttons .nav-button {
   width: 160px;
   height: 50px;
   font-size: 1.5rem;
   padding: 12px 30px;
-  background: linear-gradient(90deg, #9edce8, #4f87c0);
-
+  background: linear-gradient(90deg, #a0d8e5, #4ca1af);
 }
+
 .hero-buttons .nav-button {
-  border-radius: 25px;
+  border-radius: 20px;
 }
 .hero-buttons .nav-button:hover {
-  background: linear-gradient(135deg, #9edce8, #5e96cf);
+  background: linear-gradient(135deg, #5bcce5, #025f6e);
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(119, 216, 235, 0.6);
 }
@@ -1123,10 +1105,16 @@ area {
   width: 90%;
   max-width: 600px;
   margin: 2rem auto 0 auto; /* center it nicely */
+  position: relative; /* normal flow */
+  width: 90%;
+  max-width: 600px;
+  margin: 2rem auto 0 auto; /* center it nicely */
   background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   padding: 15px;
+  z-index: 1;
+  display: none; /* still hidden until shown */
   z-index: 1;
   display: none; /* still hidden until shown */
   transition: all 0.3s ease;

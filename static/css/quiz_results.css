@@ -140,7 +140,6 @@
   color: #c62828;
 }
 
-/* All images sized exactly like your original quiz */
 .helps-sleep img,
 .hurts-sleep img {
   width: 80px;
@@ -210,7 +209,7 @@
 /* 2) Reset every card back to original width & remove any scaling/glow */
 .quiz4-options .option,
 .quiz4-options .option.selected {
-  width: 250px !important;           /* your quiz card width */
+  width: 250px !important;           /* quiz card width */
   padding: 20px !important;
   border-radius: 30px !important;
   transform: none !important;        /* no zoom */
@@ -244,7 +243,6 @@
   font-size: 0.9rem !important;
 }
 
-/* exactly the same wrapper used on your Q1/Q3 result pages */
 .quiz-container {
   max-width: 600px;
   margin: 20px auto;
