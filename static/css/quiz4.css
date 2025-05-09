@@ -63,10 +63,9 @@
   }
   
 .option.selected {
-    transform: scale(1.15);
+    transform: scale(1.02);
     box-shadow: 0 0 25px rgba(76, 161, 175, 0.6);
     border: 4px solid #4ca1af;
-    background-color: #e0f7fa;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     z-index: 5;
     position: relative;
