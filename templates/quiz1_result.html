@@ -1,13 +1,10 @@
 {% extends "quiz_base.html" %}
 {% block title %}Quiz 1 Result{% endblock %}
 {% set hide_nav = true %}
+{% set hide_hint = true %}
 
 {% block heading %}
   Quiz 1: Correct Sequence of the Sleep Cycle
-{% endblock %}
-
-{% block hint_text %}
-It’s like watching a bedtime movie—starring you, in every sleep stage!
 {% endblock %}
 
 {% block quiz_content %}
@@ -16,17 +13,16 @@ It’s like watching a bedtime movie—starring you, in every sleep stage!
   <!-- now our overrides for sizing/layout -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
 
-  <div class="quiz-container">
-    <div class="sequence-arrows">
-      <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N1.png') }}" alt="Light Sleep">
-      <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N2.png') }}" alt="Deeper Light Sleep">
-      <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N3.png') }}" alt="Deep Sleep">
-      <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-rem.png') }}" alt="REM Sleep">
-    </div>
+  <!-- Content directly in quiz_content block -->
+  <div class="sequence-arrows">
+    <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N1.png') }}" alt="Light Sleep">
+    <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N2.png') }}" alt="Deeper Light Sleep">
+    <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N3.png') }}" alt="Deep Sleep">
+    <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-rem.png') }}" alt="REM Sleep">
+  </div>
 
-    <div class="nav-buttons">
-      <a href="{{ url_for('quiz_results') }}" class="button">← Back to Score</a>
-      <a href="{{ url_for('quiz_results_question', num=2) }}" class="button">Next →</a>
-    </div>
+  <div class="nav-buttons">
+    <a href="{{ url_for('quiz_results') }}" class="button">← Back to Score</a>
+    <a href="{{ url_for('quiz_results_question', num=2) }}" class="button">Next →</a>
   </div>
 {% endblock %}

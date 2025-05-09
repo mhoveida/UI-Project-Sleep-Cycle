@@ -423,3 +423,37 @@
     color: green;
     font-weight: bold;
 }
+
+<!-- 1. Add this to quiz_results.css -->
+/* Hide hint containers */
+.hint-container,
+.hint-details,
+.hint-summary,
+.hint-content {
+  display: none !important;
+}
+
+/* Fix nested card issue */
+.quiz-container {
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 1000px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Remove duplicate styling from nested containers */
+.quiz-container .quiz-container {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+}
+
+/* Ensure proper spacing now that hint is gone */
+h1 + .quiz-container {
+  margin-top: 30px;
+}

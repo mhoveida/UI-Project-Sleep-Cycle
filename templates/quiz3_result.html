@@ -1,52 +1,26 @@
-{# templates/quiz3_result.html #}
+<!-- 4. QUIZ 3 RESULT (quiz3_result.html) -->
 {% extends "quiz_base.html" %}
 {% block title %}Quiz 3 Result{% endblock %}
 {% set hide_nav = true %}
+{% set hide_hint = true %}
 
 {% block heading %}
-Quiz 3: Match the Scenario to Sleep Stage
-{% endblock %}
-
-{% block hint_text %}
-See how your vibe lines up with each sleep stage!
+  Quiz 3: Match the Scenario to Sleep Stage
 {% endblock %}
 
 {% block quiz_content %}
   <!-- pull in your original quiz3.css -->
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/quiz3.css') }}"
-  >
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz3.css') }}">
   <!-- then the shared quiz_results overrides -->
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/quiz_results.css') }}"
-  >
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
 
-  <div class="quiz-container">
-    <div class="result-image">
-      <img
-        src="{{ url_for('static', filename='media/Quiz/Q3/Result.png') }}"
-        alt="Quiz 3 Correct Matching"
-      >
-    </div>
+  <!-- Content directly in quiz_content block -->
+  <div class="result-image">
+    <img src="{{ url_for('static', filename='media/Quiz/Q3/Result.png') }}" alt="Quiz 3 Correct Matching">
+  </div>
 
-    <div class="nav-buttons">
-      <a
-        href="{{ url_for('quiz_results_question', num=2) }}"
-        class="button"
-      >
-        ← Prev
-      </a>
-      <a
-        href="{{ url_for('quiz_results_question', num=4) }}"
-        class="button"
-      >
-        Next →
-      </a>
-    </div>
+  <div class="nav-buttons">
+    <a href="{{ url_for('quiz_results_question', num=2) }}" class="button">← Prev</a>
+    <a href="{{ url_for('quiz_results_question', num=4) }}" class="button">Next →</a>
   </div>
 {% endblock %}
-
-
-

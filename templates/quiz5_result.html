@@ -1,49 +1,26 @@
+<!-- 6. QUIZ 5 RESULT (quiz5_result.html) -->
 {% extends "quiz_base.html" %}
-{% set hide_nav = true %}
 {% block title %}Quiz 5 Result{% endblock %}
 {% set hide_nav = true %}
+{% set hide_hint = true %}
 
 {% block heading %}
-Quiz 5: Testing Your Sleep Knowledge
-{% endblock %}
-
-{% block hint_text %}
-Level up your sleep IQ!
+  Quiz 5: Testing Your Sleep Knowledge
 {% endblock %}
 
 {% block quiz_content %}
-  <!-- load Q5’s stylesheet -->
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/quiz5.css') }}"
-  >
+  <!-- load Q5's stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz5.css') }}">
   <!-- then the shared quiz_results overrides -->
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/quiz_results.css') }}"
-  >
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
 
-  <div class="quiz-container">
-    <div class="result-image">
-      <img
-        src="{{ url_for('static', filename='media/Quiz/Q5/Result.png') }}"
-        alt="Quiz 5 Results"
-      >
-    </div>
+  <!-- Content directly in quiz_content block -->
+  <div class="result-image">
+    <img src="{{ url_for('static', filename='media/Quiz/Q5/Result.png') }}" alt="Quiz 5 Results">
+  </div>
 
-    <div class="nav-buttons">
-      <a
-        href="{{ url_for('quiz_results_question', num=4) }}"
-        class="button"
-      >
-        ← Prev
-      </a>
-      <a
-        href="{{ url_for('quiz_results') }}"
-        class="button"
-      >
-        Back to Score
-      </a>
-    </div>
+  <div class="nav-buttons">
+    <a href="{{ url_for('quiz_results_question', num=4) }}" class="button">← Prev</a>
+    <a href="{{ url_for('quiz_results') }}" class="button">Back to Score</a>
   </div>
 {% endblock %}
