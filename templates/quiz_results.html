@@ -12,14 +12,52 @@
   <p class="score-text" id="result-score"></p>
   <p class="message" id="result-message"></p>
   <p class="completed" id="completed-quizzes"></p>
-  <div class="score-breakdown">
-    <h3>Score Breakdown (Total: 24 points)</h3>
-    <ul id="score-breakdown-list">
-      <li>Quiz 1: Sleep Cycle Sequence - <span id="quiz1-score">?</span>/4 points</li>
-      <li>Quiz 2: Sleep Disruptor Effects - <span id="quiz2-score">?</span>/10 points</li>
-      <li>Quiz 3: Match Scenarios to Sleep Stages - <span id="quiz3-score">?</span>/6 points</li>
-      <li>Quiz 4: Best Wake-up Time - <span id="quiz4-score">?</span>/1 point</li>
-      <li>Quiz 5: Mixed Sleep Questions - <span id="quiz5-score">?</span>/3 points</li>
+  <div class="score-breakdown-card">
+    <div class="score-breakdown-header">
+      <span class="score-breakdown-title">Score Breakdown</span>
+      <span class="score-badge">Total: <b>24</b> points</span>
+    </div>
+    <ul class="score-breakdown-list">
+      <li>
+        <span class="score-icon">①</span>
+        <span class="score-label">Quiz 1: Sleep Cycle Sequence</span>
+        <div class="score-bar-wrap">
+          <div class="score-bar-bg"><div class="score-bar" id="quiz1-bar"></div></div>
+          <span class="score-value" id="quiz1-score">?</span><span class="score-max">/4</span>
+        </div>
+      </li>
+      <li>
+        <span class="score-icon">②</span>
+        <span class="score-label">Quiz 2: Sleep Disruptor Effects</span>
+        <div class="score-bar-wrap">
+          <div class="score-bar-bg"><div class="score-bar" id="quiz2-bar"></div></div>
+          <span class="score-value" id="quiz2-score">?</span><span class="score-max">/10</span>
+        </div>
+      </li>
+      <li>
+        <span class="score-icon">③</span>
+        <span class="score-label">Quiz 3: Match Scenarios to Sleep Stages</span>
+        <div class="score-bar-wrap">
+          <div class="score-bar-bg"><div class="score-bar" id="quiz3-bar"></div></div>
+          <span class="score-value" id="quiz3-score">?</span><span class="score-max">/6</span>
+        </div>
+      </li>
+      <li>
+        <span class="score-icon">④</span>
+        <span class="score-label">Quiz 4: Best Wake-up Time</span>
+        <div class="score-bar-wrap">
+          <div class="score-bar-bg"><div class="score-bar" id="quiz4-bar"></div></div>
+          <span class="score-value" id="quiz4-score">?</span><span class="score-max">/1</span>
+        </div>
+      </li>
+      <li>
+        <span class="score-icon">⑤</span>
+        <span class="score-label">Quiz 5: Mixed Sleep Questions</span>
+        <div class="score-bar-wrap">
+          <div class="score-bar-bg"><div class="score-bar" id="quiz5-bar"></div></div>
+          <span class="score-value" id="quiz5-score">?</span><span class="score-max">/3</span>
+        </div>
+      </li>
     </ul>
   </div>
 
@@ -51,6 +89,20 @@ document.addEventListener('DOMContentLoaded', function () {
           document.getElementById('quiz3-score').innerText = data.quiz_scores.quiz3 || '?';
           document.getElementById('quiz4-score').innerText = data.quiz_scores.quiz4 || '?';
           document.getElementById('quiz5-score').innerText = data.quiz_scores.quiz5 || '?';
+          // 动态设置进度条宽度
+          function setBar(id, score, max) {
+            const bar = document.getElementById(id);
+            if (bar && !isNaN(score) && !isNaN(max) && max > 0) {
+              bar.style.width = (Math.max(0, Math.min(score, max)) / max * 100) + '%';
+            } else {
+              bar.style.width = '0%';
+            }
+          }
+          setBar('quiz1-bar', Number(data.quiz_scores.quiz1), 4);
+          setBar('quiz2-bar', Number(data.quiz_scores.quiz2), 10);
+          setBar('quiz3-bar', Number(data.quiz_scores.quiz3), 6);
+          setBar('quiz4-bar', Number(data.quiz_scores.quiz4), 1);
+          setBar('quiz5-bar', Number(data.quiz_scores.quiz5), 3);
         }
       }).catch(error => {
         console.error('Error fetching results:', error);

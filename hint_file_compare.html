@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hint.js Comparison</title>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+    .code-block {
+      width: 48%;
+      margin: 1%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f8f8f8;
+    }
+    h2 {
+      text-align: center;
+    }
+    pre {
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hint.js Comparison</h1>
+  <div class="container">
+    <div class="code-block">
+      <h2>Current Version (Complex Alert)</h2>
+      <pre>
+/**
+ * Popup hint functionality for quiz pages
+ * Shows a popup with the hint for 5 seconds
+ */
+// Super basic hint implementation with direct alert
+console.log("Hint script loading...");
+
+// Function that runs when document is ready
+function setupHints() {
+  console.log("Setting up hints...");
+  
+  // Try to get the hint icon
+  var icons = document.querySelectorAll('.hint-icon');
+  console.log("Found hint icons:", icons.length);
+  
+  // Add direct inline onclick handler as a backup method
+  for (var i = 0; i < icons.length; i++) {
+    var icon = icons[i];
+    console.log("Setting up icon", i);
+    
+    icon.onclick = function() {
+      console.log("ICON CLICKED!");
+      
+      // Get hint text
+      var parentDiv = this.parentNode;
+      var hintText = parentDiv.querySelector('.hint-text');
+      var hintContent = "No hint available";
+      
+      if (hintText) {
+        hintContent = hintText.innerHTML;
+        console.log("Found hint content:", hintContent);
+      } else {
+        console.log("Could not find hint-text element");
+      }
+      
+      // Display hint
+      alert("HINT: " + hintContent.replace(/<[^>]*>/g, ''));
+      return false;
+    };
+    
+    // Make it very obvious it's clickable
+    icon.style.cursor = 'pointer';
+    icon.title = 'Click for hint';
+  }
+  
+  // Try direct click handler attachment
+  var firstIcon = document.querySelector('.hint-icon');
+  if (firstIcon) {
+    console.log("Adding direct click listener to first icon");
+    firstIcon.addEventListener('click', function(e) {
+      console.log("DIRECT CLICK EVENT FIRED!");
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Try to show alert
+      alert("Hint icon clicked!");
+    });
+  }
+  
+  console.log("Hint setup complete");
+}
+
+// Add event listener for page load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupHints);
+} else {
+  // Document already loaded
+  setupHints();
+}
+
+// Additionally try with window.onload as a fallback
+window.onload = function() {
+  console.log("Window.onload event - trying setupHints again");
+  setupHints();
+};
+      </pre>
+    </div>
+    <div class="code-block">
+      <h2>Desired Version (Toggle Animation)</h2>
+      <pre>
+document.addEventListener('DOMContentLoaded', function() {
+    const hintIcon = document.querySelector('.hint-icon');
+    const hintBox = document.querySelector('.hint-box');
+    
+    if (hintIcon && hintBox) {
+        // Add click event to hint icon
+        hintIcon.addEventListener('click', function() {
+            hintBox.classList.toggle('show');
+        });
+        
+        // Close hint when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!hintIcon.contains(event.target) && !hintBox.contains(event.target)) {
+                hintBox.classList.remove('show');
+            }
+        });
+    }
+});
+      </pre>
+    </div>
+  </div>
+</body>
+</html> 

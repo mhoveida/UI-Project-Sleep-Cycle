@@ -1,0 +1,51 @@
+{% extends "quiz_base.html" %}
+
+{% set next_url = url_for('quiz3_matching') %}
+{% set back_url = url_for('quiz1_sequence') %}
+{% set active_index = 1 %}
+
+{% block title %}Quiz 2: Sleep Disruptor Effects{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz2.css') }}">
+{% endblock %}
+
+{% block heading %}Sleep Disruptor Effects{% endblock %}
+
+{% block hint_text %}
+Think about which activities help and which ones hurt your sleep.
+{% endblock %}
+
+{% block quiz_content %}
+  <div class="drop-zone-row">
+    <!-- Helps Sleep -->
+    <div class="drop-column helps" data-category="Helps Sleep">
+      <h3>Helps Sleep</h3>
+    </div>
+
+    <!-- Drag Items -->
+    <div class="drag-zone vertical">
+      {% set images = [
+        "Screen.png", "Shower.png", "Stress.png", "Caffeine.png", "Meditation.png",
+        "Alcohol.png", "Eating.png", "Irregular-schedule.png", "Reading.png", "Exercising-late.png"
+      ] %}
+      {% for img in images %}
+        <img src="{{ url_for('static', filename='media/Quiz/Q2/' ~ img) }}"
+             alt="{{ img.split('.')[0] }}" class="draggable"
+             draggable="true" data-value="{{ img.split('.')[0] }}">
+      {% endfor %}
+    </div>
+
+    <!-- Hurts Sleep -->
+    <div class="drop-column hurts" data-category="Hurts Sleep">
+      <h3>Hurts Sleep</h3>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script>
+  const next_url = "{{ next_url }}";
+</script>
+<script src="{{ url_for('static', filename='js/quiz2.js') }}"></script>
+{% endblock %}

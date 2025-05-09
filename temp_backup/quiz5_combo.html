@@ -1,0 +1,101 @@
+{% extends "quiz_base.html" %}
+
+{% set next_url = url_for('quiz_results') %}
+{% set back_url = url_for('quiz4_multiple') %}
+{% set active_page = 'quiz5' %}
+
+{% block title %}Quiz 5: Mixed Sleep Questions{% endblock %}
+{% block heading %}Test Your Sleep Knowledge{% endblock %}
+{% block hint_text %}
+Answer by selecting or dragging the correct items!
+{% endblock %}
+
+{% block quiz_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz5.css') }}">
+
+<div class="quiz5-container">
+
+  <!-- 第一题：单选 -->
+  <div class="question-block">
+    <div class="question-text">Which sleep stage is the longest in each cycle?</div>
+    <div class="options single-choice" data-question="q1">
+      <div class="option" data-value="REM Sleep">REM Sleep</div>
+      <div class="option" data-value="Deep Sleep">Deep Sleep</div>
+      <div class="option" data-value="Light Sleep">Light Sleep</div>
+      <div class="option" data-value="Deeper light Sleep">Deeper light Sleep</div>
+    </div>
+  </div>
+
+  <!-- 第二题：拖拽 -->
+  <div class="question-block">
+    <div class="question-text">Drag activities that are good before bedtime</div>
+    <div class="options drag-options">
+      <div class="draggable" draggable="true" data-value="Meditation">Meditation</div>
+      <div class="draggable" draggable="true" data-value="Social Media">Social Media</div>
+      <div class="draggable" draggable="true" data-value="Reading Ebook">Reading Ebook</div>
+      <div class="draggable" draggable="true" data-value="Video Game">Video Game</div>
+    </div>
+    <div class="drop-zone">
+      <span class="placeholder">Drag Zone</span>
+    </div>
+  </div>
+
+  <!-- 第三题：单选 -->
+  <div class="question-block">
+    <div class="question-text">Which sleep is most affected by alcohol consumption</div>
+    <div class="options single-choice" data-question="q3">
+      <div class="option" data-value="REM Sleep">REM Sleep</div>
+      <div class="option" data-value="Deep Sleep">Deep Sleep</div>
+      <div class="option" data-value="Light Sleep">Light Sleep</div>
+      <div class="option" data-value="Deeper Light Sleep">Deeper light Sleep</div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+const next_url = "{{ next_url }}";
+</script>
+<script src="{{ url_for('static', filename='js/quiz5.js') }}"></script>
+
+<!-- Add debug button -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Log current selections before submitting
+  const logSelectedValues = function() {
+    const q1 = document.querySelector('.single-choice[data-question="q1"] .option.selected');
+    const q1Val = q1 ? q1.getAttribute('data-value') || q1.textContent.trim() : null;
+    
+    const q2Items = [];
+    document.querySelectorAll('.drop-zone .draggable').forEach(item => {
+      const val = item.getAttribute('data-value') || item.textContent.trim();
+      q2Items.push(val);
+    });
+    
+    const q3 = document.querySelector('.single-choice[data-question="q3"] .option.selected');
+    const q3Val = q3 ? q3.getAttribute('data-value') || q3.textContent.trim() : null;
+    
+    console.log("Debug - Selected values:", {
+      q1: q1Val,
+      q2: q2Items,
+      q3: q3Val
+    });
+  };
+  
+  // Hook into the next button click
+  const nextBtn = document.querySelector('.button.next');
+  if (nextBtn) {
+    const originalClick = nextBtn.onclick;
+    nextBtn.onclick = function(e) {
+      logSelectedValues();
+      // If there was an original click handler, call it
+      if (typeof originalClick === 'function') {
+        return originalClick.call(this, e);
+      }
+    };
+  }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block title %}Sleep Quiz{% endblock %}
+
+{% block content %}
+<h1>Sleep Quiz</h1>
+<p>Take this quick quiz to learn more about your sleep habits and how to improve them.</p>
+
+<a href="{{ url_for('quiz1_sequence') }}" class="btn btn-primary">Start Quiz</a>
+{% endblock %}
