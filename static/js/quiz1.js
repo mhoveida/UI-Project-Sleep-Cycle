@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
         clonedDragged.style.pointerEvents = "auto";
         clonedDragged.draggable = true;
         clonedDragged.dataset.originalId = dragged.id; // 存储原始ID
-        clonedDragged.dataset.value = dragged.dataset.value; // 确保复制value属性
   
         zone.appendChild(clonedDragged);
         dragged.style.display = "none"; // 隐藏原始元素
@@ -81,9 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       
       const answer = [];
       document.querySelectorAll('.empty .dropped').forEach(el => {
-        // 确保获取正确的数据值，首选dataset.value，备选显示文本内容
-        const value = el.dataset.value || el.textContent.trim();
-        answer.push(value);
+        answer.push(el.dataset.value);
       });
 
       // 检查是否所有空位都已填充

@@ -3,6 +3,7 @@
 {% set next_url = url_for('quiz_results') %}
 {% set back_url = url_for('quiz4_multiple') %}
 {% set active_page = 'quiz5' %}
+{% set active_index = 4 %}
 
 {% block title %}Quiz 5: Mixed Sleep Questions{% endblock %}
 {% block heading %}Test Your Sleep Knowledge{% endblock %}
@@ -59,43 +60,4 @@ Answer by selecting or dragging the correct items!
 const next_url = "{{ next_url }}";
 </script>
 <script src="{{ url_for('static', filename='js/quiz5.js') }}"></script>
-
-<!-- Add debug button -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Log current selections before submitting
-  const logSelectedValues = function() {
-    const q1 = document.querySelector('.single-choice[data-question="q1"] .option.selected');
-    const q1Val = q1 ? q1.getAttribute('data-value') || q1.textContent.trim() : null;
-    
-    const q2Items = [];
-    document.querySelectorAll('.drop-zone .draggable').forEach(item => {
-      const val = item.getAttribute('data-value') || item.textContent.trim();
-      q2Items.push(val);
-    });
-    
-    const q3 = document.querySelector('.single-choice[data-question="q3"] .option.selected');
-    const q3Val = q3 ? q3.getAttribute('data-value') || q3.textContent.trim() : null;
-    
-    console.log("Debug - Selected values:", {
-      q1: q1Val,
-      q2: q2Items,
-      q3: q3Val
-    });
-  };
-  
-  // Hook into the next button click
-  const nextBtn = document.querySelector('.button.next');
-  if (nextBtn) {
-    const originalClick = nextBtn.onclick;
-    nextBtn.onclick = function(e) {
-      logSelectedValues();
-      // If there was an original click handler, call it
-      if (typeof originalClick === 'function') {
-        return originalClick.call(this, e);
-      }
-    };
-  }
-});
-</script>
 {% endblock %}

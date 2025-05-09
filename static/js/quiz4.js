@@ -18,11 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // 获取答案，首选data-answer属性，备选data-value属性或文本内容
-        const answer = selectedOption.getAttribute('data-answer') || 
-                       selectedOption.getAttribute('data-value') || 
-                       selectedOption.querySelector('.time')?.textContent || 
-                       selectedOption.textContent.trim();
+        const answer = selectedOption.getAttribute('data-answer');
 
         fetch('/submit_quiz4', {
             method: 'POST',

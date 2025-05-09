@@ -1,6 +1,7 @@
 {% extends "quiz_base.html" %}
 {% block title %}Quiz Results{% endblock %}
 {% set hide_nav = true %}
+{% set hide_hint = true %}
 {% block heading %}Your Quiz Results{% endblock %}
 {% block hint_text %}See how well you know your sleep cycles!{% endblock %}
 
@@ -12,51 +13,18 @@
   <p class="score-text" id="result-score"></p>
   <p class="message" id="result-message"></p>
   <p class="completed" id="completed-quizzes"></p>
-  <div class="score-breakdown">
-    <h3>Score Breakdown (Total: 24 points)</h3>
-    <ul id="score-breakdown-list">
-      <li>Quiz 1: Sleep Cycle Sequence - <span id="quiz1-score">?</span>/4 points</li>
-      <li>Quiz 2: Sleep Disruptor Effects - <span id="quiz2-score">?</span>/10 points</li>
-      <li>Quiz 3: Match Scenarios to Sleep Stages - <span id="quiz3-score">?</span>/6 points</li>
-      <li>Quiz 4: Best Wake-up Time - <span id="quiz4-score">?</span>/1 point</li>
-      <li>Quiz 5: Mixed Sleep Questions - <span id="quiz5-score">?</span>/3 points</li>
-    </ul>
+  <p class="total" id="total-score"></p>
+  
+  <!-- New div for detailed score breakdown -->
+  <div id="score-breakdown" class="score-breakdown"></div>
+
+  <div class="result-buttons">
+    <a href="/learn/1" class="button">Review Sleep Stages</a>
+    <a href="{{ url_for('quiz1_sequence') }}" class="button">Try Again</a>
   </div>
-
-<div class="result-buttons">
-  <a href="/learn/1" class="left-button">Review Sleep Stages</a>
-  <a href="/quiz_results/q1" class="middle-button">View Correct Choices</a>
-  <a href="{{ url_for('quiz1_sequence') }}" class="right-button">Try Again</a>
-</div>
-
 </div>
 {% endblock %}
 
 {% block script %}
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    fetch('/quiz_results', {
-        method: 'POST'
-    }).then(response => response.json())
-      .then(data => {
-        document.getElementById('result-title').innerText = data.feedback.title;
-        document.getElementById('result-score').innerText = 'Score: ' + data.feedback.score;
-        document.getElementById('result-message').innerText = data.feedback.message;
-        document.getElementById('completed-quizzes').innerText = 'Quizzes Completed: ' + data.completed_quizzes + '/5';
-        
-        // Update individual quiz scores if available
-        if (data.quiz_scores) {
-          document.getElementById('quiz1-score').innerText = data.quiz_scores.quiz1 || '?';
-          document.getElementById('quiz2-score').innerText = data.quiz_scores.quiz2 || '?';
-          document.getElementById('quiz3-score').innerText = data.quiz_scores.quiz3 || '?';
-          document.getElementById('quiz4-score').innerText = data.quiz_scores.quiz4 || '?';
-          document.getElementById('quiz5-score').innerText = data.quiz_scores.quiz5 || '?';
-        }
-      }).catch(error => {
-        console.error('Error fetching results:', error);
-        document.getElementById('result-title').innerText = 'Error';
-        document.getElementById('result-message').innerText = 'Unable to load quiz results.';
-      });
-});
-</script>
+<script src="{{ url_for('static', filename='js/quiz_results.js') }}"></script>
 {% endblock %}

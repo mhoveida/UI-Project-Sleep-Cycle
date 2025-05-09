@@ -1,4 +1,4 @@
-/* Base styles with modern tech design */
+/* base.css - 基础样式，更科技感的设计 */
 
 body {
   font-family: 'Roboto', 'Segoe UI', sans-serif;
@@ -9,7 +9,7 @@ body {
   line-height: 1.6;
 }
 
-/* Page title */
+/* 页面标题 */
 h1 {
   text-align: center;
   font-size: 2.5rem;
@@ -20,125 +20,30 @@ h1 {
   letter-spacing: 1px;
 }
 
-/* Hint section - using native details/summary */
-.hint-container {
-  margin: 25px auto;
-  max-width: 800px;
-}
-
-.hint-details {
-  background: linear-gradient(90deg, #e0f7fa, #f5f5f5);
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-}
-
-.hint-summary {
-  padding: 15px 25px;
+/* 提示部分 */
+.hint {
   display: flex;
   align-items: center;
-  cursor: pointer;
-  outline: none;
-  list-style: none;
-  position: relative;
-  transition: background-color 0.2s ease;
+  background: linear-gradient(90deg, #e0f7fa, #f5f5f5);
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin: 25px auto;
+  max-width: 800px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-.hint-summary:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-/* Remove the default arrow from summary */
-.hint-summary::-webkit-details-marker {
-  display: none;
-}
-
-.hint-icon {
+.hint img {
   width: 30px;
   margin-right: 15px;
-  transition: all 0.3s ease;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.2));
 }
 
-/* Animation for the icon when hint is closed */
-details:not([open]) .hint-icon {
-  animation: pulse-rotate 2s infinite;
-}
-
-/* Custom arrow */
-.hint-arrow {
-  margin-left: auto;
-  transition: transform 0.3s ease;
-}
-
-details[open] .hint-arrow {
-  transform: rotate(180deg);
-}
-
-@keyframes pulse-rotate {
-  0% { 
-    transform: scale(1) rotate(0deg); 
-    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1));
-  }
-  50% { 
-    transform: scale(1.1) rotate(5deg); 
-    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
-  }
-  100% { 
-    transform: scale(1) rotate(0deg); 
-    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1));
-  }
-}
-
-/* Effect when hovering over the summary */
-.hint-summary:hover .hint-icon {
-  transform: scale(1.15) rotate(10deg);
-}
-
-/* Effect when hint is open */
-details[open] .hint-icon {
-  transform: rotate(15deg);
-}
-
-.hint-summary span {
-  font-size: 1rem;
-  color: #607d8b;
-  font-style: italic;
-}
-
-.hint-content {
-  padding: 0 25px 20px;
-  color: #37474f;
+.hint span {
   font-size: 1.1rem;
-  line-height: 1.5;
-  border-top: 1px solid rgba(0,0,0,0.05);
-  margin-top: 5px;
-  animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Popup hint styling - added by JavaScript */
-.hint-popup {
-  font-family: 'Roboto', 'Segoe UI', sans-serif;
   color: #37474f;
-  line-height: 1.6;
 }
 
-/* Hint animation effect */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.hint.empty .hint-icon {
-  animation: pulse 2s infinite;
-}
-
-/* Main content area */
+/* 主内容区域 */
 .quiz-container {
   background-color: white;
   border-radius: 15px;
@@ -149,7 +54,7 @@ details[open] .hint-icon {
   min-height: 400px;
 }
 
-/* Bottom navigation */
+/* 底部导航 */
 .nav-bottom {
   display: flex;
   justify-content: space-between;
@@ -162,7 +67,7 @@ details[open] .hint-icon {
 .button {
   padding: 12px 25px;
   border: none;
-  border-radius: 30px;
+  border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -199,7 +104,7 @@ details[open] .hint-icon {
   box-shadow: 0 6px 15px rgba(76, 161, 175, 0.6);
 }
 
-/* Progress dots */
+/* 进度点 */
 .progress-dots {
   display: flex;
   justify-content: center;
@@ -221,7 +126,7 @@ details[open] .hint-icon {
   transform: scale(1.2);
 }
 
-/* Responsive design */
+/* 响应式设计 */
 @media (max-width: 768px) {
   .navbar {
     padding: 10px 15px;

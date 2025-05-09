@@ -16,12 +16,12 @@
       "question": "Sleep Disruptor Effects",
       "hint": "Some habits help, some hurt - can you spot which is which?",
       "options": {
-        "all": ["Meditation", "Screen blue light", "Stress & anxiety", "Late caffeine", "Reading Ebook", "Video Game", "Exercising late", "Alcohol before bed", "Regular schedule"],
+        "all": ["Screen", "Shower", "Stress", "Caffeine", "Meditation", "Alcohol", "Eating", "Irregular-schedule", "Reading", "Exercising-late.png"],
         "categories": ["Helps Sleep", "Hurts Sleep"]
       },
       "correctAnswer": {
-        "Helps Sleep": ["Meditation", "Reading physical book", "Regular schedule"],
-        "Hurts Sleep": ["Screen blue light", "Stress & anxiety", "Late caffeine", "Video Game", "Exercising late", "Alcohol before bed"]
+        "Helps Sleep": ["Meditation", "Reading", "Shower"],
+        "Hurts Sleep": ["Screen", "Stress", "Caffeine", "Exercising-late", "Alcohol", "Irregular-schedule", "Eating"]
       }
     },
     {
@@ -33,32 +33,44 @@
         {
           "label": "Sufficient N3 Deep Sleep",
           "match": "Sport.png",
-          "explanation": "Better athletic performance"
+          "explanation": "Better immune system functioning",
+          "leftIndex": 0,
+          "rightIndex": 1
         },
         {
           "label": "Complete REM Cycles",
           "match": "Solve.png", 
-          "explanation": "Creative problem solving"
+          "explanation": "Better athletic performance",
+          "leftIndex": 1,
+          "rightIndex": 3
         },
         {
           "label": "Insufficient N3 Deep Sleep",
           "match": "Sick.png",
-          "explanation": "Better immune system functioning"
+          "explanation": "Memory consolidation issues",
+          "leftIndex": 2,
+          "rightIndex": 0
         },
         {
           "label": "Multiple REM cycles",
           "match": "Recovery.png",
-          "explanation": "Emotional regulation improvements"
+          "explanation": "Creative problem solving",
+          "leftIndex": 3,
+          "rightIndex": 5
         },
         {
           "label": "N2 Deeper Light Sleep",
           "match": "Guitar.png",
-          "explanation": "Motor skill improvement"
+          "explanation": "Motor skill improvement",
+          "leftIndex": 4,
+          "rightIndex": 4
         },
         {
           "label": "Disrupted N3 Deep Sleep",
           "match": "Forget.png",
-          "explanation": "Memory consolidation issues"
+          "explanation": "Emotional regulation difficulties",
+          "leftIndex": 5,
+          "rightIndex": 2
         }
       ]
     },
