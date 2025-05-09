@@ -383,8 +383,7 @@
 
 /* 3) Only the correct card gets a subtle border + faint glow */
 .quiz4-options .option.selected {
-  border: 4px solid #4ca1af !important;
-  background-color: #e0f7fa !important;
+  border: 8px solid #4ca1af !important;
   box-shadow: 0 0 10px rgba(76, 161, 175, 0.3) !important;
 }
 

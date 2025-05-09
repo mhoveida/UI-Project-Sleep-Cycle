@@ -104,7 +104,7 @@
   .wave-container {
     width: 100%;
     position: relative;
-    height: 50px;
+    height: auto;
     margin-top: 10px;
     overflow: hidden;
   }
@@ -113,7 +113,7 @@
     width: 100%;
     position: relative;
     height: auto;
-    max-height: 50px;
+    max-height: auto;
   }
   
   /* 响应式设计 */
