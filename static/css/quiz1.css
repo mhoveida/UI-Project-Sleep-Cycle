@@ -5,9 +5,9 @@
 }
 
 .empty {
-  width: 160px;
-  height: 90px;
-  margin: 10px;
+  width: 250px;
+  height: 150px;
+  margin: 5px;
   border: none;
   position: relative;
 }
@@ -24,8 +24,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 160px;
-  height: 90px;
+  width: 250px;
+  height: 150px;
   transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
@@ -33,21 +33,13 @@
 
 /* 原始可拖拽项样式 */
 .draggable {
-  width: 160px;
-  height: 90px;
+  width: 200px;
+  height: 120px;
   object-fit: contain;
   background: none;   /* 🔥 去掉蓝色背景 */
   border: none;
   cursor: grab;
   user-select: none;
-  transition: transform 0.2s ease;
-}
-
-.draggable {
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  cursor: grab;
   border-radius: 8px;
   transition: transform 0.2s ease;
 }
@@ -110,7 +102,7 @@
 }
 
 .drag-zone img {
-  width: 80px;
+  width: 200px;
   height: auto;
   cursor: grab;
   border-radius: 5px;
