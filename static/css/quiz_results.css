@@ -1,53 +1,249 @@
 .result-container {
-    text-align: center;
-    padding: 10px 20px;
-  }
-  
-  .result-container h2 {
-    font-size: 32px;
-    color: #2e7d32;
-    margin-bottom: 20px;
-  }
-  
-  .score-text {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .message {
-    font-size: 20px;
-    margin: 20px 0;
-    color: #555;
-  }
-  
-  .result-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
+  text-align: center;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-  /* all three buttons share the same styling */
-  .left-button,
-  .middle-button,
-  .right-button {
-    width: 25%;
-    text-align: center;
-    padding: 10px 20px;
-    background-color: #5f8d92;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-  }
+.result-container h2 {
+  font-size: 32px;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  animation: fadeIn 0.8s ease-in;
+}
 
-  .left-button:hover,
-  .middle-button:hover,
-  .right-button:hover {
-    background-color: #417276;
-  }
+.result-container h2.perfect {
+  color: #4ca1af;
+  animation: perfect-pulse 2s infinite;
+}
 
-  /* ── Sequence images: smaller, on one line ─────────────────────────────────── */
+@keyframes perfect-pulse {
+  0% { color: #4ca1af; }
+  50% { color: #2e7d32; }
+  100% { color: #4ca1af; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+  
+.score-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.message {
+  font-size: 20px;
+  margin: 20px 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.overall-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  padding: 15px 25px;
+  background-color: #f5f8f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  min-width: 180px;
+  transition: transform 0.2s;
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box p {
+  margin: 5px 0;
+}
+
+.stat-box .label {
+  font-size: 14px;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-box .value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4ca1af;
+}
+
+.score-breakdown {
+  margin: 30px 0;
+  padding: 25px;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 1s ease-in;
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.score-breakdown h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.quiz-breakdown {
+  margin-bottom: 20px;
+  padding: 18px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s;
+}
+
+.quiz-breakdown:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.quiz-breakdown.perfect {
+  background-color: #f0f9f6;
+  border-left: 4px solid #4ca1af;
+}
+
+.quiz-breakdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.quiz-breakdown h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Score bar styling */
+.score-bar-container {
+  width: 70%;
+  margin: 15px auto 0;
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.score-bar {
+  height: 100%;
+  background: linear-gradient(to right, #4ca1af, #5f8d92);
+  border-radius: 6px;
+  transition: width 1s ease-in-out;
+}
+
+.score-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.score-number {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.score-percentage {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Perfect score indicator */
+.perfect-indicator {
+  background-color: #e7fae7;
+  color: #2e7d32;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+/* Style for the review link */
+.review-link {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: #4ca1af;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.review-link:hover {
+  background-color: #417276;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 161, 175, 0.2);
+}
+  
+.result-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.result-buttons a.button {
+  padding: 12px 24px;
+  background-color: #5f8d92;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s;
+  min-width: 160px;
+}
+
+.result-buttons a.button:hover {
+  background-color: #417276;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(65, 114, 118, 0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .result-container {
+    padding: 15px;
+  }
+  
+  .score-breakdown {
+    padding: 15px;
+  }
+  
+  .quiz-breakdown {
+    padding: 15px;
+  }
+}
+
+/* ── Sequence images: smaller, on one line ─────────────────────────────────── */
 /* ── Force the sequence images into a single row and shrink them ───────────────── */
 .sequence-arrows {
   display: flex;
@@ -151,13 +347,6 @@
   text-align: center;
 }
 
-
-.quiz-container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-}
-
 .result-image {
   margin: 20px auto;
   max-width: 400px;
@@ -169,21 +358,6 @@
   height: auto;
   border-radius: 8px;
 }
-
-.nav-buttons {
-  max-width: 280px;
-  margin: 20px auto 0;
-}
-
-.nav-buttons .button {
-  flex: none;
-  width: 120px;
-  padding: 6px 0;
-  font-size: 0.8rem;
-}
-
-/* ── FINAL QUIZ-4 RESULT OVERRIDES ───────────────────────────────────────── */
-
 /* 1) Center the three cards exactly as in the live quiz */
 .quiz4-options {
   display: flex !important;
@@ -217,165 +391,35 @@
 .quiz4-top .waketime-section .clock {
   margin-left: -20px; /* pull it left by 20px—tweak the value to suit */
 }
+/* Add these styles to your quiz_results.css file */
 
-/* 4) Re-center the prev/next buttons under the cards */
-.nav-buttons {
-  display: flex !important;
-  justify-content: center !important;
-  gap: 16px !important;
-  margin: 20px auto 0 !important;
+.questions-answered {
+    font-size: 0.8em;
+    color: #666;
+    margin-left: 5px;
+    font-style: italic;
 }
 
-.nav-buttons .button {
-  width: 140px !important;
-  padding: 8px 0 !important;
-  font-size: 0.9rem !important;
+.score-details {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
 }
 
-.quiz-container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
+.score-number {
+    font-weight: bold;
+    margin-right: 10px;
 }
 
-.result-image {
-  margin: 20px auto;
-  max-width: 400px;
+.score-percentage {
+    color: #555;
+    margin-left: auto;
+    font-weight: bold;
 }
 
-.result-image img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-.nav-buttons {
-  max-width: 280px;
-  margin: 20px auto 0;
-}
-
-.nav-buttons .button {
-  flex: none;
-  width: 120px;
-  padding: 6px 0;
-  font-size: 0.8rem;
-}
-
-.score-breakdown {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.score-breakdown h3 {
-  margin-top: 0;
-  color: #333;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-}
-
-.quiz-breakdown {
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: white;
-  border-radius: 5px;
-  border-left: 4px solid #6c757d;
-}
-
-.quiz-breakdown h4 {
-  margin-top: 0;
-  margin-bottom: 5px;
-  color: #495057;
-}
-
-.quiz-breakdown p {
-  margin: 5px 0 0 0;
-  font-weight: 500;
-}
-
-/* Colored indicators for scores */
-.quiz-breakdown p.good-score {
-  color: #28a745;
-}
-
-.quiz-breakdown p.medium-score {
-  color: #ffc107;
-}
-
-.quiz-breakdown p.low-score {
-  color: #dc3545;
-}
-
-/* Style for the breakdown sections */
-.quiz-breakdown {
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 8px;
-  background-color: #f5f5f5;
-}
-
-.quiz-breakdown-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.quiz-breakdown h4 {
-  margin: 0;
-  font-size: 1.1em;
-  color: #333;
-}
-
-.quiz-breakdown p {
-  margin: 5px 0 0 0;
-  font-size: 0.95em;
-}
-
-/* Style for the review link */
-.review-link {
-  display: inline-block;
-  padding: 5px 10px;
-  background-color: #4ca1af;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 0.85em;
-  transition: background-color 0.2s;
-}
-
-.review-link:hover {
-  background-color: #4ca1af;
-  text-decoration: none;
-}
-
-/* Overall breakdown section styling */
-.score-breakdown {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.score-breakdown h3 {
-  margin-bottom: 15px;
-  font-size: 1.3em;
-  color: #333;
-  text-align: center;
-}
-
-/* Perfect score title styling */
-#result-title {
-  transition: color 0.3s;
-}
-.perfect {
-  animation: perfect-pulse 2s infinite;
-}
-
-/* For the checkmark after perfect quiz scores */
-.quiz-breakdown.perfect p {
-  color: #4ca1af;
-  font-weight: bold;
+.perfect-indicator {
+    margin-left: 10px;
+    color: green;
+    font-weight: bold;
 }

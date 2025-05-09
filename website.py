@@ -184,8 +184,17 @@ def quiz_results():
 
         total_score = 0
         completed_questions = 0
-        max_possible_score = 24  # Updated to 24 total questions
+        max_possible_score = 24  # 24 total questions
         questions_details = []  # Track individual question scores
+
+        # Define total questions in each quiz for detailed breakdown
+        quiz_totals = {
+            1: 4,   # 4 sequence items
+            2: 10,  # 10 drag items
+            3: 6,   # 6 matching items
+            4: 1,   # 1 multiple choice
+            5: 3    # 3 mixed questions
+        }
 
         # Helper to normalize strings
         def normalize(value):
@@ -195,8 +204,12 @@ def quiz_results():
         correct_sequence = [normalize(x) for x in quiz_data['questions'][0]['correctAnswer']]
         user_sequence = [normalize(x) for x in session.get('quiz1_answer', [])]
         
+        quiz1_answered = 0
         if user_sequence:
-            completed_questions += 4  # 4 positions in the sequence
+            # Only count questions that have been answered
+            quiz1_answered = len(user_sequence)  # Count only positions that were filled
+            completed_questions += quiz1_answered
+            
             for i in range(min(len(correct_sequence), len(user_sequence))):
                 if i < len(user_sequence) and i < len(correct_sequence):
                     if user_sequence[i] == correct_sequence[i]:
@@ -214,17 +227,19 @@ def quiz_results():
         user_helps = set([normalize(x) for x in session.get('quiz2_helps', [])])
         user_hurts = set([normalize(x) for x in session.get('quiz2_hurts', [])])
         
+        quiz2_answered = 0
         if user_helps or user_hurts:
-            # Count all items to track completion
-            all_items = set(correct_helps) | set(correct_hurts)
-            completed_questions += len(all_items)
+            # Only count items that were actually placed by the user
+            placed_items = user_helps | user_hurts
+            quiz2_answered = len(placed_items)
+            completed_questions += quiz2_answered  # Only count items the user placed
             
             # Check each help item
             for item in correct_helps:
                 if item in user_helps:
                     total_score += 1
                     questions_details.append({"quiz": 2, "question": item, "correct": True})
-                else:
+                elif item in placed_items:  # Only add to details if user placed it somewhere
                     questions_details.append({"quiz": 2, "question": item, "correct": False})
             
             # Check each hurt item
@@ -232,16 +247,7 @@ def quiz_results():
                 if item in user_hurts:
                     total_score += 1
                     questions_details.append({"quiz": 2, "question": item, "correct": True})
-                else:
-                    questions_details.append({"quiz": 2, "question": item, "correct": False})
-                    
-            # Check for incorrectly categorized items
-            for item in user_helps:
-                if item not in correct_helps and item in correct_hurts:
-                    questions_details.append({"quiz": 2, "question": item, "correct": False})
-                    
-            for item in user_hurts:
-                if item not in correct_hurts and item in correct_helps:
+                elif item in placed_items:  # Only add to details if user placed it somewhere
                     questions_details.append({"quiz": 2, "question": item, "correct": False})
 
         # Quiz 3 - Each correct match counts as 1 point (6 points total)
@@ -258,8 +264,11 @@ def quiz_results():
         user_matches = session.get('quiz3_matches', {})
         print("User submitted matches:", user_matches)
         
+        quiz3_answered = 0
         if user_matches:
-            completed_questions += len(correct_matches)
+            # Only count questions that user actually matched
+            quiz3_answered = len(user_matches)
+            completed_questions += quiz3_answered  # Only count connections the user made
             
             for question_key, correct_answer in correct_matches.items():
                 # Find if this question was answered
@@ -281,7 +290,7 @@ def quiz_results():
                             break
                     
                     questions_details.append({"quiz": 3, "question": original_label or question_key, "correct": True})
-                else:
+                elif base_question_key:  # Only add to details if user answered this question
                     print(f"Incorrect! {base_question_key} -> {user_matches.get(base_question_key, 'Not found')} does not match {correct_answer}")
                     # Find the original label using the index from the question key
                     question_index = int(question_key.split('_')[1])
@@ -292,14 +301,14 @@ def quiz_results():
                             break
                     
                     questions_details.append({"quiz": 3, "question": original_label or question_key, "correct": False})
-            
-            print(f"Quiz 3 score: {total_score} / 6")
 
         # Quiz 4 - Single question worth 1 point
         correct_answer = normalize(quiz_data['questions'][3]['correctAnswer'])
         user_answer = normalize(session.get('quiz4_answer', ''))
         
+        quiz4_answered = 0
         if user_answer:
+            quiz4_answered = 1
             completed_questions += 1
             if user_answer == correct_answer:
                 total_score += 1
@@ -314,46 +323,49 @@ def quiz_results():
             'q3': normalize(quiz_data['questions'][6]['correctAnswer'])
         }
         
-        user_answers = {
-            'q1': normalize(session.get('quiz5_answers', {}).get('q1', '')),
-            'q2': set([normalize(x) for x in session.get('quiz5_answers', {}).get('q2', [])]),
-            'q3': normalize(session.get('quiz5_answers', {}).get('q3', ''))
-        }
+        user_answers = session.get('quiz5_answers', {})
+        quiz5_answered = 0
         
-        # Q1 - Single choice - worth 1 point
-        if user_answers['q1']:
+        # Q1 - Single choice
+        if user_answers.get('q1'):
+            quiz5_answered += 1
             completed_questions += 1
-            if user_answers['q1'] == quiz5_correct['q1']:
+            user_answer = normalize(user_answers.get('q1', ''))
+            if user_answer == quiz5_correct['q1']:
                 total_score += 1
                 questions_details.append({"quiz": 5, "question": 1, "correct": True})
             else:
                 questions_details.append({"quiz": 5, "question": 1, "correct": False})
                     
-        # Q2 - Drag and drop activity - worth 1 point total
-        if user_answers['q2']:
-            completed_questions += 1  # Count as ONE question total
+        # Q2 - Drag and drop activity
+        user_q2 = set([normalize(x) for x in user_answers.get('q2', [])])
+        if user_q2:
+            quiz5_answered += 1
+            completed_questions += 1  # Count as ONE question
             
             # Check if user dragged the correct item(s)
             all_correct = True
             for item in quiz5_correct['q2']:
-                if item not in user_answers['q2']:
+                if item not in user_q2:
                     all_correct = False
-                    questions_details.append({"quiz": 5, "question": f"2-{item}", "correct": False})
             
             # Also check if user included any wrong items
-            for item in user_answers['q2']:
+            for item in user_q2:
                 if item not in quiz5_correct['q2']:
                     all_correct = False
-                    questions_details.append({"quiz": 5, "question": f"2-{item}", "correct": False})
             
             if all_correct:
                 total_score += 1
                 questions_details.append({"quiz": 5, "question": 2, "correct": True})
+            else:
+                questions_details.append({"quiz": 5, "question": 2, "correct": False})
 
-        # Q3 - Single choice - worth 1 point
-        if user_answers['q3']:
+        # Q3 - Single choice
+        if user_answers.get('q3'):
+            quiz5_answered += 1
             completed_questions += 1
-            if user_answers['q3'] == quiz5_correct['q3']:
+            user_answer = normalize(user_answers.get('q3', ''))
+            if user_answer == quiz5_correct['q3']:
                 total_score += 1
                 questions_details.append({"quiz": 5, "question": 3, "correct": True})
             else:
@@ -378,12 +390,36 @@ def quiz_results():
                 "score": f"{total_score}/{max_possible_score}"
             }
 
+        # Group questions by quiz for the detailed breakdown
+        quizGroups = {}
+        for i in range(1, 6):  # Quiz 1-5
+            # Initialize with empty array for each quiz
+            quizGroups[str(i)] = {
+                "total": quiz_totals[i],
+                "answered": 0,
+                "correct": 0
+            }
+        
+        # Set the answered counts based on our tracking variables
+        quizGroups["1"]["answered"] = quiz1_answered
+        quizGroups["2"]["answered"] = quiz2_answered
+        quizGroups["3"]["answered"] = quiz3_answered
+        quizGroups["4"]["answered"] = quiz4_answered
+        quizGroups["5"]["answered"] = quiz5_answered
+        
+        # Count correct answers per quiz
+        for detail in questions_details:
+            quiz_num = str(detail["quiz"])
+            if detail["correct"]:
+                quizGroups[quiz_num]["correct"] += 1
+        
         return jsonify({
             'total_score': total_score,
             'max_score': max_possible_score,
             'completed_questions': completed_questions,
             'feedback': feedback,
-            'questions_details': questions_details
+            'questions_details': questions_details,
+            'quizGroups': quizGroups  # Add quiz group data for improved breakdown
         })
 
     return render_template('quiz_results.html', active_page="quiz", total_score=None)
