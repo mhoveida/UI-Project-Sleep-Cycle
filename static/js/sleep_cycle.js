@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log("Page loaded, initializing sleep cycle animation");
   
   // Create the wave animation container
-  createWaveAnimation();
+  //createWaveAnimation();
   
   // Handle clicks on characteristic titles
   document.querySelectorAll('.characteristics').forEach(charList => {
