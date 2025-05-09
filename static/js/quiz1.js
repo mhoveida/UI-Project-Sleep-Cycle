@@ -7,14 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
       draggables.forEach(el => {
         el.addEventListener("dragstart", e => {
           e.dataTransfer.setData("text/plain", el.id);
-          // 添加拖动时的样式
-          setTimeout(() => {
-            el.style.opacity = "0.5";
-          }, 0);
-        });
-
-        el.addEventListener("dragend", e => {
-          el.style.opacity = "1";
         });
       });
     }
@@ -22,18 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setupDraggables();
   
     empties.forEach(zone => {
-      zone.addEventListener("dragover", e => {
-        e.preventDefault();
-        zone.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
-      });
-
-      zone.addEventListener("dragleave", e => {
-        zone.style.backgroundColor = "";
-      });
+      zone.addEventListener("dragover", e => e.preventDefault());
   
       zone.addEventListener("drop", e => {
         e.preventDefault();
-        zone.style.backgroundColor = "";
         const draggedId = e.dataTransfer.getData("text/plain");
         const dragged = document.getElementById(draggedId);
   
@@ -44,8 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (existingId) {
             const originalExisting = document.getElementById(existingId);
             if (originalExisting) {
-              originalExisting.style.display = "";
-              originalExisting.style.opacity = "1";
+              originalExisting.style.display = ""; // 显示回原 drag-zone
             }
           }
           existing.remove();
@@ -57,23 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
         clonedDragged.classList.add("dropped");
         clonedDragged.style.pointerEvents = "auto";
         clonedDragged.draggable = true;
-        clonedDragged.dataset.originalId = dragged.id;
-        clonedDragged.dataset.value = dragged.dataset.value;
-        clonedDragged.style.opacity = "1";
+        clonedDragged.dataset.originalId = dragged.id; // 存储原始ID
+        clonedDragged.dataset.value = dragged.dataset.value; // 确保复制value属性
   
         zone.appendChild(clonedDragged);
-        dragged.style.display = "none";
+        dragged.style.display = "none"; // 隐藏原始元素
   
         // 为克隆的元素添加拖动事件
         clonedDragged.addEventListener("dragstart", evt => {
           evt.dataTransfer.setData("text/plain", draggedId);
-          setTimeout(() => {
-            clonedDragged.style.opacity = "0.5";
-          }, 0);
-        });
-
-        clonedDragged.addEventListener("dragend", evt => {
-          clonedDragged.style.opacity = "1";
         });
       });
     });
@@ -89,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       empties.forEach(zone => {
         const droppedElement = zone.querySelector(".dropped");
         if (droppedElement && (droppedElement.id === draggedId || droppedElement.dataset.originalId === draggedId)) {
+          // 恢复 empty 的原始图片
           zone.innerHTML = `<img src="/static/media/Quiz/Q1/quiz1-empty.png" alt="Drop Slot">`;
         }
       });
@@ -96,7 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // 显示原 drag-zone 中的项
       if (originalDragged) {
         originalDragged.style.display = "";
-        originalDragged.style.opacity = "1";
       }
     });
 

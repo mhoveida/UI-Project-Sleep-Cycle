@@ -219,8 +219,6 @@ def quiz_results():
         # Quiz 2 - 修改为您喜欢的评分逻辑
         correct_helps = set([normalize(x) for x in quiz_data['questions'][1]['correctAnswer']['Helps Sleep']])
         correct_hurts = set([normalize(x) for x in quiz_data['questions'][1]['correctAnswer']['Hurts Sleep']])
-        
-        # Get user answers
         user_helps = set([normalize(x) for x in session.get('quiz2_helps', [])])
         user_hurts = set([normalize(x) for x in session.get('quiz2_hurts', [])])
         

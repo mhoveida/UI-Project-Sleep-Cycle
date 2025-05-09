@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Single choice logic
+    // 单选逻辑
     document.querySelectorAll('.options.single-choice').forEach(group => {
-        const questionId = group.getAttribute('data-question');
         group.querySelectorAll('.option').forEach(option => {
             option.addEventListener('click', () => {
                 group.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
@@ -11,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Drag Logic
+    // 拖拽逻辑
     const draggables = document.querySelectorAll('.draggable');
     const dropZone = document.querySelector('.drop-zone');
 
@@ -58,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Submit handler
+    // 提交处理
     document.querySelector('.button.next').addEventListener('click', function(e) {
         e.preventDefault();
         
