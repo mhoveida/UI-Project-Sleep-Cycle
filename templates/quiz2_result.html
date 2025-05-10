@@ -1,44 +1,43 @@
-<!-- 3. QUIZ 2 RESULT (quiz2_result.html) -->
 {% extends "quiz_base.html" %}
-{% block title %}Quiz 2 Result{% endblock %}
-{% set hide_nav = true %}
-{% set hide_hint = true %}
 
-{% block heading %}
-  Quiz 2: Sleep Disruptor Effects
+{% set next_url = url_for('quiz_results_question', num=3) %}
+{% set back_url = url_for('quiz_results_question', num=1) %}
+{% set active_index = 1 %}
+{% set hide_hint = true %}
+{% set hide_nav = false %}
+
+{% block title %}Quiz 2 Result: Sleep Disruptor Effects{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz2.css') }}">
 {% endblock %}
 
+{% block heading %}Sleep Disruptor Effects{% endblock %}
+
 {% block quiz_content %}
-  <!-- Original quiz‐2 styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz2.css') }}">
-  <!-- Result‐page overrides (for fixed images & layout) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
-
-  <!-- Content directly in quiz_content block -->
-  <div class="disruptor-grid">
-    <!-- Helps Sleep column -->
-    <div class="helps-sleep">
+  <div class="drop-zone-row">
+    <!-- Helps Sleep -->
+    <div class="drop-column helps" data-category="Helps Sleep">
       <h3>Helps Sleep</h3>
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Shower.png') }}" alt="Shower">
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Meditation.png') }}" alt="Meditation">
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Reading.png') }}" alt="Reading">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Shower.png') }}" alt="Shower" class="draggable">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Meditation.png') }}" alt="Meditation" class="draggable">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Reading.png') }}" alt="Reading" class="draggable">
     </div>
 
-    <!-- Hurts Sleep column -->
-    <div class="hurts-sleep">
+    <!-- Hurts Sleep -->
+    <div class="drop-column hurts" data-category="Hurts Sleep">
       <h3>Hurts Sleep</h3>
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Screen.png') }}" alt="Screen Time">
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Caffeine.png') }}" alt="Caffeine">
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Irregular-schedule.png') }}" alt="Irregular Schedule">
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Exercising-late.png') }}" alt="Exercising Late">
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Eating.png') }}" alt="Eating">
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Alcohol.png') }}" alt="Alcohol">
-      <img src="{{ url_for('static', filename='media/Quiz/Q2/Stress.png') }}" alt="Stress">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Screen.png') }}" alt="Screen Time" class="draggable">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Stress.png') }}" alt="Stress" class="draggable">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Caffeine.png') }}" alt="Caffeine" class="draggable">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Alcohol.png') }}" alt="Alcohol" class="draggable">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Eating.png') }}" alt="Eating" class="draggable">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Irregular-schedule.png') }}" alt="Irregular Schedule" class="draggable">
+      <img src="{{ url_for('static', filename='media/Quiz/Q2/Exercising-late.png') }}" alt="Exercising Late" class="draggable">
     </div>
   </div>
+{% endblock %}
 
-  <div class="nav-buttons">
-    <a href="{{ url_for('quiz_results_question', num=1) }}" class="button">← Prev</a>
-    <a href="{{ url_for('quiz_results_question', num=3) }}" class="button">Next →</a>
-  </div>
+{% block script %}
+  <!-- No JavaScript needed for this results page -->
 {% endblock %}
