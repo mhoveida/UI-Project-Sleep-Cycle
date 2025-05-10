@@ -1,28 +1,37 @@
 {% extends "quiz_base.html" %}
 {% block title %}Quiz 1 Result{% endblock %}
-{% set hide_nav = true %}
+{% set hide_nav = false %}
 {% set hide_hint = true %}
+{% set active_index = 0 %}
+{% set next_url = url_for('quiz_results_question', num=2) %}
+{% set back_url = url_for('quiz_results') %}
 
 {% block heading %}
-  Quiz 1: Correct Sequence of the Sleep Cycle
+  Correct Sequence of the Sleep Cycle
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz1.css') }}">
 {% endblock %}
 
 {% block quiz_content %}
-  <!-- original quiz1 styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz1.css') }}">
-  <!-- now our overrides for sizing/layout -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
-
-  <!-- Content directly in quiz_content block -->
-  <div class="sequence-arrows">
-    <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N1.png') }}" alt="Light Sleep">
-    <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N2.png') }}" alt="Deeper Light Sleep">
-    <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N3.png') }}" alt="Deep Sleep">
-    <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-rem.png') }}" alt="REM Sleep">
+  <!-- Display the correct sequence in the same layout as the quiz -->
+  <div class="drop-zone">
+    <div class="empty" data-index="0">
+      <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N1.png') }}" alt="Light Sleep" class="dropped">
+    </div>
+    <div class="empty" data-index="1">
+      <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N2.png') }}" alt="Deeper Light Sleep" class="dropped">
+    </div>
+    <div class="empty" data-index="2">
+      <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-N3.png') }}" alt="Deep Sleep" class="dropped">
+    </div>
+    <div class="empty" data-index="3">
+      <img src="{{ url_for('static', filename='media/Quiz/Q1/quiz1-rem.png') }}" alt="REM Sleep" class="dropped">
+    </div>
   </div>
+{% endblock %}
 
-  <div class="nav-buttons">
-    <a href="{{ url_for('quiz_results') }}" class="button">← Back to Score</a>
-    <a href="{{ url_for('quiz_results_question', num=2) }}" class="button">Next →</a>
-  </div>
+{% block script %}
+  <!-- No JavaScript needed for this page as it's just displaying the correct sequence -->
 {% endblock %}
