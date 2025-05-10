@@ -423,6 +423,46 @@ function resetWaveAnimation() {
   }
 }
 
+// Function to show completed stage message
+function showCompletedStageMessage(stageInfo, nextStageId) {
+  // Create the completion message element
+  const completionMessage = document.createElement('div');
+  completionMessage.className = 'stage-completion-message';
+  
+  // Style the message
+  completionMessage.style.marginTop = '2rem';
+  completionMessage.style.padding = '0.75rem';
+  completionMessage.style.backgroundColor = 'rgba(76, 161, 175, 0.1)';
+  completionMessage.style.borderRadius = '8px';
+  completionMessage.style.borderLeft = '4px solid #4ca1af';
+  completionMessage.style.color = '#2c3e50';
+  completionMessage.style.fontWeight = 'bold';
+  completionMessage.style.textAlign = 'center';
+  completionMessage.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+  
+  // Set message content based on current stage
+  if (nextStageId) {
+    // Not final stage
+    completionMessage.textContent = `Stage complete! Click on ${nextStageId} in the image to continue.`;
+    
+    // Add subtle pulsing animation
+    completionMessage.style.animation = 'pulse 2s infinite';
+  } else {
+    // Final stage (REM)
+    completionMessage.textContent = `All stages complete! Click on N1 to restart or continue to next section.`;
+    
+    // Different color for completion
+    completionMessage.style.borderLeft = '4px solid #27ae60';
+    completionMessage.style.backgroundColor = 'rgba(39, 174, 96, 0.1)';
+  }
+  
+  // Add to the stage info container
+  stageInfo.appendChild(completionMessage);
+  
+  // Scroll to make the message visible
+  completionMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 // Modify your existing showStage function to include the wave animation
 function showStage(stageId) {
   console.log("Show stage called for:", stageId);
@@ -470,38 +510,38 @@ document.addEventListener('DOMContentLoaded', () => {
             nextItem.style.display = 'block';
             nextItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
           } else {
-            const nextButton = item.closest('.stage-info').querySelector('.next-stage-button');
-    
-            if (nextButton) {
-              nextButton.style.display = 'inline-block';
-              nextButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-              console.log("Reached end of final stage.");
-    
-              const restartButton = document.createElement('button');
-              restartButton.textContent = "Restart Cycle";
-              restartButton.className = "next-stage-button"; // 👈 same styling
-              restartButton.style.marginTop = "2rem";
-    
-              item.closest('.stage-info').appendChild(restartButton);
-    
-              restartButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
-              restartButton.addEventListener('click', () => {
-                showStage('N1');
-                window.scrollTo({
-                  top: 0,
-                  behavior: 'smooth'
-                });
-              });
+            // Find the stage info container
+            const stageInfo = item.closest('.stage-info');
+            const currentId = stageInfo.id.replace('info-', '');
+            const stageOrder = ["N1", "N2", "N3", "REM"];
+            const currentIndex = stageOrder.indexOf(currentId);
+            
+            // Check if there's a next stage
+            const nextId = currentIndex < stageOrder.length - 1 ? stageOrder[currentIndex + 1] : null;
+            
+            // Remove any existing next stage button
+            const existingButton = stageInfo.querySelector('.next-stage-button');
+            if (existingButton) {
+              existingButton.remove();
             }
+            
+            // Remove any existing completion message
+            const existingMessage = stageInfo.querySelector('.stage-completion-message');
+            if (existingMessage) {
+              existingMessage.remove();
+            }
+            
+            // Show the completion message instead of the button
+            showCompletedStageMessage(stageInfo, nextId);
           }
         });
       }
     });    
   });
 
-  // Handle "Next Stage" button
+  // We're not using the Next Stage buttons anymore, so we can remove this handler
+  // But keeping it commented out for reference
+  /*
   document.querySelectorAll('.next-stage-button').forEach(btn => {
     btn.addEventListener('click', () => {
       const currentId = btn.closest('.stage-info').id.replace('info-', '');
@@ -512,14 +552,28 @@ document.addEventListener('DOMContentLoaded', () => {
       if (nextId) {
         showStage(nextId);
   
-        // ✅ Reset the page scroll to the top
+        // Reset the page scroll to the top
         window.scrollTo({
           top: 0,
           behavior: 'smooth'
         });
       }
     });
-  });  
+  });
+  */
+});
+
+// Add a style element for the pulse animation
+document.addEventListener('DOMContentLoaded', () => {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = `
+    @keyframes pulse {
+      0% { opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { opacity: 0.8; }
+    }
+  `;
+  document.head.appendChild(styleElement);
 });
 
 function toggleHint(iconElement) {
