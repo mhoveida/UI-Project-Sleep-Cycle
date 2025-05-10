@@ -28,9 +28,6 @@
           <li class="characteristic-item" style="{% if not loop.first %}display: none;{% endif %}">
             <div class="char-button-wrapper">
               <button class="char-button">{{ c.title }}</button>
-              {% if c.detail %}
-                <img src="{{ url_for('static', filename='media/hint.png') }}" alt="Hint" class="hint-icon" onclick="toggleHint(this)">
-              {% endif %}
             </div>
             <img src="{{ url_for('static', filename='media/Sleep-cycle/Characteristics/' ~ stage.id ~ '-ch' ~ loop.index ~ '.png') }}"
                  alt="{{ c.title }}">

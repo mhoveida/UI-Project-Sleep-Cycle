@@ -681,36 +681,3 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.head.appendChild(styleElement);
 });
-
-function toggleHint(iconElement) {
-  const parent = iconElement.closest('.characteristic-item');
-  const hintText = parent.querySelector('.hint-text');
-  if (hintText) {
-    // Toggle visibility with smooth transition
-    if (hintText.style.display === 'none' || !hintText.style.display) {
-      // Show hint with proper styling
-      hintText.style.display = 'block';
-      hintText.style.backgroundColor = '#f9f9f9';
-      hintText.style.border = '1px solid #e0e0e0';
-      hintText.style.borderLeft = '3px solid #4ca1af';
-      hintText.style.borderRadius = '5px';
-      hintText.style.padding = '10px 15px';
-      hintText.style.margin = '12px auto';
-      hintText.style.width = '400px';
-      hintText.style.maxWidth = '500px';
-      hintText.style.fontStyle = 'italic';
-      hintText.style.color = '#555';
-      hintText.style.lineHeight = '1.5';
-      hintText.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
-      hintText.style.whiteSpace = 'nowrap';
-      hintText.style.overflow = 'hidden';
-      hintText.style.textOverflow = 'ellipsis';
-      hintText.title = hintText.textContent;
-      // Apply animation
-      hintText.style.animation = 'fadeIn 0.3s ease-in-out';
-    } else {
-      // Hide hint
-      hintText.style.display = 'none';
-    }
-  }
-}
