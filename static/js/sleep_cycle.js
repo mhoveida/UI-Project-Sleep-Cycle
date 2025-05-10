@@ -425,12 +425,24 @@ function resetWaveAnimation() {
 
 // Function to show completed stage message
 function showCompletedStageMessage(stageInfo, nextStageId) {
+  // First, remove any existing completion messages and arrows
+  const existingWrappers = stageInfo.querySelectorAll('.stage-completion-wrapper');
+  existingWrappers.forEach(wrapper => wrapper.remove());
+  
+  // Create a wrapper div to hold both message and up arrow
+  const messageWrapper = document.createElement('div');
+  messageWrapper.className = 'stage-completion-wrapper';
+  messageWrapper.style.display = 'flex';
+  messageWrapper.style.alignItems = 'center';
+  messageWrapper.style.gap = '1rem';
+  messageWrapper.style.marginTop = '2rem';
+  
   // Create the completion message element
   const completionMessage = document.createElement('div');
   completionMessage.className = 'stage-completion-message';
   
   // Style the message
-  completionMessage.style.marginTop = '2rem';
+  completionMessage.style.flex = '1';
   completionMessage.style.padding = '0.75rem';
   completionMessage.style.backgroundColor = 'rgba(76, 161, 175, 0.1)';
   completionMessage.style.borderRadius = '8px';
@@ -450,17 +462,67 @@ function showCompletedStageMessage(stageInfo, nextStageId) {
   } else {
     // Final stage (REM)
     completionMessage.textContent = `All stages complete! Click on N1 to restart or continue to next section.`;
+    completionMessage.style.whiteSpace = 'nowrap';
+    completionMessage.style.textOverflow = 'ellipsis';
+
+
     
     // Different color for completion
-    completionMessage.style.borderLeft = '4px solid #27ae60';
-    completionMessage.style.backgroundColor = 'rgba(39, 174, 96, 0.1)';
+    completionMessage.style.borderLeft = '4px solid #4ca1af';
+    completionMessage.style.backgroundColor ='rgba(76, 161, 175, 0.1)';
   }
   
-  // Add to the stage info container
-  stageInfo.appendChild(completionMessage);
+  // Create the up arrow button
+  const upArrowButton = document.createElement('button');
+  upArrowButton.className = 'scroll-top-button';
+  upArrowButton.innerHTML = '&#8679;'; // Up arrow Unicode character
+  
+  // Style the up arrow button
+  upArrowButton.style.display = 'flex';
+  upArrowButton.style.justifyContent = 'center';
+  upArrowButton.style.alignItems = 'center';
+  upArrowButton.style.width = '40px';
+  upArrowButton.style.height = '40px';
+  upArrowButton.style.borderRadius = '50%';
+  upArrowButton.style.backgroundColor = '#4ca1af';
+  upArrowButton.style.color = 'white';
+  upArrowButton.style.fontSize = '24px';
+  upArrowButton.style.border = 'none';
+  upArrowButton.style.cursor = 'pointer';
+  upArrowButton.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+  upArrowButton.style.transition = 'transform 0.2s ease';
+  
+  // Add hover effect
+  upArrowButton.onmouseover = function() {
+    this.style.transform = 'translateY(-3px)';
+  };
+  upArrowButton.onmouseout = function() {
+    this.style.transform = 'translateY(0)';
+  };
+  
+  // Add click event to scroll to top
+  upArrowButton.onclick = function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  
+  // Add tooltip
+  upArrowButton.title = "Scroll to top";
+  
+  // Add message and button to wrapper
+  messageWrapper.appendChild(completionMessage);
+  messageWrapper.appendChild(upArrowButton);
+  
+  // Add wrapper to the stage info container
+  stageInfo.appendChild(messageWrapper);
   
   // Scroll to make the message visible
-  completionMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  messageWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  
+  // Remove automatic scroll timeout - now user only controls with button
+  // No more automatic scrolling
 }
 
 // Modify your existing showStage function to include the wave animation
@@ -489,6 +551,12 @@ function showStage(stageId) {
   
   // Animate the wave to this stage
   animateWave(stageId);
+  
+  // NEW: Scroll to the top of the page when a new stage is shown
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }
 
 // Initialize everything when the page loads
@@ -497,6 +565,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Create the wave animation container
   //createWaveAnimation();
+  
+  // Track any active completion message cleanup timeouts
+  let messageCleanupTimeout = null;
   
   // Handle clicks on characteristic titles
   document.querySelectorAll('.characteristics').forEach(charList => {
@@ -531,6 +602,11 @@ document.addEventListener('DOMContentLoaded', () => {
               existingMessage.remove();
             }
             
+            // Clear any previous timeout that might be running
+            if (messageCleanupTimeout) {
+              clearTimeout(messageCleanupTimeout);
+            }
+            
             // Show the completion message instead of the button
             showCompletedStageMessage(stageInfo, nextId);
           }
@@ -563,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
   */
 });
 
-// Add a style element for the pulse animation
+// Add a style element for animations
 document.addEventListener('DOMContentLoaded', () => {
   const styleElement = document.createElement('style');
   styleElement.textContent = `
@@ -571,6 +647,36 @@ document.addEventListener('DOMContentLoaded', () => {
       0% { opacity: 0.8; }
       50% { opacity: 1; }
       100% { opacity: 0.8; }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .scroll-top-button:hover {
+      background-color: #5dafbd !important;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+    }
+    
+    .scroll-top-button:active {
+      transform: translateY(2px) !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+    }
+    
+    .hint-text {
+      background-color: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-left: 3px solid #4ca1af;
+      border-radius: 5px;
+      padding: 10px 15px;
+      margin: 12px auto;
+      max-width: 350px;
+      font-style: italic;
+      color: #555;
+      line-height: 1.5;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: none;
     }
   `;
   document.head.appendChild(styleElement);
@@ -580,6 +686,31 @@ function toggleHint(iconElement) {
   const parent = iconElement.closest('.characteristic-item');
   const hintText = parent.querySelector('.hint-text');
   if (hintText) {
-    hintText.style.display = hintText.style.display === 'none' ? 'block' : 'none';
+    // Toggle visibility with smooth transition
+    if (hintText.style.display === 'none' || !hintText.style.display) {
+      // Show hint with proper styling
+      hintText.style.display = 'block';
+      hintText.style.backgroundColor = '#f9f9f9';
+      hintText.style.border = '1px solid #e0e0e0';
+      hintText.style.borderLeft = '3px solid #4ca1af';
+      hintText.style.borderRadius = '5px';
+      hintText.style.padding = '10px 15px';
+      hintText.style.margin = '12px auto';
+      hintText.style.width = '400px';
+      hintText.style.maxWidth = '500px';
+      hintText.style.fontStyle = 'italic';
+      hintText.style.color = '#555';
+      hintText.style.lineHeight = '1.5';
+      hintText.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
+      hintText.style.whiteSpace = 'nowrap';
+      hintText.style.overflow = 'hidden';
+      hintText.style.textOverflow = 'ellipsis';
+      hintText.title = hintText.textContent;
+      // Apply animation
+      hintText.style.animation = 'fadeIn 0.3s ease-in-out';
+    } else {
+      // Hide hint
+      hintText.style.display = 'none';
+    }
   }
 }
