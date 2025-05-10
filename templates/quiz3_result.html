@@ -1,26 +1,67 @@
-<!-- 4. QUIZ 3 RESULT (quiz3_result.html) -->
 {% extends "quiz_base.html" %}
-{% block title %}Quiz 3 Result{% endblock %}
-{% set hide_nav = true %}
-{% set hide_hint = true %}
 
-{% block heading %}
-  Quiz 3: Match the Scenario to Sleep Stage
+{% set next_url = url_for('quiz_results_question', num=4) %}
+{% set back_url = url_for('quiz_results_question', num=2) %}
+{% set active_index = 2 %}
+{% set hide_hint = true %}
+{% set hide_nav = false %}
+
+{% block title %}Quiz 3 Result: Match Sleep Stages{% endblock %}
+{% block heading %}Match the Scenario to Sleep Stage{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz3.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz3_result.css') }}">
 {% endblock %}
 
 {% block quiz_content %}
-  <!-- pull in your original quiz3.css -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz3.css') }}">
-  <!-- then the shared quiz_results overrides -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
 
-  <!-- Content directly in quiz_content block -->
-  <div class="result-image">
-    <img src="{{ url_for('static', filename='media/Quiz/Q3/Result.png') }}" alt="Quiz 3 Correct Matching">
+<div class="match-container">
+  <!-- Left side labels -->
+  <div class="left-side">
+    {% set labels = [
+      "Sufficient N3 Deep Sleep",
+      "Complete REM Cycles",
+      "Insufficient N3 Deep Sleep",
+      "Multiple REM cycles",
+      "N2 Deeper Light Sleep",
+      "Disrupted N3 Deep Sleep"
+    ] %}
+    {% for label in labels %}
+      <div class="match-item" data-label="{{ loop.index0 }}">
+        <span>{{ label }}</span>
+        <span class="connector left-connector connected" data-index="{{ loop.index0 }}"></span>
+      </div>
+    {% endfor %}
   </div>
 
-  <div class="nav-buttons">
-    <a href="{{ url_for('quiz_results_question', num=2) }}" class="button">← Prev</a>
-    <a href="{{ url_for('quiz_results_question', num=4) }}" class="button">Next →</a>
+  <!-- Right side images -->
+  <div class="right-side">
+    {% set images = [
+      "Sick.png", "Sport.png", "Forget.png",
+      "Solve.png", "Guitar.png", "Recovery.png"
+    ] %}
+    {% for img in images %}
+      <div class="match-item" data-label="{{ loop.index0 }}">
+        <span class="connector right-connector connected" data-index="{{ loop.index0 }}"></span>
+        <img src="{{ url_for('static', filename='media/Quiz/Q3/' ~ img) }}" alt="Scenario {{ loop.index0 }}">
+      </div>
+    {% endfor %}
   </div>
+
+  <!-- SVG for connection lines -->
+  <svg class="match-lines">
+    <!-- Connection lines will be drawn/updated by JavaScript -->
+    <line x1="43%" y1="8.5%" x2="57%" y2="91.5%" /> <!-- Connection 0 to 5 -->
+    <line x1="43%" y1="25%" x2="57%" y2="58.5%" /> <!-- Connection 1 to 3 -->
+    <line x1="43%" y1="41.5%" x2="57%" y2="8.5%" /> <!-- Connection 2 to 0 -->
+    <line x1="43%" y1="58.5%" x2="57%" y2="41.5%" /> <!-- Connection 3 to 2 -->
+    <line x1="43%" y1="75%" x2="57%" y2="75%" /> <!-- Connection 4 to 4 -->
+    <line x1="43%" y1="91.5%" x2="57%" y2="25%" /> <!-- Connection 5 to 1 -->
+  </svg>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/quiz3_result.js') }}"></script>
 {% endblock %}

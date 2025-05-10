@@ -1,0 +1,30 @@
+/* Additional styles for the quiz3 result page */
+
+.result-indicator {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* Connection line styles */
+.match-lines line {
+  stroke: #4ca1af;
+  stroke-width: 2;
+}
+
+/* Connected dot styles */
+.connector.connected {
+  background-color: #4ca1af;
+  border-color: #4ca1af;
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 768px) {
+  .result-indicator {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
