@@ -86,3 +86,31 @@
   .drop-zone.filled::before {
     content: "";
   }
+
+  /* Additional styles for the result page */
+    .options.single-choice .option {
+      cursor: default;
+    }
+    
+    .options.single-choice .option:hover {
+      background-color: inherit;
+    }
+    
+    .options.single-choice .option.correct {
+      background-color: #a0d8e5;
+    }
+    
+    .draggable {
+      cursor: default;
+    }
+    
+    .drop-zone {
+      cursor: default;
+    }
+    
+    /* Correct answer indicator */
+    .correct-indicator {
+      margin-top: 10px;
+      color: #2c7a85;
+      font-weight: bold;
+    }
