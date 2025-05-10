@@ -52,7 +52,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--dark-gray);
   font-weight: 600;
 }
-  
+.intro h1 {
+  text-align: left;
+}  
 .container-fluid-limited {
   width: 90%;
   max-width: 1600px;
