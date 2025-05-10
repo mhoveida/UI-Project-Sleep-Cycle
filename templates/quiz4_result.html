@@ -1,20 +1,22 @@
-<!-- 5. QUIZ 4 RESULT (quiz4_result.html) -->
 {% extends "quiz_base.html" %}
-{% block title %}Quiz 4 Result{% endblock %}
-{% set hide_nav = true %}
+
+{% set next_url = url_for('quiz_results_question', num=5) %}
+{% set back_url = url_for('quiz_results_question', num=3) %}
+{% set active_index = 3 %}
 {% set hide_hint = true %}
+{% set hide_nav = false %}
+
+{% block title %}Quiz 4 Result{% endblock %}
 
 {% block heading %}
-  Quiz 4: When to wake up?
+  When to wake up?
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz4.css') }}">
 {% endblock %}
 
 {% block quiz_content %}
-  <!-- 1) Original Quiz 4 styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz4.css') }}">
-  <!-- 2) Shared result overrides (buttons, centering, etc) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_results.css') }}">
-
-  <!-- Content directly in quiz_content block -->
   <!-- Top "Bedtime" / "Wake-up" row -->
   <div class="quiz4-top">
     <div class="bedtime-section">
@@ -58,11 +60,5 @@
         <img src="{{ url_for('static', filename='media/Quiz/Q4/Option3-wave.png') }}" class="wave-img" alt="">
       </div>
     </div>
-  </div>
-
-  <!-- Nav buttons -->
-  <div class="nav-buttons">
-    <a href="{{ url_for('quiz_results_question', num=3) }}" class="button">← Prev</a>
-    <a href="{{ url_for('quiz_results_question', num=5) }}" class="button">Next →</a>
   </div>
 {% endblock %}

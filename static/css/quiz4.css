@@ -158,3 +158,18 @@
       width: 95% !important;
     }
   }
+  /* Disable hover effect on result page options */
+    .option {
+      cursor: default;
+    }
+    
+    .option:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Keep selected option styled */
+    .option.selected {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(76, 161, 175, 0.6);
+    }
