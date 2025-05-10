@@ -88,14 +88,6 @@
   }
 
   /* Additional styles for the result page */
-    .options.single-choice .option {
-      cursor: default;
-    }
-    
-    .options.single-choice .option:hover {
-      background-color: inherit;
-    }
-    
     .options.single-choice .option.correct {
       background-color: #a0d8e5;
     }
