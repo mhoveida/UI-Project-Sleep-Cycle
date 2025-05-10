@@ -899,7 +899,7 @@ area {
 }
 
 .hero {
-  position: relative;
+  position: absolute;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -912,23 +912,6 @@ area {
   height: 100%;
   object-fit: cover;
   z-index: 1;
-}
-
-.hero-title {
-  position: absolute;
-  top: 6rem;
-  left: 5rem;
-  z-index: 2;
-  color: white;
-  font-size: 3.5rem;
-  font-weight: bold;
-  margin: 0;
-  /* Background styling */
-  background-color: rgba(0, 18, 53, 0.5);
-  padding: 1rem 1.5rem;
-  border-radius: 100px;
-  display: inline-block;
-  backdrop-filter: blur(4px);
 }
 
 .hero-buttons {
@@ -1390,3 +1373,109 @@ area {
   font-style: italic;
   color: #444;
 }
+
+/* Full-Page Hero Animation Styles */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+    background: linear-gradient(to bottom, #0a1a2f 0%, #1c3b5a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+/* Remove any margin/padding that might be affecting the full-page display */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.night-sky {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* Star-shaped stars with blur effect */
+/* Circle-shaped stars with blur effect */
+/* Circle-shaped stars with less blur */
+.star {
+    position: absolute;
+    background-color: rgba(246, 246, 203, 0.9); /* More opaque background */
+    filter: blur(0.3px); /* Much less blur - just enough for soft edges */
+    border-radius: 50%; /* This creates a circle */
+}
+
+/* Slightly increased blur for twinkling stars */
+.star.twinkle {
+    animation: twinkle-on-off 6s ease-in-out infinite;
+    filter: blur(1px); /* Less blur for twinkling stars */
+    background-color: rgba(255, 255, 220, 0.9); /* Brighter when twinkling */
+}
+
+/* Adjust the shadow in the animation */
+@keyframes twinkle-on-off {
+    0%, 100% {
+        opacity: 0.5;
+        box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 8px 5px rgba(255, 255, 255, 0.6);
+    }
+}
+
+.moon {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 80px;
+    height: 80px;
+    background-color: #f9f9e0;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 220, 0.6);
+}
+
+.hero-title {
+  color: white;
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0 auto;
+  text-align: center;
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hero-buttons {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    gap: 20px;
+    bottom: 20%; /* Position closer to bottom */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* Make sure the navbar stays on top */
+.navbar {
+    position: relative;
+    z-index: 1000;
+}
+
+/* Adjust main content to accommodate the full-page hero */
+main {
+    position: relative;
+    z-index: 5;
+}
+
