@@ -1404,32 +1404,45 @@ body, html {
     left: 0;
 }
 
-/* Star-shaped stars with blur effect */
-/* Circle-shaped stars with blur effect */
-/* Circle-shaped stars with less blur */
+
 .star {
     position: absolute;
-    background-color: rgba(246, 246, 203, 0.9); /* More opaque background */
-    filter: blur(0.3px); /* Much less blur - just enough for soft edges */
-    border-radius: 50%; /* This creates a circle */
+    background-color: #f9f7df;
+    box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.7);
+    clip-path: polygon(
+        50% 0%, 
+        60% 40%, 
+        100% 50%, 
+        60% 60%,
+        50% 100%,
+        40% 60%,
+        0% 50%,
+        40% 40%
+    );
+    border-radius: 2px;
 }
 
-/* Slightly increased blur for twinkling stars */
+/* Twinkling animation */
 .star.twinkle {
-    animation: twinkle-on-off 6s ease-in-out infinite;
-    filter: blur(1px); /* Less blur for twinkling stars */
-    background-color: rgba(255, 255, 220, 0.9); /* Brighter when twinkling */
+    background-color: #f9f7df;
+    box-shadow: 
+        0 0 10px 4px rgba(255, 255, 255, 0.9),
+        0 0 20px 10px rgba(255, 255, 255, 0.5);
+    animation: enhanced-twinkle 4s ease-in-out infinite;
 }
 
-/* Adjust the shadow in the animation */
-@keyframes twinkle-on-off {
+@keyframes enhanced-twinkle {
     0%, 100% {
-        opacity: 0.5;
-        box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.2);
+        opacity: 0.4;
+        box-shadow: 
+            0 0 10px 4px rgba(255, 255, 255, 0.5),
+            0 0 20px 10px rgba(255, 255, 255, 0.3);
     }
     50% {
         opacity: 1;
-        box-shadow: 0 0 8px 5px rgba(255, 255, 255, 0.6);
+        box-shadow: 
+            0 0 15px 6px rgba(255, 255, 255, 0.9),
+            0 0 30px 15px rgba(255, 255, 255, 0.6);
     }
 }
 
