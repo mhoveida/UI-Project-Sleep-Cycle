@@ -9,11 +9,23 @@
 </section>
 
 <div class="examples-grid website-padding">
-  {% for e in content.examples %}
-    <div class="example-card" onclick="toggleExplanation('{{ e.title | replace(' ', '_') }}')">
+  <!-- First row -->
+  {% for e in content.examples[:3] %}
+    <div class="example-card" data-id="{{ e.title | replace(' ', '_') }}">
       <img src="{{ url_for('static', filename='media/Examples/' ~ e.icon) }}" alt="{{ e.title }}">
       <h3>{{ e.title }}</h3>
-      <p class="explanation" id="exp-{{ e.title | replace(' ', '_') }}" style="display: none;">
+      <p class="explanation" id="exp-{{ e.title | replace(' ', '_') }}">
+        {{ e.explanation }}
+      </p>
+    </div>
+  {% endfor %}
+  
+  <!-- Second row -->
+  {% for e in content.examples[3:6] %}
+    <div class="example-card" data-id="{{ e.title | replace(' ', '_') }}">
+      <img src="{{ url_for('static', filename='media/Examples/' ~ e.icon) }}" alt="{{ e.title }}">
+      <h3>{{ e.title }}</h3>
+      <p class="explanation" id="exp-{{ e.title | replace(' ', '_') }}">
         {{ e.explanation }}
       </p>
     </div>
@@ -27,12 +39,58 @@
 
 <script>
 function toggleExplanation(id) {
-  const el = document.getElementById("exp-" + id);
-  if (el.style.display === "none") {
-    el.style.display = "block";
-  } else {
-    el.style.display = "none";
+  // Find the card that was clicked
+  const cardElement = document.querySelector(`.example-card[data-id="${id}"]`);
+  
+  // If we couldn't find the card, exit
+  if (!cardElement) return;
+  
+  // Check if this card is already expanded
+  const isExpanded = cardElement.classList.contains('expanded');
+  
+  // First, collapse all cards
+  document.querySelectorAll('.example-card').forEach(card => {
+    card.classList.remove('expanded');
+    const explanation = card.querySelector('.explanation');
+    if (explanation) {
+      explanation.style.maxHeight = '0px';
+      explanation.style.opacity = '0';
+      explanation.style.margin = '0';
+    }
+  });
+  
+  // If the card wasn't expanded before, expand it
+  if (!isExpanded) {
+    // Add expanded class to the card
+    cardElement.classList.add('expanded');
+    
+    // Get the explanation element
+    const explanation = cardElement.querySelector('.explanation');
+    if (explanation) {
+      // Animate the explanation
+      explanation.style.maxHeight = explanation.scrollHeight + 'px';
+      explanation.style.opacity = '1';
+      explanation.style.margin = '1rem 0 0 0';
+    }
   }
 }
+
+// Initialize when the DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  // Set initial state of explanations
+  document.querySelectorAll('.explanation').forEach(explanation => {
+    explanation.style.maxHeight = '0px';
+    explanation.style.opacity = '0';
+    explanation.style.margin = '0';
+  });
+  
+  // Add click handlers to all cards
+  document.querySelectorAll('.example-card').forEach(card => {
+    card.addEventListener('click', function() {
+      const id = this.getAttribute('data-id');
+      toggleExplanation(id);
+    });
+  });
+});
 </script>
 {% endblock %}

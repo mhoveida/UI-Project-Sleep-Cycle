@@ -477,7 +477,125 @@ area {
   height: auto;
   margin-bottom: 0.5rem;
 }
+/* CSS with significantly increased spacing between cards */
 
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Exactly 3 columns */
+  grid-template-rows: repeat(2, auto);   /* 2 rows */
+  gap: 4rem;  /* Dramatically increased gap between cards */
+  margin: 3rem auto; /* More margin around the entire grid */
+  max-width: 1200px;
+  padding: 2rem;  /* More padding around the grid */
+}
+
+.example-card {
+  background: var(--light-gray);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 2rem;  /* More padding inside cards */
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* More pronounced shadow */
+  width: 100%;
+  max-width: 260px; /* Set maximum width */
+  min-height: 240px;
+  margin: 0 auto; /* Center cards within their grid cells */
+}
+
+.example-card:hover {
+  background: #b6e5f0;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.12);
+}
+
+.example-card.expanded {
+  background: white;
+  border-color: var(--accent-color);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  transform: translateY(-7px);
+  z-index: 10;
+  height: auto;
+  min-height: 240px;
+}
+
+.example-card img {
+  width: 85px;
+  height: auto;
+  margin-bottom: 1.5rem; /* More space below the image */
+  transition: transform 0.3s ease;
+}
+
+.example-card.expanded img {
+  transform: scale(0.95);
+}
+
+.example-card h3 {
+  color: var(--dark-gray);
+  margin: 0 0 0.8rem 0; /* More margin below heading */
+  font-size: 1.25rem;
+  transition: color 0.3s ease;
+}
+
+.example-card.expanded h3 {
+  color: var(--base-color);
+  font-weight: 700;
+}
+
+.explanation {
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+  text-align: left;
+  border-top: 1px solid transparent;
+}
+
+.example-card.expanded .explanation {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top-color: #eee;
+}
+
+/* Empty card placeholder styling */
+.example-card.empty-card {
+  visibility: hidden;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .examples-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;  /* Still significant gap on mobile */
+    padding: 1rem;
+  }
+  
+  .example-card {
+    min-height: 220px;
+    padding: 1.5rem;
+    max-width: 320px; /* Slightly wider on mobile */
+  }
+}
+
+/* Medium screens - 2 columns */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .examples-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+}
 .explanation {
   margin-top: 0.5rem;
   font-size: 0.9rem;
