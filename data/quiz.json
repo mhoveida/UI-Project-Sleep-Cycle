@@ -6,7 +6,7 @@
       "id": 1,
       "type": "sequence",
       "question": "Correct Sequence the Sleep Cycle",
-      "hint": "Think about how you transition from awake to deep sleep and back again during the night",
+      "hint": "Think about how you transition from awake to deep sleep and back again during the night.",
       "options": ["Light Sleep", "Deeper Light Sleep", "Deep Sleep", "REM Sleep"],
       "correctAnswer": ["Light Sleep", "Deeper Light Sleep", "Deep Sleep", "REM Sleep"]
     },
@@ -28,7 +28,7 @@
       "id": 3,
       "type": "matching",
       "question": "Match the Scenario to Sleep Stage",
-      "hint": "Match each person's vibe to their sleep stage!",
+      "hint": "Match each person's vibe to their sleep stage.",
       "items": [
         {
           "label": "Sufficient N3 Deep Sleep",

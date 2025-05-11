@@ -664,20 +664,6 @@ document.addEventListener('DOMContentLoaded', () => {
       box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
     }
     
-    .hint-text {
-      background-color: #f9f9f9;
-      border: 1px solid #e0e0e0;
-      border-left: 3px solid #4ca1af;
-      border-radius: 5px;
-      padding: 10px 15px;
-      margin: 12px auto;
-      max-width: 350px;
-      font-style: italic;
-      color: #555;
-      line-height: 1.5;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      display: none;
-    }
   `;
   document.head.appendChild(styleElement);
 });
