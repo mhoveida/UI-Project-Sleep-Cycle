@@ -1,6 +1,6 @@
 {% extends "quiz_base.html" %}
 
-{% set next_url = url_for('quiz_results') %}
+{% set next_label = "View Score" %}
 {% set back_url = url_for('quiz4_multiple') %}
 {% set active_page = 'quiz5' %}
 {% set active_index = 4 %}
@@ -54,7 +54,6 @@ Answer by selecting or dragging the correct items!
 
 </div>
 {% endblock %}
-
 {% block script %}
 <script>
 const next_url = "{{ next_url }}";

@@ -8,7 +8,6 @@
 
 {% block content %}
 {% set back_url = back_url | default('/quiz_start') %}
-
 <div class="container-fluid-limited website-padding">
   <!-- Page Title -->
   <h1>{% block heading %}Sleep Quiz{% endblock %}</h1>
@@ -46,7 +45,11 @@
       {% endfor %}
     </div>
     <!-- 只保留一个 Next 按钮 -->
-    <a href="{{ next_url }}" class="button next">Next →</a>
+    <a href="{{ next_url }}" class="button next">
+  {{ next_label | default("Next →") }}
+    </a>
+
+  
   </div>
   {% endif %}
 
