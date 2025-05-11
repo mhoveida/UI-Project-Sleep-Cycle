@@ -27,7 +27,7 @@ h1 {
 }
 
 .hint-details {
-  background: linear-gradient(90deg, #e0f7fa, #f5f5f5);
+  background: linear-gradient(135deg,#e6f7fb, #b2e0e8);
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   overflow: hidden;
