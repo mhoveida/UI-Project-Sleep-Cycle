@@ -39,14 +39,14 @@
 
   {% if not hide_nav %}
   <div class="nav-bottom">
-    <a href="{{ back_url }}" class="button back">&lt; Back</a>
+    <a href="{{ back_url }}" class="button back"> ← Back</a>
     <div class="progress-dots">
       {% for i in range(5) %}
         <span class="dot {% if i == active_index %}active{% endif %}"></span>
       {% endfor %}
     </div>
     <!-- 只保留一个 Next 按钮 -->
-    <a href="{{ next_url }}" class="button next">Next &gt;</a>
+    <a href="{{ next_url }}" class="button next">Next →</a>
   </div>
   {% endif %}
 
