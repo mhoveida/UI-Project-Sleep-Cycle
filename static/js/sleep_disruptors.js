@@ -6,9 +6,18 @@ document.addEventListener("DOMContentLoaded", () => {
   
     disruptors.forEach(d => {
       d.addEventListener("dragstart", e => {
-        currentDragged = d;
-        e.dataTransfer.setData("text/plain", d.id);
-      });
+      currentDragged = d;
+      e.dataTransfer.setData("text/plain", d.id);
+      // Hide original
+      setTimeout(() => {
+        d.style.display = "none";
+      }, 0);
+    });
+
+    d.addEventListener("dragend", () => {
+      // Show after drop
+      d.style.display = "flex";
+    });
     });
   
     dropzones.forEach(zone => {
