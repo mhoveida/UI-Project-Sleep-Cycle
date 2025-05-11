@@ -5,9 +5,22 @@
 {% block content %}
 <section class="intro website-padding">
   <h1>{{ content.intro.title }}</h1>
-  <h3>{{ content.intro.subtitle }}</h3>
 </section>
-
+<!-- Add this before your main content -->
+<div class="hint-container">
+  <details class="hint-details">
+    <summary class="hint-summary">
+      <img src="/static/media/hint.png" alt="hint" class="hint-icon"> 
+      <span>Need a hint? Click here</span>
+      <svg class="hint-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.41 0.295013L6 4.87501L10.59 0.295013L12 1.70501L6 7.70501L0 1.70501L1.41 0.295013Z" fill="#607D8B"/>
+      </svg>
+    </summary>
+    <div class="hint-content">
+      Try matching each disruptor to the sleep stage it most directly affects. For example, think about when caffeine might interfere with your ability to fall asleep.
+    </div>
+  </details>
+</div>
 <div class="drag-drop-container website-padding">
   <!-- Left: Disruptors to drag -->
   <div class="disruptor-list">
