@@ -26,10 +26,15 @@
     
     <div class="calculator-tabs">
         <button id="wake-up-tab" class="calculator-tab active">
-            <span class="sun-icon">☀️</span> When to wake up
+            <img src="{{ url_for('static', filename='media/calculator/calculator-wakeup-active.png') }}" alt="Wake Up Active" class="tab-icon wake-icon active-icon">
+            <img src="{{ url_for('static', filename='media/calculator/calculator-wakeup-inactive.png') }}" alt="Wake Up Inactive" class="tab-icon wake-icon inactive-icon">
+            When to wake up
         </button>
+
         <button id="sleep-tab" class="calculator-tab">
-            <span class="moon-icon">🌙</span> When to sleep
+            <img src="{{ url_for('static', filename='media/calculator/calculator-sleep-active.png') }}" alt="Sleep Active" class="tab-icon sleep-icon active-icon">
+            <img src="{{ url_for('static', filename='media/calculator/calculator-sleep-inactive.png') }}" alt="Sleep Inactive" class="tab-icon sleep-icon inactive-icon">
+            When to sleep
         </button>
     </div>
     

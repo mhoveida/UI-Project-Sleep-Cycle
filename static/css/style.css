@@ -629,6 +629,23 @@ area {
   text-align: center;
   margin-bottom: 1.5rem;
 }
+.tab-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.active-icon { display: inline; }
+.inactive-icon { display: none; }
+
+.calculator-tab:not(.active) .active-icon {
+    display: none;
+}
+
+.calculator-tab:not(.active) .inactive-icon {
+    display: inline;
+}
 
 /* Info box */
 .info-box {

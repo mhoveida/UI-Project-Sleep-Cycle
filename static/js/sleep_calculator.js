@@ -58,35 +58,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Select the correct tab
     function selectTab(mode) {
-        selectedMode = mode;
-        
-        if (mode === 'wake-up') {
-            if (wakeUpTab) wakeUpTab.classList.add('active');
-            if (sleepTab) sleepTab.classList.remove('active');
-            
-            // Show/hide relevant time inputs
-            if (sleepTimeInput) sleepTimeInput.style.display = 'flex';
-            if (wakeTimeInput) wakeTimeInput.style.display = 'none';
-            
-            if (calculateWakeTimeBtn) calculateWakeTimeBtn.style.display = 'block';
-            if (calculateBedTimeBtn) calculateBedTimeBtn.style.display = 'none';
-        } else {
-            if (wakeUpTab) wakeUpTab.classList.remove('active');
-            if (sleepTab) sleepTab.classList.add('active');
-            
-            // Show/hide relevant time inputs
-            if (sleepTimeInput) sleepTimeInput.style.display = 'none';
-            if (wakeTimeInput) wakeTimeInput.style.display = 'flex';
-            
-            if (calculateWakeTimeBtn) calculateWakeTimeBtn.style.display = 'none';
-            if (calculateBedTimeBtn) calculateBedTimeBtn.style.display = 'block';
-        }
-        
-        // Clear results when switching tabs
-        if (resultsContainer) resultsContainer.innerHTML = '';
+    selectedMode = mode;
+
+    if (mode === 'wake-up') {
+        if (wakeUpTab) wakeUpTab.classList.add('active');
+        if (sleepTab) sleepTab.classList.remove('active');
+
+        // Show/hide relevant time inputs
+        if (sleepTimeInput) sleepTimeInput.style.display = 'flex';
+        if (wakeTimeInput) wakeTimeInput.style.display = 'none';
+
+        if (calculateWakeTimeBtn) calculateWakeTimeBtn.style.display = 'block';
+        if (calculateBedTimeBtn) calculateBedTimeBtn.style.display = 'none';
+    } else {
+        if (wakeUpTab) wakeUpTab.classList.remove('active');
+        if (sleepTab) sleepTab.classList.add('active');
+
+        // Show/hide relevant time inputs
+        if (sleepTimeInput) sleepTimeInput.style.display = 'none';
+        if (wakeTimeInput) wakeTimeInput.style.display = 'flex';
+
+        if (calculateWakeTimeBtn) calculateWakeTimeBtn.style.display = 'none';
+        if (calculateBedTimeBtn) calculateBedTimeBtn.style.display = 'block';
     }
+
+    // Toggle icon visibility
+    document.querySelectorAll('.calculator-tab').forEach(tab => {
+        const isActive = tab.classList.contains('active');
+        const activeIcon = tab.querySelector('.active-icon');
+        const inactiveIcon = tab.querySelector('.inactive-icon');
+
+        if (activeIcon) activeIcon.style.display = isActive ? 'inline' : 'none';
+        if (inactiveIcon) inactiveIcon.style.display = isActive ? 'none' : 'inline';
+    });
+
+    // Clear results when switching tabs
+    if (resultsContainer) resultsContainer.innerHTML = '';
+}
+
     
     // Setup age range selection
     if (ageRangeButtons) {
