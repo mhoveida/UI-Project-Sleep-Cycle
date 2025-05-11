@@ -86,12 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
         answer.push(value);
       });
 
-      // 检查是否所有空位都已填充
-      if (answer.length < 4) {
-        alert("Please place all sleep cycle stages in order before continuing.");
-        return;
-      }
-
       // 使用AJAX提交数据
       fetch('/submit_quiz1', {
         method: 'POST',

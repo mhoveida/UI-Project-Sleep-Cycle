@@ -9,17 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // 添加提交处理程序
-    document.querySelector('.button.next').addEventListener('click', function(e) {
+        document.querySelector('.button.next').addEventListener('click', function(e) {
         e.preventDefault();
 
         const selectedOption = document.querySelector('.option.selected');
-        if (!selectedOption) {
-            alert("Please select an option before continuing.");
-            return;
-        }
+        const answer = selectedOption ? selectedOption.getAttribute('data-answer') : null;
 
-        const answer = selectedOption.getAttribute('data-answer');
-
+        // Submit the answer, even if it's null (user skipped)
         fetch('/submit_quiz4', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -27,15 +23,13 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                window.location.href = '/quiz5';
-            } else {
-                alert("Error submitting answer.");
-            }
+            // Always continue to next quiz
+            window.location.href = '/quiz5';
         })
         .catch(error => {
             console.error("Error:", error);
-            alert("An error occurred. Please try again.");
+            window.location.href = '/quiz5';  // Continue even if there's a fetch error
         });
     });
+
 });
